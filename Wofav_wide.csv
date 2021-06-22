@@ -1,0 +1,17 @@
+Species,Treatment,Core,Colony,pre_sh,pre_propD,post_propD,post_sh,preDcat,postDcat,Batch
+O.faveolata,Manipulated,1-13-c,13,0.041232283,0.160033067,1,0.015510189,0.16,1,October
+O.faveolata,Control,1-13-d,13,0.01822619,0.056453359,0.028851717,0.154326647,0.04,0.02,October
+O.faveolata,Control,1-21-d,21,0.036766704,0.00705967,0.002166989,0.272806948,0,0,October
+O.faveolata,Control,1-34-d,34,0.038548609,0,0,0.262578845,0,0,October
+O.faveolata,Manipulated,1-36-c,36,0.046369584,0,NA,NA,0,NA,October
+O.faveolata,Manipulated,1-4-c,4,0.011652817,0,1,0.006568866,0,1,October
+O.faveolata,Manipulated,1-62-c,62,0.021341754,0,0.2512367,0.017932755,0,0.24,October
+O.faveolata,Manipulated,1-62-d,62,0.073369415,0,NA,NA,0,NA,October
+O.faveolata,Manipulated,1-64-c,64,0.020358545,0.9713626,1,0.024635116,0.96,1,October
+O.faveolata,Manipulated,1-64-d,64,0.018516459,0.485454513,NA,0,0.48,NA,October
+O.faveolata,Manipulated,1-65-c,65,0.008679695,1,1,0.026744019,1,1,October
+O.faveolata,Manipulated,1-65-d,65,0.012211296,1,1,0.009942746,1,1,October
+O.faveolata,Manipulated,1-66-c,66,0.020030748,1,1,0.010531539,1,1,October
+O.faveolata,Control,1-66-d,66,0.024371859,1,1,0.028396562,1,1,October
+O.faveolata,Manipulated,1-81-c,81,0.144464594,0.022251898,1,0.012296232,0.02,1,October
+O.faveolata,Control,1-81-d,81,0.192691428,0.028047107,0.001711606,0.465480951,0.02,0,October
