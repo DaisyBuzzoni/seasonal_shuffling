@@ -1,0 +1,2543 @@
+\PassOptionsToPackage{unicode=true}{hyperref} % options for packages loaded elsewhere
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provides euro and other symbols
+\else % if luatex or xelatex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+\fi
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+% use microtype if available
+\IfFileExists{microtype.sty}{%
+\usepackage[]{microtype}
+\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\IfFileExists{parskip.sty}{%
+\usepackage{parskip}
+}{% else
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+}
+\usepackage{hyperref}
+\hypersetup{
+            pdftitle={Buzzoni D., Cunning R. and Baker A. C. (2021) Initial Algal Symbiont Communities Affect Shuffling to Durusdinium after Coral Bleaching and Reflect Seasonal Differences in Bleaching Sensitivity},
+            pdfborder={0 0 0},
+            breaklinks=true}
+\urlstyle{same}  % don't use monospace font for urls
+\usepackage[margin=1in]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx,grffile}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{0}
+% Redefines (sub)paragraphs to behave more like sections
+\ifx\paragraph\undefined\else
+\let\oldparagraph\paragraph
+\renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+\let\oldsubparagraph\subparagraph
+\renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+
+% set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+
+
+\title{Buzzoni D., Cunning R. and Baker A. C. (2021) Initial Algal Symbiont
+Communities Affect Shuffling to Durusdinium after Coral Bleaching and
+Reflect Seasonal Differences in Bleaching Sensitivity}
+\author{}
+\date{\vspace{-2.5em}}
+
+\begin{document}
+\maketitle
+
+\hypertarget{seasonal-temperatures}{%
+\subsection{SEASONAL TEMPERATURES}\label{seasonal-temperatures}}
+
+\hypertarget{figure-1a-temperatures-are-seasonal}{%
+\subsubsection{Figure 1a: Temperatures are
+seasonal}\label{figure-1a-temperatures-are-seasonal}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{temp3=}\KeywordTok{read.csv}\NormalTok{(}\StringTok{"foweytemps5yrs.csv"}\NormalTok{)}
+\NormalTok{temp3}\OperatorTok{$}\NormalTok{date=}\KeywordTok{as.Date}\NormalTok{(}\KeywordTok{with}\NormalTok{(temp3, }\KeywordTok{paste}\NormalTok{(}\StringTok{'2019'}\NormalTok{,MM, DD,}\DataTypeTok{sep=}\StringTok{"-"}\NormalTok{)), }\StringTok{"%Y-%m-%d"}\NormalTok{)}
+\NormalTok{ temp3}\OperatorTok{$}\NormalTok{WTMP=}\KeywordTok{as.numeric}\NormalTok{(}\KeywordTok{paste}\NormalTok{(temp3}\OperatorTok{$}\NormalTok{WTMP))}
+\NormalTok{ temp=}\KeywordTok{read.csv}\NormalTok{(}\StringTok{"temp.csv"}\NormalTok{)}
+\NormalTok{temp}\OperatorTok{$}\NormalTok{Date=}\KeywordTok{as.Date}\NormalTok{(temp}\OperatorTok{$}\NormalTok{Date,}\DataTypeTok{format =} \StringTok{"%d/%m/%Y"}\NormalTok{)}
+ 
+ \KeywordTok{ggplot}\NormalTok{()}\OperatorTok{+}\KeywordTok{stat_summary}\NormalTok{(}\DataTypeTok{data=}\NormalTok{temp3,}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\NormalTok{date,}\DataTypeTok{y=}\NormalTok{WTMP,}\DataTypeTok{fill=}\StringTok{'darkgreen'}\NormalTok{),}\DataTypeTok{fun.data=}\NormalTok{mean_se,}\DataTypeTok{geom=}\StringTok{'ribbon'}\NormalTok{,}\DataTypeTok{alpha=}\FloatTok{0.6}\NormalTok{)}\OperatorTok{+}\KeywordTok{theme_minimal}\NormalTok{(}\DataTypeTok{base_size =} \DecValTok{15}\NormalTok{)}\OperatorTok{%+replace%}
+\StringTok{    }\KeywordTok{theme}\NormalTok{(}\DataTypeTok{panel.border =} \KeywordTok{element_rect}\NormalTok{(}\DataTypeTok{colour=}\StringTok{'grey20'}\NormalTok{,}\DataTypeTok{fill=}\OtherTok{NA}\NormalTok{),}
+          \DataTypeTok{panel.grid.minor.x =} \KeywordTok{element_blank}\NormalTok{(),}
+          \DataTypeTok{panel.grid.minor.y =} \KeywordTok{element_blank}\NormalTok{())}\OperatorTok{+}
+\StringTok{   }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{x=}\StringTok{'Month (2019-20)'}\NormalTok{,}\DataTypeTok{y=}\StringTok{'Temperature/°C'}\NormalTok{)}\OperatorTok{+}\KeywordTok{stat_summary}\NormalTok{(}\DataTypeTok{data=}\NormalTok{temp,}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\NormalTok{Date,}\DataTypeTok{y=}\NormalTok{Temp,}\DataTypeTok{fill=}\StringTok{'chartreuse2'}\NormalTok{),}\DataTypeTok{fun.data=}\NormalTok{mean_se,}\DataTypeTok{geom=}\StringTok{'ribbon'}\NormalTok{,}\DataTypeTok{alpha=}\FloatTok{0.6}\NormalTok{)}\OperatorTok{+}\KeywordTok{scale_fill_identity}\NormalTok{(}\DataTypeTok{guide=}\StringTok{'legend'}\NormalTok{,}\DataTypeTok{breaks=}\KeywordTok{c}\NormalTok{(}\StringTok{'darkgreen'}\NormalTok{,}\StringTok{'chartreuse2'}\NormalTok{),}\DataTypeTok{labels=}\KeywordTok{c}\NormalTok{(}\StringTok{'Fowey Rock 2015-19 average'}\NormalTok{,}\StringTok{'Emerald Reef 2019'}\NormalTok{))}\OperatorTok{+}\KeywordTok{guides}\NormalTok{(}\DataTypeTok{fill=}\KeywordTok{guide_legend}\NormalTok{(}\DataTypeTok{title=}\StringTok{''}\NormalTok{))}\OperatorTok{+}\KeywordTok{theme}\NormalTok{(}\DataTypeTok{legend.position =} \KeywordTok{c}\NormalTok{(}\FloatTok{0.6}\NormalTok{,}\FloatTok{0.3}\NormalTok{))}\OperatorTok{+}\KeywordTok{scale_x_date}\NormalTok{(}\DataTypeTok{date_labels =} \StringTok{'%b'}\NormalTok{,}\DataTypeTok{limits=}\KeywordTok{as.Date}\NormalTok{(}\KeywordTok{c}\NormalTok{(}\StringTok{'2019-01-01'}\NormalTok{,}\StringTok{'2019-12-31'}\NormalTok{)))}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{SEASONAL_SHUFFLING_files/figure-latex/unnamed-chunk-3-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#ggsave('temp3.pdf',device='pdf', width=7,height=5) #add labels to figure to show two collection timepoints}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{initial-symbiont-communities}{%
+\subsection{INITIAL SYMBIONT
+COMMUNITIES}\label{initial-symbiont-communities}}
+
+\hypertarget{figure-1b-m.-cavernosa-symbionts-per-host-cell-increased-from-april-to-october.}{%
+\subsubsection{Figure 1b: M. cavernosa symbionts per host cell increased
+from April to
+October.}\label{figure-1b-m.-cavernosa-symbionts-per-host-cell-increased-from-april-to-october.}}
+
+Add arrows to show that points above line show higher in april, below
+line shows higher in April.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#calculate seasonal per colony change in symbiont density (ie the average symbiont density between the two cores taken from each colony per batch)}
+\NormalTok{batches}\OperatorTok{$}\NormalTok{pre_sh[}\KeywordTok{which}\NormalTok{(batches}\OperatorTok{$}\NormalTok{pre_sh}\OperatorTok{==}\DecValTok{0}\NormalTok{)]=}\OtherTok{NA}
+\NormalTok{Apr_Oct_sh=}\StringTok{ }\NormalTok{batches }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{group_by}\NormalTok{(Colony,Batch) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{summarise_at}\NormalTok{(}\KeywordTok{vars}\NormalTok{(pre_sh), }\KeywordTok{funs}\NormalTok{(}\KeywordTok{mean}\NormalTok{(., }\DataTypeTok{na.rm=}\OtherTok{TRUE}\NormalTok{)))}
+
+\NormalTok{Apr_sh=}\StringTok{ }\KeywordTok{filter}\NormalTok{(Apr_Oct_sh, Batch}\OperatorTok{==}\StringTok{'April'}\NormalTok{)}
+\NormalTok{Apr_sh}\OperatorTok{$}\NormalTok{Apr_pre_sh=}\KeywordTok{paste}\NormalTok{(Apr_sh}\OperatorTok{$}\NormalTok{pre_sh)}
+\NormalTok{Oct_sh=}\StringTok{ }\KeywordTok{filter}\NormalTok{(Apr_Oct_sh, Batch}\OperatorTok{==}\StringTok{'October'}\NormalTok{)}
+\NormalTok{Oct_sh}\OperatorTok{$}\NormalTok{Oct_pre_sh=}\KeywordTok{paste}\NormalTok{(Oct_sh}\OperatorTok{$}\NormalTok{pre_sh)}
+\NormalTok{Apr_Oct_sh_change=}\KeywordTok{join}\NormalTok{(Apr_sh,Oct_sh,}\DataTypeTok{by=}\StringTok{'Colony'}\NormalTok{)}
+\NormalTok{Apr_Oct_sh_change=Apr_Oct_sh_change[,}\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{4}\NormalTok{,}\DecValTok{7}\NormalTok{)]}
+\NormalTok{Apr_Oct_sh_change}\OperatorTok{$}\NormalTok{Apr_pre_sh=}\KeywordTok{as.numeric}\NormalTok{(Apr_Oct_sh_change}\OperatorTok{$}\NormalTok{Apr_pre_sh)}
+\NormalTok{Apr_Oct_sh_change}\OperatorTok{$}\NormalTok{Oct_pre_sh=}\KeywordTok{as.numeric}\NormalTok{(Apr_Oct_sh_change}\OperatorTok{$}\NormalTok{Oct_pre_sh)}
+\NormalTok{Apr_Oct_sh_change}\OperatorTok{$}\NormalTok{pre_sh_change=}\StringTok{ }\NormalTok{Apr_Oct_sh_change}\OperatorTok{$}\NormalTok{Oct_pre_sh}\OperatorTok{-}\StringTok{ }\NormalTok{Apr_Oct_sh_change}\OperatorTok{$}\NormalTok{Apr_pre_sh}
+\NormalTok{Apr_Oct_sh_change}\OperatorTok{$}\NormalTok{rel_sh_change=}\StringTok{ }\NormalTok{((Apr_Oct_sh_change}\OperatorTok{$}\NormalTok{Oct_pre_sh}\OperatorTok{-}\StringTok{ }\NormalTok{Apr_Oct_sh_change}\OperatorTok{$}\NormalTok{Apr_pre_sh)}\OperatorTok{/}\NormalTok{Apr_Oct_sh_change}\OperatorTok{$}\NormalTok{Apr_pre_sh)}\OperatorTok{*}\DecValTok{100}
+\NormalTok{Apr_Oct_sh_change}\OperatorTok{$}\NormalTok{octtoapr<-}\StringTok{ }\NormalTok{Apr_Oct_sh_change}\OperatorTok{$}\NormalTok{Oct_pre_sh}\OperatorTok{/}\NormalTok{Apr_Oct_sh_change}\OperatorTok{$}\NormalTok{Apr_pre_sh}
+\NormalTok{Apr_Oct_sh_change}\OperatorTok{$}\NormalTok{Species=}\KeywordTok{factor}\NormalTok{(Apr_Oct_sh_change}\OperatorTok{$}\NormalTok{Colony)}
+\NormalTok{Apr_Oct_sh_change}\OperatorTok{$}\NormalTok{Species=}\StringTok{ }\KeywordTok{mapvalues}\NormalTok{(Apr_Oct_sh_change}\OperatorTok{$}\NormalTok{Species,}
+                          \DataTypeTok{from=}\KeywordTok{c}\NormalTok{(}\StringTok{'100'}\NormalTok{,}\StringTok{'2'}\NormalTok{,}\StringTok{'27'}\NormalTok{,}\StringTok{'28'}\NormalTok{,}\StringTok{'39'}\NormalTok{,}\StringTok{'67'}\NormalTok{,}\StringTok{'68'}\NormalTok{,}\StringTok{'71'}\NormalTok{,}\StringTok{'72'}\NormalTok{,}\StringTok{'87'}\NormalTok{),}\DataTypeTok{to=}\NormalTok{(}\KeywordTok{rep}\NormalTok{(}\StringTok{'M.cavernosa'}\NormalTok{,}\DataTypeTok{times=}\DecValTok{10}\NormalTok{)))}
+\NormalTok{ Apr_Oct_sh_change}\OperatorTok{$}\NormalTok{Species=}\StringTok{ }\KeywordTok{mapvalues}\NormalTok{(Apr_Oct_sh_change}\OperatorTok{$}\NormalTok{Species,}
+                          \DataTypeTok{from=}\KeywordTok{c}\NormalTok{(}\StringTok{'13'}\NormalTok{,}\StringTok{'21'}\NormalTok{,}\StringTok{'34'}\NormalTok{,}\StringTok{'36'}\NormalTok{,}\StringTok{'4'}\NormalTok{,}\StringTok{'62'}\NormalTok{,}\StringTok{'64'}\NormalTok{,}\StringTok{'65'}\NormalTok{,}\StringTok{'66'}\NormalTok{,}\StringTok{'81'}\NormalTok{),}\DataTypeTok{to=}\NormalTok{(}\KeywordTok{rep}\NormalTok{(}\StringTok{'O.faveolata'}\NormalTok{,}\DataTypeTok{times=}\DecValTok{10}\NormalTok{)))                         }
+\NormalTok{  Apr_Oct_sh_change}\OperatorTok{$}\NormalTok{Species=}\StringTok{ }\KeywordTok{mapvalues}\NormalTok{(Apr_Oct_sh_change}\OperatorTok{$}\NormalTok{Species,}
+                          \DataTypeTok{from=}\KeywordTok{c}\NormalTok{(}\StringTok{'16'}\NormalTok{,}\StringTok{'18'}\NormalTok{,}\StringTok{'19'}\NormalTok{,}\StringTok{'22'}\NormalTok{,}\StringTok{'23'}\NormalTok{,}\StringTok{'26'}\NormalTok{,}\StringTok{'3'}\NormalTok{,}\StringTok{'35'}\NormalTok{,}\StringTok{'41'}\NormalTok{,}\StringTok{'48'}\NormalTok{),}\DataTypeTok{to=}\NormalTok{(}\KeywordTok{rep}\NormalTok{(}\StringTok{'S.siderea'}\NormalTok{,}\DataTypeTok{times=}\DecValTok{10}\NormalTok{))) }
+\CommentTok{# this dataframe shows the average change in s:h per colony}
+
+
+\CommentTok{##test statistical significance in seasonal change in S:H}
+ \KeywordTok{hist}\NormalTok{(}\KeywordTok{log10}\NormalTok{(batches}\OperatorTok{$}\NormalTok{pre_sh)) }\CommentTok{#log10 transformed data then used linear mixed effects model on s:h data to test effect of batch within each species, with colony as a random factor}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{SEASONAL_SHUFFLING_files/figure-latex/unnamed-chunk-4-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{batches}\OperatorTok{$}\NormalTok{transf_presh=}\StringTok{ }\KeywordTok{log10}\NormalTok{(batches}\OperatorTok{$}\NormalTok{pre_sh) }\CommentTok{# transform the response variable}
+\NormalTok{mcavpreshmod=}\KeywordTok{lmer}\NormalTok{(}\KeywordTok{log10}\NormalTok{(pre_sh)}\OperatorTok{~}\NormalTok{Batch}\OperatorTok{+}\NormalTok{(}\DecValTok{1}\OperatorTok{|}\NormalTok{Colony),}\DataTypeTok{data=}\KeywordTok{filter}\NormalTok{(batches,batches}\OperatorTok{$}\NormalTok{Species}\OperatorTok{==}\StringTok{'M.cavernosa'}\NormalTok{))}
+\NormalTok{rc_resids<-}\StringTok{ }\KeywordTok{compute_redres}\NormalTok{(mcavpreshmod)}
+\NormalTok{resids<-}\StringTok{ }\KeywordTok{subset}\NormalTok{(batches,batches}\OperatorTok{$}\NormalTok{Species}\OperatorTok{==}\StringTok{'M.cavernosa'}\NormalTok{)}
+\NormalTok{resids}\OperatorTok{$}\NormalTok{logpresh<-}\StringTok{ }\KeywordTok{log10}\NormalTok{(resids}\OperatorTok{$}\NormalTok{pre_sh)}
+\NormalTok{resids<-resids[,}\KeywordTok{c}\NormalTok{(}\DecValTok{12}\NormalTok{)]}
+\NormalTok{logpre<-resids[}\OperatorTok{-}\KeywordTok{c}\NormalTok{(}\DecValTok{5}\NormalTok{,}\DecValTok{6}\NormalTok{)]}
+\NormalTok{resids<-}\StringTok{ }\KeywordTok{data.frame}\NormalTok{(logpre, rc_resids) }
+\KeywordTok{plot_resqq}\NormalTok{(mcavpreshmod) }\CommentTok{# check residuals are normally distributed}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{SEASONAL_SHUFFLING_files/figure-latex/unnamed-chunk-4-2.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mcavpreshmod2<-}\StringTok{ }\KeywordTok{as_lmerModLmerTest}\NormalTok{(mcavpreshmod)}
+\KeywordTok{summary}\NormalTok{(mcavpreshmod2) }\CommentTok{#p for batch, p=0.001126** }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Linear mixed model fit by REML. t-tests use Satterthwaite's method [
+## lmerModLmerTest]
+## Formula: log10(pre_sh) ~ Batch + (1 | Colony)
+##    Data: filter(batches, batches$Species == "M.cavernosa")
+## 
+## REML criterion at convergence: 56
+## 
+## Scaled residuals: 
+##      Min       1Q   Median       3Q      Max 
+## -2.17638 -0.65717 -0.08901  0.55392  2.38020 
+## 
+## Random effects:
+##  Groups   Name        Variance  Std.Dev.
+##  Colony   (Intercept) 3.240e-08 0.00018 
+##  Residual             2.357e-01 0.48546 
+## Number of obs: 38, groups:  Colony, 10
+## 
+## Fixed effects:
+##              Estimate Std. Error      df t value Pr(>|t|)    
+## (Intercept)   -2.3177     0.1144 35.9720  -20.25  < 2e-16 ***
+## BatchOctober   0.5583     0.1577 35.9823    3.54  0.00113 ** 
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Correlation of Fixed Effects:
+##             (Intr)
+## BatchOctobr -0.725
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# now let's get the batch parameter estimates and CIs:}
+\NormalTok{mcavemm.sh<-}\StringTok{ }\KeywordTok{emmeans}\NormalTok{(mcavpreshmod, }\DataTypeTok{specs=}\NormalTok{revpairwise}\OperatorTok{~}\NormalTok{Batch) }
+\KeywordTok{summary}\NormalTok{(mcavemm.sh)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## $emmeans
+##  Batch   emmean    SE   df lower.CL upper.CL
+##  April    -2.32 0.115 25.7    -2.55    -2.08
+##  October  -1.76 0.109 25.7    -1.98    -1.54
+## 
+## Degrees-of-freedom method: kenward-roger 
+## Results are given on the log10 (not the response) scale. 
+## Confidence level used: 0.95 
+## 
+## $contrasts
+##  contrast        estimate    SE   df t.ratio p.value
+##  October - April    0.558 0.158 28.7 3.525   0.0014 
+## 
+## Note: contrasts are still on the log10 scale 
+## Degrees-of-freedom method: kenward-roger
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mcavemmsh_contrasts<-}\StringTok{ }\NormalTok{mcavemm.sh}\OperatorTok{$}\NormalTok{contrasts }\OperatorTok{%>%}
+\StringTok{     }\KeywordTok{confint}\NormalTok{()}\OperatorTok{%>%}
+\StringTok{     }\KeywordTok{as.data.frame}\NormalTok{() }\CommentTok{# NB these results are given on a log10 scale}
+\CommentTok{#also include April prediction in this dataframe for later calculations}
+
+\NormalTok{mcavemmsh_contrasts<-}\KeywordTok{as.data.frame}\NormalTok{(}\KeywordTok{c}\NormalTok{(mcavemmsh_contrasts,mcavemm.sh}\OperatorTok{$}\NormalTok{emmeans[}\DecValTok{1}\NormalTok{]))  }\CommentTok{# since we're taking the }
+
+\NormalTok{ofavpreshmod=}\KeywordTok{lmer}\NormalTok{(}\KeywordTok{log10}\NormalTok{(pre_sh)}\OperatorTok{~}\NormalTok{Batch}\OperatorTok{+}\NormalTok{(}\DecValTok{1}\OperatorTok{|}\NormalTok{Colony),}\DataTypeTok{data=}\KeywordTok{filter}\NormalTok{(batches,batches}\OperatorTok{$}\NormalTok{Species}\OperatorTok{==}\StringTok{'O.faveolata'}\NormalTok{))}
+\NormalTok{rc_resids<-}\StringTok{ }\KeywordTok{compute_redres}\NormalTok{(ofavpreshmod)}
+\NormalTok{resids<-}\StringTok{ }\KeywordTok{subset}\NormalTok{(batches,batches}\OperatorTok{$}\NormalTok{Species}\OperatorTok{==}\StringTok{'O.faveolata'}\NormalTok{)}
+\NormalTok{resids}\OperatorTok{$}\NormalTok{logpresh<-}\StringTok{ }\KeywordTok{log10}\NormalTok{(resids}\OperatorTok{$}\NormalTok{pre_sh)}
+\NormalTok{resids<-resids[,}\KeywordTok{c}\NormalTok{(}\DecValTok{12}\NormalTok{)]}
+\NormalTok{logpre<-resids}
+\NormalTok{resids<-}\StringTok{ }\KeywordTok{data.frame}\NormalTok{(logpre, rc_resids) }
+\KeywordTok{plot_resqq}\NormalTok{(mcavpreshmod) }\CommentTok{# check residuals are normally distributed}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{SEASONAL_SHUFFLING_files/figure-latex/unnamed-chunk-4-3.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{ofavpreshmod2<-}\StringTok{ }\KeywordTok{as_lmerModLmerTest}\NormalTok{(ofavpreshmod)}
+\KeywordTok{summary}\NormalTok{(ofavpreshmod2) }\CommentTok{#p for batch, p=0.938}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Linear mixed model fit by REML. t-tests use Satterthwaite's method [
+## lmerModLmerTest]
+## Formula: log10(pre_sh) ~ Batch + (1 | Colony)
+##    Data: filter(batches, batches$Species == "O.faveolata")
+## 
+## REML criterion at convergence: 29.6
+## 
+## Scaled residuals: 
+##     Min      1Q  Median      3Q     Max 
+## -2.3754 -0.5262  0.1305  0.6129  1.6623 
+## 
+## Random effects:
+##  Groups   Name        Variance Std.Dev.
+##  Colony   (Intercept) 0.12853  0.3585  
+##  Residual             0.07002  0.2646  
+## Number of obs: 35, groups:  Colony, 10
+## 
+## Fixed effects:
+##               Estimate Std. Error        df t value Pr(>|t|)    
+## (Intercept)  -1.491446   0.128795 11.205854 -11.580  1.4e-07 ***
+## BatchOctober  0.007186   0.091378 24.399854   0.079    0.938    
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Correlation of Fixed Effects:
+##             (Intr)
+## BatchOctobr -0.320
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# now let's get the batch parameter estimates and CIs:}
+\NormalTok{ofavemm.sh<-}\StringTok{ }\KeywordTok{emmeans}\NormalTok{(ofavpreshmod, }\DataTypeTok{specs=}\NormalTok{revpairwise}\OperatorTok{~}\NormalTok{Batch) }
+\KeywordTok{summary}\NormalTok{(ofavemm.sh)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## $emmeans
+##  Batch   emmean    SE   df lower.CL upper.CL
+##  April    -1.49 0.129 11.1    -1.77    -1.21
+##  October  -1.48 0.132 12.1    -1.77    -1.20
+## 
+## Degrees-of-freedom method: kenward-roger 
+## Results are given on the log10 (not the response) scale. 
+## Confidence level used: 0.95 
+## 
+## $contrasts
+##  contrast        estimate     SE   df t.ratio p.value
+##  October - April  0.00719 0.0915 24.3 0.078   0.9381 
+## 
+## Note: contrasts are still on the log10 scale 
+## Degrees-of-freedom method: kenward-roger
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{ofavemmsh_contrasts<-}\StringTok{ }\NormalTok{ofavemm.sh}\OperatorTok{$}\NormalTok{contrasts }\OperatorTok{%>%}
+\StringTok{     }\KeywordTok{confint}\NormalTok{()}\OperatorTok{%>%}
+\StringTok{     }\KeywordTok{as.data.frame}\NormalTok{() }\CommentTok{# NB these results are given on a log10 scale}
+\CommentTok{#also include April prediction in this dataframe for later calculations}
+\NormalTok{ofavemmsh_contrasts<-}\KeywordTok{as.data.frame}\NormalTok{(}\KeywordTok{c}\NormalTok{(ofavemmsh_contrasts,ofavemm.sh}\OperatorTok{$}\NormalTok{emmeans[}\DecValTok{1}\NormalTok{])) }
+
+\NormalTok{ssidpreshmod=}\KeywordTok{lmer}\NormalTok{(}\KeywordTok{log10}\NormalTok{(pre_sh)}\OperatorTok{~}\NormalTok{Batch}\OperatorTok{+}\NormalTok{(}\DecValTok{1}\OperatorTok{|}\NormalTok{Colony),}\DataTypeTok{data=}\KeywordTok{filter}\NormalTok{(batches,batches}\OperatorTok{$}\NormalTok{Species}\OperatorTok{==}\StringTok{'S.siderea'}\NormalTok{))}
+\KeywordTok{plot}\NormalTok{(ssidpreshmod)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{SEASONAL_SHUFFLING_files/figure-latex/unnamed-chunk-4-4.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{rc_resids<-}\StringTok{ }\KeywordTok{compute_redres}\NormalTok{(ssidpreshmod)}
+\NormalTok{resids<-}\StringTok{ }\KeywordTok{subset}\NormalTok{(batches,batches}\OperatorTok{$}\NormalTok{Species}\OperatorTok{==}\StringTok{'S.siderea'}\NormalTok{)}
+\NormalTok{resids}\OperatorTok{$}\NormalTok{logpresh<-}\StringTok{ }\KeywordTok{log10}\NormalTok{(resids}\OperatorTok{$}\NormalTok{pre_sh)}
+\NormalTok{resids<-resids[,}\KeywordTok{c}\NormalTok{(}\DecValTok{12}\NormalTok{)]}
+\NormalTok{logpre<-resids[}\OperatorTok{-}\KeywordTok{c}\NormalTok{(}\DecValTok{19}\NormalTok{,}\DecValTok{20}\NormalTok{,}\DecValTok{39}\NormalTok{,}\DecValTok{40}\NormalTok{)]}
+\NormalTok{resids<-}\StringTok{ }\KeywordTok{data.frame}\NormalTok{(logpre, rc_resids) }
+\KeywordTok{plot_resqq}\NormalTok{(mcavpreshmod) }\CommentTok{# check residuals are normally distributed}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{SEASONAL_SHUFFLING_files/figure-latex/unnamed-chunk-4-5.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{ssidpreshmod2<-}\StringTok{ }\KeywordTok{as_lmerModLmerTest}\NormalTok{(ssidpreshmod)}
+\KeywordTok{summary}\NormalTok{(ssidpreshmod2) }\CommentTok{#p for batch, p=0.04833*}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Linear mixed model fit by REML. t-tests use Satterthwaite's method [
+## lmerModLmerTest]
+## Formula: log10(pre_sh) ~ Batch + (1 | Colony)
+##    Data: filter(batches, batches$Species == "S.siderea")
+## 
+## REML criterion at convergence: 55
+## 
+## Scaled residuals: 
+##      Min       1Q   Median       3Q      Max 
+## -2.53246 -0.34681  0.00358  0.49889  1.82110 
+## 
+## Random effects:
+##  Groups   Name        Variance Std.Dev.
+##  Colony   (Intercept) 0.2705   0.5201  
+##  Residual             0.1524   0.3903  
+## Number of obs: 36, groups:  Colony, 9
+## 
+## Fixed effects:
+##              Estimate Std. Error      df t value Pr(>|t|)    
+## (Intercept)   -3.0287     0.1963 10.0494 -15.431 2.51e-08 ***
+## BatchOctober  -0.2696     0.1301 26.0000  -2.072   0.0483 *  
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Correlation of Fixed Effects:
+##             (Intr)
+## BatchOctobr -0.331
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# now let's get the batch parameter estimates and CIs:}
+\NormalTok{ssidemm.sh<-}\StringTok{ }\KeywordTok{emmeans}\NormalTok{(ssidpreshmod, }\DataTypeTok{specs=}\NormalTok{revpairwise}\OperatorTok{~}\NormalTok{Batch) }
+\KeywordTok{summary}\NormalTok{(ssidemm.sh)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## $emmeans
+##  Batch   emmean    SE   df lower.CL upper.CL
+##  April    -3.03 0.196 10.1    -3.47    -2.59
+##  October  -3.30 0.196 10.1    -3.74    -2.86
+## 
+## Degrees-of-freedom method: kenward-roger 
+## Results are given on the log10 (not the response) scale. 
+## Confidence level used: 0.95 
+## 
+## $contrasts
+##  contrast        estimate   SE df t.ratio p.value
+##  October - April    -0.27 0.13 26 -2.072  0.0483 
+## 
+## Note: contrasts are still on the log10 scale 
+## Degrees-of-freedom method: kenward-roger
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{ssidemmsh_contrasts<-}\StringTok{ }\NormalTok{ssidemm.sh}\OperatorTok{$}\NormalTok{contrasts }\OperatorTok{%>%}
+\StringTok{     }\KeywordTok{confint}\NormalTok{()}\OperatorTok{%>%}
+\StringTok{     }\KeywordTok{as.data.frame}\NormalTok{() }\CommentTok{# NB these results are given on a log10 scale}
+\CommentTok{#also include April prediction in this dataframe for later calculations}
+\NormalTok{ssidemmsh_contrasts<-}\KeywordTok{as.data.frame}\NormalTok{(}\KeywordTok{c}\NormalTok{(ssidemmsh_contrasts,ssidemm.sh}\OperatorTok{$}\NormalTok{emmeans[}\DecValTok{1}\NormalTok{])) }
+
+\CommentTok{#collate the dataframe}
+\NormalTok{sh_emmcontrasts<-}\KeywordTok{rbind}\NormalTok{(mcavemmsh_contrasts,ofavemmsh_contrasts,ssidemmsh_contrasts)}
+\NormalTok{sh_emmcontrasts}\OperatorTok{$}\NormalTok{Species<-}\KeywordTok{c}\NormalTok{(}\StringTok{'M.cavernosa'}\NormalTok{,}\StringTok{'O.faveolata'}\NormalTok{,}\StringTok{'S.siderea'}\NormalTok{)}
+\NormalTok{sh_emmcontrasts}\OperatorTok{$}\NormalTok{Species<-}\KeywordTok{as.factor}\NormalTok{(sh_emmcontrasts}\OperatorTok{$}\NormalTok{Species)}
+\NormalTok{sh_emmcontrasts}\OperatorTok{$}\NormalTok{change_untransformed=}\StringTok{ }\DecValTok{10}\OperatorTok{^}\NormalTok{(sh_emmcontrasts}\OperatorTok{$}\NormalTok{estimate)}
+\NormalTok{sh_emmcontrasts}\OperatorTok{$}\NormalTok{lowerCI_change_untransformed=}\StringTok{ }\DecValTok{10}\OperatorTok{^}\NormalTok{(sh_emmcontrasts}\OperatorTok{$}\NormalTok{lower.CL)}
+\NormalTok{sh_emmcontrasts}\OperatorTok{$}\NormalTok{upperCI_change_untransformed=}\StringTok{ }\DecValTok{10}\OperatorTok{^}\NormalTok{(sh_emmcontrasts}\OperatorTok{$}\NormalTok{upper.CL)}
+\NormalTok{sh_emmcontrasts}\OperatorTok{$}\NormalTok{April_untransformed=}\StringTok{ }\DecValTok{10}\OperatorTok{^}\NormalTok{(sh_emmcontrasts}\OperatorTok{$}\NormalTok{emmean)  }
+
+\CommentTok{#plot set-up}
+\NormalTok{ofav=}\KeywordTok{expression}\NormalTok{(}\KeywordTok{paste}\NormalTok{(}\KeywordTok{italic}\NormalTok{(}\StringTok{"O. faveolata"}\NormalTok{)))}
+\NormalTok{ssid=}\KeywordTok{expression}\NormalTok{(}\KeywordTok{paste}\NormalTok{(}\KeywordTok{italic}\NormalTok{(}\StringTok{"S. siderea"}\NormalTok{)))}
+\NormalTok{mcav=}\KeywordTok{expression}\NormalTok{(}\KeywordTok{paste}\NormalTok{(}\KeywordTok{italic}\NormalTok{(}\StringTok{"M. cavernosa"}\NormalTok{)))}
+
+\CommentTok{#PLOT 2A.SEASONAL CHANGE IN INITIAL S:H}
+\KeywordTok{ggplot}\NormalTok{()}\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_point}\NormalTok{(}\DataTypeTok{data=}\NormalTok{sh_emmcontrasts, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\NormalTok{Species,}\DataTypeTok{y=}\NormalTok{(change_untransformed), }\DataTypeTok{colour=}\NormalTok{Species), }\DataTypeTok{size=}\DecValTok{2}\NormalTok{)}\OperatorTok{+}\StringTok{ }\CommentTok{#large points are showing estimated october s:h - april s:h}
+\StringTok{  }\KeywordTok{geom_point}\NormalTok{(}\DataTypeTok{data=}\NormalTok{Apr_Oct_sh_change, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\NormalTok{Species,}\DataTypeTok{y=}\NormalTok{pre_sh_change, }\DataTypeTok{colour=}\NormalTok{Species), }\DataTypeTok{size=}\FloatTok{0.5}\NormalTok{,  }\DataTypeTok{position=}\KeywordTok{position_jitter}\NormalTok{(}\DataTypeTok{width=}\FloatTok{0.1}\NormalTok{))}\OperatorTok{+}\StringTok{ }\CommentTok{#small points are showing october s:h / april s:h}
+\StringTok{  }\KeywordTok{geom_errorbar}\NormalTok{(}\DataTypeTok{data=}\NormalTok{sh_emmcontrasts, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\NormalTok{Species, }\DataTypeTok{ymin=}\NormalTok{(lowerCI_change_untransformed), }\DataTypeTok{ymax=}\NormalTok{(upperCI_change_untransformed), }\DataTypeTok{colour=}\NormalTok{Species), }\DataTypeTok{size=}\FloatTok{0.5}\NormalTok{, }\DataTypeTok{width=}\FloatTok{0.2}\NormalTok{)}\OperatorTok{+}
+\StringTok{  }\KeywordTok{theme_minimal}\NormalTok{(}\DataTypeTok{base_size =} \DecValTok{15}\NormalTok{)}\OperatorTok{%+replace%}
+\StringTok{    }\KeywordTok{theme}\NormalTok{(}\DataTypeTok{panel.border =} \KeywordTok{element_rect}\NormalTok{(}\DataTypeTok{colour=}\StringTok{'grey20'}\NormalTok{,}\DataTypeTok{fill=}\OtherTok{NA}\NormalTok{),}
+          \DataTypeTok{panel.grid.major.x =} \KeywordTok{element_blank}\NormalTok{(),}
+          \DataTypeTok{panel.grid.minor.x =} \KeywordTok{element_blank}\NormalTok{(),}
+          \DataTypeTok{panel.grid.minor.y =} \KeywordTok{element_blank}\NormalTok{())}\OperatorTok{+}
+\StringTok{  }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{y=}\StringTok{'October : April symbionts per host cell'}\NormalTok{, }\DataTypeTok{x=}\StringTok{''}\NormalTok{)}\OperatorTok{+}
+\StringTok{   }\KeywordTok{scale_x_discrete}\NormalTok{(}\DataTypeTok{labels=}\KeywordTok{c}\NormalTok{(mcav,ofav,ssid), }\DataTypeTok{expand=}\KeywordTok{expansion}\NormalTok{(}\DataTypeTok{add=}\KeywordTok{c}\NormalTok{(}\FloatTok{0.4}\NormalTok{,}\FloatTok{1.2}\NormalTok{)))}\OperatorTok{+}
+\StringTok{  }\KeywordTok{scale_color_manual}\NormalTok{(}\DataTypeTok{values=}\KeywordTok{c}\NormalTok{(}\StringTok{'deeppink2'}\NormalTok{,}\StringTok{'darkorange1'}\NormalTok{, }\StringTok{'darkturquoise'}\NormalTok{))}\OperatorTok{+}
+\StringTok{  }\KeywordTok{guides}\NormalTok{(}\DataTypeTok{colour=}\NormalTok{F)}\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_hline}\NormalTok{(}\DataTypeTok{yintercept=}\DecValTok{1}\NormalTok{,}\DataTypeTok{linetype=}\StringTok{'dashed'}\NormalTok{)}\OperatorTok{+}
+\StringTok{  }\KeywordTok{scale_y_continuous}\NormalTok{(}\DataTypeTok{breaks=}\KeywordTok{c}\NormalTok{(}\FloatTok{0.5}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{4}\NormalTok{,}\DecValTok{6}\NormalTok{,}\DecValTok{8}\NormalTok{))}\OperatorTok{+}
+\StringTok{  }\KeywordTok{coord_cartesian}\NormalTok{(}\DataTypeTok{ylim=}\KeywordTok{c}\NormalTok{(}\FloatTok{0.3}\NormalTok{,}\DecValTok{8}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{SEASONAL_SHUFFLING_files/figure-latex/unnamed-chunk-4-6.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#ggsave('initialSH_seasonal_emmeans.pdf',device='pdf',width=7,height=5) # add 'higher in Oct'/'higher in Apr' labels to figure}
+
+\CommentTok{#UPDATES FOR ROSS: This is now the emmeans predicted seasonal differnece, with 95% confidence intervals. Note some individual mcav datapoints are beyond the limits of the graph but accounted for in the predicted means and statistical calculations. }
+\CommentTok{#potential problem with this plot is that by plotting the ratio, a ratio of 0.5 (50% decrease) may be equivalent to a ratio of 2 (100% increase)...? Is this plot disproportionately inflating positive values?}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{figure-1c-proportion-durusdinium-did-not-change-between-april-and-october-for-any-of-the-3-coral-species.}{%
+\subsubsection{Figure 1c: Proportion Durusdinium did not change between
+April and October for any of the 3 coral
+species.}\label{figure-1c-proportion-durusdinium-did-not-change-between-april-and-october-for-any-of-the-3-coral-species.}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{batch_comparevi=}
+\KeywordTok{ggplot}\NormalTok{()}\OperatorTok{+}
+\StringTok{   }\KeywordTok{theme_minimal}\NormalTok{(}\DataTypeTok{base_size =} \DecValTok{15}\NormalTok{)}\OperatorTok{%+replace%}
+\StringTok{    }\KeywordTok{theme}\NormalTok{(}\DataTypeTok{panel.border =} \KeywordTok{element_rect}\NormalTok{(}\DataTypeTok{colour=}\StringTok{'grey20'}\NormalTok{,}\DataTypeTok{fill=}\OtherTok{NA}\NormalTok{),}
+          \DataTypeTok{panel.grid.major.x =} \KeywordTok{element_blank}\NormalTok{(),}
+          \DataTypeTok{panel.grid.minor.x =} \KeywordTok{element_blank}\NormalTok{())}\OperatorTok{+}\StringTok{ }
+\StringTok{  }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{y=}\StringTok{'Initial proportion *Durusdinium*'}\NormalTok{)}\OperatorTok{+}
+\StringTok{  }\KeywordTok{scale_fill_manual}\NormalTok{(}\DataTypeTok{values=}\KeywordTok{c}\NormalTok{(}\StringTok{'#3C5488B2'}\NormalTok{,}\StringTok{'#00A087B2'}\NormalTok{),}\DataTypeTok{labels=}\KeywordTok{c}\NormalTok{(}\StringTok{'April'}\NormalTok{,}\StringTok{'October'}\NormalTok{))}\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_violin}\NormalTok{(}\DataTypeTok{data=}\NormalTok{batches,}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\NormalTok{Species,}\DataTypeTok{y=}\NormalTok{pre_propD,}\DataTypeTok{colour=}\NormalTok{Batch),}\DataTypeTok{scale =} \StringTok{'width'}\NormalTok{)}\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_dotplot}\NormalTok{(}\DataTypeTok{data=}\NormalTok{batches,}\DataTypeTok{bins=}\DecValTok{30}\NormalTok{,}\DataTypeTok{binaxis=}\StringTok{'y'}\NormalTok{,}\DataTypeTok{dotsize=}\FloatTok{0.7}\NormalTok{,}\DataTypeTok{stackratio=}\FloatTok{0.5}\NormalTok{,}\DataTypeTok{stackdir=}\StringTok{'center'}\NormalTok{,}\DataTypeTok{stackgroups=}\NormalTok{F, }\DataTypeTok{position=}\StringTok{'dodge'}\NormalTok{,}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\NormalTok{ Species,}\DataTypeTok{y=}\NormalTok{pre_propD,}\DataTypeTok{fill=}\NormalTok{Batch))}\OperatorTok{+}
+\StringTok{  }\KeywordTok{scale_colour_manual}\NormalTok{(}\DataTypeTok{values=}\KeywordTok{c}\NormalTok{(}\StringTok{'#3C5488B2'}\NormalTok{,}\StringTok{'#00A087B2'}\NormalTok{),}\DataTypeTok{labels=}\KeywordTok{c}\NormalTok{(}\StringTok{'April'}\NormalTok{,}\StringTok{'October'}\NormalTok{))}\OperatorTok{+}
+\StringTok{  }\KeywordTok{scale_x_discrete}\NormalTok{(}\DataTypeTok{labels=}\KeywordTok{c}\NormalTok{(mcav,ofav,ssid))}\OperatorTok{+}
+\StringTok{   }\KeywordTok{theme}\NormalTok{(}\DataTypeTok{axis.title.y.left  =} \KeywordTok{element_markdown}\NormalTok{(), }\DataTypeTok{legend.position =} \KeywordTok{c}\NormalTok{(}\FloatTok{0.2}\NormalTok{,}\FloatTok{0.5}\NormalTok{))}\OperatorTok{+}
+\StringTok{  }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{x=}\StringTok{''}\NormalTok{)}\OperatorTok{+}
+\StringTok{  }\KeywordTok{theme}\NormalTok{(}\DataTypeTok{legend.title =} \KeywordTok{element_text}\NormalTok{(}\DataTypeTok{size=}\DecValTok{0}\NormalTok{))}
+\NormalTok{batch_comparevi}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{SEASONAL_SHUFFLING_files/figure-latex/unnamed-chunk-5-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#ggsave('batchcompare_propd_vi_dot.pdf',device='pdf',width=7,height=5)}
+
+\KeywordTok{hist}\NormalTok{(batches}\OperatorTok{$}\NormalTok{pre_propD)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{SEASONAL_SHUFFLING_files/figure-latex/unnamed-chunk-5-2.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mcavpredmod=}\KeywordTok{glmer}\NormalTok{(pre_propD}\OperatorTok{~}\NormalTok{Batch}\OperatorTok{+}\NormalTok{(}\DecValTok{1}\OperatorTok{|}\NormalTok{Colony),}\DataTypeTok{data=}\KeywordTok{filter}\NormalTok{(batches,batches}\OperatorTok{$}\NormalTok{Species}\OperatorTok{==}\StringTok{'M.cavernosa'}\NormalTok{), }\DataTypeTok{family =} \StringTok{'binomial'}\NormalTok{)}
+\KeywordTok{summary}\NormalTok{(mcavpredmod) }\CommentTok{# p=1}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Generalized linear mixed model fit by maximum likelihood (Laplace
+##   Approximation) [glmerMod]
+##  Family: binomial  ( logit )
+## Formula: pre_propD ~ Batch + (1 | Colony)
+##    Data: filter(batches, batches$Species == "M.cavernosa")
+## 
+##      AIC      BIC   logLik deviance df.resid 
+##      6.0     11.1      0.0      0.0       37 
+## 
+## Scaled residuals: 
+##     Min      1Q  Median      3Q     Max 
+##       0       0       0       0 2904892 
+## 
+## Random effects:
+##  Groups Name        Variance Std.Dev.
+##  Colony (Intercept) 0        0       
+## Number of obs: 40, groups:  Colony, 10
+## 
+## Fixed effects:
+##                Estimate Std. Error z value Pr(>|z|)
+## (Intercept)  -3.806e+01  1.501e+07       0        1
+## BatchOctober -3.033e+02  2.122e+07       0        1
+## 
+## Correlation of Fixed Effects:
+##             (Intr)
+## BatchOctobr -0.707
+## optimizer (Nelder_Mead) convergence code: 0 (OK)
+## boundary (singular) fit: see ?isSingular
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{ofavpredmod=}\KeywordTok{glmer}\NormalTok{(pre_propD}\OperatorTok{~}\NormalTok{Batch}\OperatorTok{+}\NormalTok{(}\DecValTok{1}\OperatorTok{|}\NormalTok{Colony),}\DataTypeTok{data=}\KeywordTok{filter}\NormalTok{(batches,batches}\OperatorTok{$}\NormalTok{Species}\OperatorTok{==}\StringTok{'O.faveolata'}\NormalTok{), }\DataTypeTok{family =} \StringTok{'binomial'}\NormalTok{)}
+\KeywordTok{summary}\NormalTok{(ofavpredmod) }\CommentTok{# p=0.2}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Generalized linear mixed model fit by maximum likelihood (Laplace
+##   Approximation) [glmerMod]
+##  Family: binomial  ( logit )
+## Formula: pre_propD ~ Batch + (1 | Colony)
+##    Data: filter(batches, batches$Species == "O.faveolata")
+## 
+##      AIC      BIC   logLik deviance df.resid 
+##     31.9     36.5    -12.9     25.9       32 
+## 
+## Scaled residuals: 
+##      Min       1Q   Median       3Q      Max 
+## -0.76647 -0.04036 -0.00779  0.25178  1.00309 
+## 
+## Random effects:
+##  Groups Name        Variance Std.Dev.
+##  Colony (Intercept) 80.35    8.964   
+## Number of obs: 35, groups:  Colony, 10
+## 
+## Fixed effects:
+##              Estimate Std. Error z value Pr(>|z|)
+## (Intercept)    -6.153      3.793  -1.622    0.105
+## BatchOctober   -3.286      2.769  -1.187    0.235
+## 
+## Correlation of Fixed Effects:
+##             (Intr)
+## BatchOctobr 0.343
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{ssidpredmod=}\KeywordTok{glmer}\NormalTok{(pre_propD}\OperatorTok{~}\NormalTok{Batch}\OperatorTok{+}\NormalTok{(}\DecValTok{1}\OperatorTok{|}\NormalTok{Colony),}\DataTypeTok{data=}\KeywordTok{filter}\NormalTok{(batches,batches}\OperatorTok{$}\NormalTok{Species}\OperatorTok{==}\StringTok{'S.siderea'}\NormalTok{), }\DataTypeTok{family =} \StringTok{'binomial'}\NormalTok{)}
+\KeywordTok{summary}\NormalTok{(ssidpredmod)}\CommentTok{# p0.09}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Generalized linear mixed model fit by maximum likelihood (Laplace
+##   Approximation) [glmerMod]
+##  Family: binomial  ( logit )
+## Formula: pre_propD ~ Batch + (1 | Colony)
+##    Data: filter(batches, batches$Species == "S.siderea")
+## 
+##      AIC      BIC   logLik deviance df.resid 
+##     36.2     41.0    -15.1     30.2       33 
+## 
+## Scaled residuals: 
+##     Min      1Q  Median      3Q     Max 
+## -2.9098 -0.3598 -0.0362  0.2155  0.9639 
+## 
+## Random effects:
+##  Groups Name        Variance Std.Dev.
+##  Colony (Intercept) 24.15    4.914   
+## Number of obs: 36, groups:  Colony, 9
+## 
+## Fixed effects:
+##              Estimate Std. Error z value Pr(>|z|)  
+## (Intercept)    -1.039      2.132  -0.487   0.6259  
+## BatchOctober    4.593      2.713   1.693   0.0905 .
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Correlation of Fixed Effects:
+##             (Intr)
+## BatchOctobr -0.425
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#UPDATES FOR ROSS: Make it clear that this plot is showing raw data, not predictive model. glmer is now 'family quasibinomial'. }
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{bleaching-sensitivity-rate}{%
+\subsection{BLEACHING SENSITIVITY \&
+RATE}\label{bleaching-sensitivity-rate}}
+
+\hypertarget{figure-1d-m.-cavernosa-showed-higher-sensitivity-to-bleaching-in-october-compared-to-april.}{%
+\subsubsection{Figure 1d: M. cavernosa showed higher sensitivity to
+bleaching in October compared to
+April.}\label{figure-1d-m.-cavernosa-showed-higher-sensitivity-to-bleaching-in-october-compared-to-april.}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{blch_sensitivity=blch_sensitivity[}\OperatorTok{-}\KeywordTok{c}\NormalTok{(}\DecValTok{31}\NormalTok{,}\DecValTok{32}\NormalTok{,}\DecValTok{48}\NormalTok{,}\DecValTok{59}\NormalTok{,}\DecValTok{56}\NormalTok{,}\DecValTok{57}\NormalTok{,}\DecValTok{75}\NormalTok{),] }\CommentTok{#remove 're'_drop_sh' NAs, and 5 cores that increased symbiont density}
+\NormalTok{mcavsensitivity=}\KeywordTok{subset}\NormalTok{(blch_sensitivity,Species}\OperatorTok{==}\StringTok{'M.cavernosa'}\NormalTok{)}
+\NormalTok{mcavsensitivity}\OperatorTok{$}\NormalTok{transformedshdrop<-}\StringTok{ }\NormalTok{(mcavsensitivity}\OperatorTok{$}\NormalTok{rel_drop_sh)}\OperatorTok{^}\DecValTok{2}
+\KeywordTok{plot}\NormalTok{(mcavsensitivity}\OperatorTok{$}\NormalTok{rel_drop_sh}\OperatorTok{~}\NormalTok{mcavsensitivity}\OperatorTok{$}\NormalTok{rel_drop_y2)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{SEASONAL_SHUFFLING_files/figure-latex/unnamed-chunk-7-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mcavblchresmod=}\KeywordTok{glmer}\NormalTok{((rel_drop_sh}\OperatorTok{^}\DecValTok{2}\NormalTok{)}\OperatorTok{~}\NormalTok{rel_drop_y2}\OperatorTok{*}\NormalTok{Batch}\OperatorTok{+}\NormalTok{(}\DecValTok{1}\OperatorTok{|}\NormalTok{Colony),}\DataTypeTok{data=}\NormalTok{mcavsensitivity)}
+\KeywordTok{plot_resqq}\NormalTok{(mcavblchresmod)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{SEASONAL_SHUFFLING_files/figure-latex/unnamed-chunk-7-2.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{summary}\NormalTok{(mcavblchresmod)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Linear mixed model fit by REML ['lmerMod']
+## Formula: (rel_drop_sh^2) ~ rel_drop_y2 * Batch + (1 | Colony)
+##    Data: mcavsensitivity
+## 
+## REML criterion at convergence: 363.3
+## 
+## Scaled residuals: 
+##      Min       1Q   Median       3Q      Max 
+## -1.90415 -0.22251  0.04061  0.26312  2.78896 
+## 
+## Random effects:
+##  Groups   Name        Variance Std.Dev.
+##  Colony   (Intercept)  30138   173.6   
+##  Residual             746489   864.0   
+## Number of obs: 25, groups:  Colony, 10
+## 
+## Fixed effects:
+##                    Estimate Std. Error t value
+## (Intercept)        -5141.38    2432.88  -2.113
+## rel_drop_y2          -97.15      34.76  -2.795
+## Batch2             15479.84    2674.24   5.789
+## rel_drop_y2:Batch2   106.79      40.53   2.635
+## 
+## Correlation of Fixed Effects:
+##             (Intr) rl_d_2 Batch2
+## rel_drop_y2  0.993              
+## Batch2      -0.912 -0.906       
+## rl_drp_2:B2 -0.856 -0.862  0.985
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mcavblchresmod2<-}\StringTok{ }\KeywordTok{as_lmerModLmerTest}\NormalTok{(mcavblchresmod)}
+\KeywordTok{summary}\NormalTok{(mcavblchresmod2)}\CommentTok{#the interaction between batch and drop in y2 is significant (p=0.0156).}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Linear mixed model fit by REML. t-tests use Satterthwaite's method [
+## lmerModLmerTest]
+## Formula: (rel_drop_sh^2) ~ rel_drop_y2 * Batch + (1 | Colony)
+##    Data: mcavsensitivity
+## 
+## REML criterion at convergence: 363.3
+## 
+## Scaled residuals: 
+##      Min       1Q   Median       3Q      Max 
+## -1.90415 -0.22251  0.04061  0.26312  2.78896 
+## 
+## Random effects:
+##  Groups   Name        Variance Std.Dev.
+##  Colony   (Intercept)  30138   173.6   
+##  Residual             746489   864.0   
+## Number of obs: 25, groups:  Colony, 10
+## 
+## Fixed effects:
+##                    Estimate Std. Error       df t value Pr(>|t|)    
+## (Intercept)        -5141.38    2432.88    21.00  -2.113   0.0467 *  
+## rel_drop_y2          -97.15      34.76    21.00  -2.795   0.0109 *  
+## Batch2             15479.84    2674.24    20.94   5.789 9.67e-06 ***
+## rel_drop_y2:Batch2   106.79      40.53    20.73   2.635   0.0156 *  
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Correlation of Fixed Effects:
+##             (Intr) rl_d_2 Batch2
+## rel_drop_y2  0.993              
+## Batch2      -0.912 -0.906       
+## rl_drp_2:B2 -0.856 -0.862  0.985
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{ofavsensitivity<-}\KeywordTok{subset}\NormalTok{(blch_sensitivity,Species}\OperatorTok{==}\StringTok{'O.faveolata'}\NormalTok{)}
+\KeywordTok{plot}\NormalTok{(ofavsensitivity}\OperatorTok{$}\NormalTok{rel_drop_sh}\OperatorTok{~}\NormalTok{ofavsensitivity}\OperatorTok{$}\NormalTok{rel_drop_y2)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{SEASONAL_SHUFFLING_files/figure-latex/unnamed-chunk-7-3.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{ofavblchresmod=}\KeywordTok{glmer}\NormalTok{((rel_drop_sh}\OperatorTok{^}\DecValTok{2}\NormalTok{)}\OperatorTok{~}\NormalTok{rel_drop_y2}\OperatorTok{*}\NormalTok{Batch}\OperatorTok{+}\NormalTok{InitialDom}\OperatorTok{+}\NormalTok{(}\DecValTok{1}\OperatorTok{|}\NormalTok{Colony),}\DataTypeTok{data=}\NormalTok{ofavsensitivity)}
+\KeywordTok{plot_resqq}\NormalTok{(ofavblchresmod)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{SEASONAL_SHUFFLING_files/figure-latex/unnamed-chunk-7-4.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{summary}\NormalTok{(ofavblchresmod)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Linear mixed model fit by REML ['lmerMod']
+## Formula: (rel_drop_sh^2) ~ rel_drop_y2 * Batch + InitialDom + (1 | Colony)
+##    Data: ofavsensitivity
+## 
+## REML criterion at convergence: 335.6
+## 
+## Scaled residuals: 
+##      Min       1Q   Median       3Q      Max 
+## -2.48257 -0.28194  0.08217  0.54525  1.33783 
+## 
+## Random effects:
+##  Groups   Name        Variance Std.Dev.
+##  Colony   (Intercept) 195290   441.9   
+##  Residual             756932   870.0   
+## Number of obs: 24, groups:  Colony, 10
+## 
+## Fixed effects:
+##                    Estimate Std. Error t value
+## (Intercept)         7700.76    1267.88   6.074
+## rel_drop_y2          -21.06      22.82  -0.923
+## Batch2              3731.23    2596.95   1.437
+## InitialDomnond       469.74     584.43   0.804
+## rel_drop_y2:Batch2    64.05      41.25   1.553
+## 
+## Correlation of Fixed Effects:
+##             (Intr) rl_d_2 Batch2 IntlDm
+## rel_drop_y2  0.926                     
+## Batch2      -0.576 -0.704              
+## InitilDmnnd  0.036  0.349 -0.525       
+## rl_drp_2:B2 -0.593 -0.742  0.988 -0.539
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{ofavblchresmod2<-}\StringTok{ }\KeywordTok{as_lmerModLmerTest}\NormalTok{(ofavblchresmod)}
+\KeywordTok{summary}\NormalTok{(ofavblchresmod2) }\CommentTok{#when separated by symbiont genus, the interaction between bacth and drop in y2 is insignificant (p=0.137)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Linear mixed model fit by REML. t-tests use Satterthwaite's method [
+## lmerModLmerTest]
+## Formula: (rel_drop_sh^2) ~ rel_drop_y2 * Batch + InitialDom + (1 | Colony)
+##    Data: ofavsensitivity
+## 
+## REML criterion at convergence: 335.6
+## 
+## Scaled residuals: 
+##      Min       1Q   Median       3Q      Max 
+## -2.48257 -0.28194  0.08217  0.54525  1.33783 
+## 
+## Random effects:
+##  Groups   Name        Variance Std.Dev.
+##  Colony   (Intercept) 195290   441.9   
+##  Residual             756932   870.0   
+## Number of obs: 24, groups:  Colony, 10
+## 
+## Fixed effects:
+##                    Estimate Std. Error      df t value Pr(>|t|)    
+## (Intercept)         7700.76    1267.88   18.99   6.074  7.7e-06 ***
+## rel_drop_y2          -21.06      22.82   18.40  -0.923    0.368    
+## Batch2              3731.23    2596.95   18.97   1.437    0.167    
+## InitialDomnond       469.74     584.43   11.22   0.804    0.438    
+## rel_drop_y2:Batch2    64.05      41.25   19.00   1.553    0.137    
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Correlation of Fixed Effects:
+##             (Intr) rl_d_2 Batch2 IntlDm
+## rel_drop_y2  0.926                     
+## Batch2      -0.576 -0.704              
+## InitilDmnnd  0.036  0.349 -0.525       
+## rl_drp_2:B2 -0.593 -0.742  0.988 -0.539
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{ssidsensitivity<-}\KeywordTok{subset}\NormalTok{(blch_sensitivity,Species}\OperatorTok{==}\StringTok{'S.siderea'}\NormalTok{)}
+\KeywordTok{plot}\NormalTok{(ssidsensitivity}\OperatorTok{$}\NormalTok{rel_drop_sh}\OperatorTok{~}\NormalTok{ssidsensitivity}\OperatorTok{$}\NormalTok{rel_drop_y2)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{SEASONAL_SHUFFLING_files/figure-latex/unnamed-chunk-7-5.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{ssidblchresmod=}\KeywordTok{glmer}\NormalTok{((rel_drop_sh}\OperatorTok{^}\DecValTok{2}\NormalTok{)}\OperatorTok{~}\NormalTok{rel_drop_y2}\OperatorTok{*}\NormalTok{Batch}\OperatorTok{+}\NormalTok{InitialDom}\OperatorTok{+}\NormalTok{(}\DecValTok{1}\OperatorTok{|}\NormalTok{Colony),}\DataTypeTok{data=}\NormalTok{ssidsensitivity)}
+\KeywordTok{plot_resqq}\NormalTok{(ssidblchresmod)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{SEASONAL_SHUFFLING_files/figure-latex/unnamed-chunk-7-6.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{summary}\NormalTok{(ssidblchresmod)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Linear mixed model fit by REML ['lmerMod']
+## Formula: (rel_drop_sh^2) ~ rel_drop_y2 * Batch + InitialDom + (1 | Colony)
+##    Data: ssidsensitivity
+## 
+## REML criterion at convergence: 269.4
+## 
+## Scaled residuals: 
+##     Min      1Q  Median      3Q     Max 
+## -1.7786 -0.3998  0.2009  0.6135  1.1655 
+## 
+## Random effects:
+##  Groups   Name        Variance Std.Dev.
+##  Colony   (Intercept)      0     0.0   
+##  Residual             868824   932.1   
+## Number of obs: 20, groups:  Colony, 9
+## 
+## Fixed effects:
+##                    Estimate Std. Error t value
+## (Intercept)         8273.79    1130.84   7.316
+## rel_drop_y2          -15.86      22.12  -0.717
+## Batch2              1418.57    1413.00   1.004
+## InitialDomnond       218.95     459.78   0.476
+## rel_drop_y2:Batch2    21.21      27.17   0.781
+## 
+## Correlation of Fixed Effects:
+##             (Intr) rl_d_2 Batch2 IntlDm
+## rel_drop_y2  0.942                     
+## Batch2      -0.747 -0.757              
+## InitilDmnnd -0.224  0.014 -0.060       
+## rl_drp_2:B2 -0.733 -0.816  0.947 -0.163
+## optimizer (nloptwrap) convergence code: 0 (OK)
+## boundary (singular) fit: see ?isSingular
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{ssidblchresmod2<-}\StringTok{ }\KeywordTok{as_lmerModLmerTest}\NormalTok{(ssidblchresmod)}
+\KeywordTok{summary}\NormalTok{(ssidblchresmod2) }\CommentTok{#when separated by symbiont genus, the interaction between bacth and drop in y2 is insignificant (p=0.447)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Linear mixed model fit by REML. t-tests use Satterthwaite's method [
+## lmerModLmerTest]
+## Formula: (rel_drop_sh^2) ~ rel_drop_y2 * Batch + InitialDom + (1 | Colony)
+##    Data: ssidsensitivity
+## 
+## REML criterion at convergence: 269.4
+## 
+## Scaled residuals: 
+##     Min      1Q  Median      3Q     Max 
+## -1.7786 -0.3998  0.2009  0.6135  1.1655 
+## 
+## Random effects:
+##  Groups   Name        Variance Std.Dev.
+##  Colony   (Intercept)      0     0.0   
+##  Residual             868824   932.1   
+## Number of obs: 20, groups:  Colony, 9
+## 
+## Fixed effects:
+##                    Estimate Std. Error      df t value Pr(>|t|)    
+## (Intercept)         8273.79    1130.84   15.00   7.316 2.54e-06 ***
+## rel_drop_y2          -15.86      22.12   15.00  -0.717    0.484    
+## Batch2              1418.57    1413.00   15.00   1.004    0.331    
+## InitialDomnond       218.95     459.78   15.00   0.476    0.641    
+## rel_drop_y2:Batch2    21.21      27.17   15.00   0.781    0.447    
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Correlation of Fixed Effects:
+##             (Intr) rl_d_2 Batch2 IntlDm
+## rel_drop_y2  0.942                     
+## Batch2      -0.747 -0.757              
+## InitilDmnnd -0.224  0.014 -0.060       
+## rl_drp_2:B2 -0.733 -0.816  0.947 -0.163
+## optimizer (nloptwrap) convergence code: 0 (OK)
+## boundary (singular) fit: see ?isSingular
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mcavsensitivity}\OperatorTok{$}\NormalTok{predicted<-}\StringTok{ }\KeywordTok{predict}\NormalTok{(mcavblchresmod)}
+\NormalTok{mcavsensitivity}\OperatorTok{$}\NormalTok{residuals<-}\StringTok{ }\KeywordTok{residuals}\NormalTok{(mcavblchresmod)}
+\NormalTok{mcavsensitivity}\OperatorTok{$}\NormalTok{untransformed_predicted<-}\StringTok{ }\OperatorTok{-}\NormalTok{(mcavsensitivity}\OperatorTok{$}\NormalTok{predicted}\OperatorTok{^}\FloatTok{0.5}\NormalTok{) }\CommentTok{#all changes are negative, reverse transform sqaured response variable.   }
+
+\KeywordTok{ggplot}\NormalTok{()}\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_point}\NormalTok{(}\DataTypeTok{data=}\NormalTok{mcavsensitivity,}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\NormalTok{rel_drop_y2,}\DataTypeTok{y=}\NormalTok{rel_drop_sh,}\DataTypeTok{colour=}\NormalTok{Batch))}\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_smooth}\NormalTok{(}\DataTypeTok{data=}\NormalTok{mcavsensitivity,}\DataTypeTok{method=}\StringTok{'loess'}\NormalTok{,}
+  \KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\NormalTok{rel_drop_y2,}\DataTypeTok{y=}\NormalTok{untransformed_predicted,}\DataTypeTok{color=}\NormalTok{Batch),}\DataTypeTok{show.legend=}\NormalTok{F,}\DataTypeTok{se=}\NormalTok{T, }\DataTypeTok{alpha=}\FloatTok{0.5}\NormalTok{, }\DataTypeTok{size=}\FloatTok{0.5}\NormalTok{)}\OperatorTok{+}
+\StringTok{  }\KeywordTok{coord_cartesian}\NormalTok{(}\DataTypeTok{clip=}\StringTok{'off'}\NormalTok{, }\DataTypeTok{ylim=}\KeywordTok{c}\NormalTok{(}\OperatorTok{-}\DecValTok{120}\NormalTok{,}\DecValTok{0}\NormalTok{))}\OperatorTok{+}
+\StringTok{  }\KeywordTok{theme_minimal}\NormalTok{(}\DataTypeTok{base_size =} \DecValTok{13}\NormalTok{)}\OperatorTok{%+replace%}
+\StringTok{    }\KeywordTok{theme}\NormalTok{(}\DataTypeTok{panel.border =} \KeywordTok{element_rect}\NormalTok{(}\DataTypeTok{colour=}\StringTok{'grey20'}\NormalTok{,}\DataTypeTok{size=}\FloatTok{0.5}\NormalTok{,}\DataTypeTok{fill=}\OtherTok{NA}\NormalTok{))}\OperatorTok{+}
+\StringTok{   }\KeywordTok{scale_colour_manual}\NormalTok{(}\DataTypeTok{values=}\KeywordTok{c}\NormalTok{(}\StringTok{'#3C5488B2'}\NormalTok{,}\StringTok{'#00A087B2'}\NormalTok{),}\DataTypeTok{labels=}\KeywordTok{c}\NormalTok{(}\StringTok{'April'}\NormalTok{,}\StringTok{'October'}\NormalTok{))}\OperatorTok{+}
+\StringTok{ }\KeywordTok{theme}\NormalTok{(}\DataTypeTok{panel.spacing =} \KeywordTok{unit}\NormalTok{(}\FloatTok{1.2}\NormalTok{, }\StringTok{"lines"}\NormalTok{),}\DataTypeTok{legend.position =} \StringTok{'right'}\NormalTok{)}\OperatorTok{+}
+\StringTok{  }\KeywordTok{theme}\NormalTok{(}\DataTypeTok{legend.title=}\KeywordTok{element_text}\NormalTok{(}\DataTypeTok{size=}\DecValTok{0}\NormalTok{), }\DataTypeTok{axis.title.y =} \KeywordTok{element_markdown}\NormalTok{())}\OperatorTok{+}
+\KeywordTok{theme}\NormalTok{(}\DataTypeTok{legend.position =} \KeywordTok{c}\NormalTok{(}\FloatTok{0.8}\NormalTok{,}\FloatTok{0.5}\NormalTok{))}\OperatorTok{+}
+\StringTok{  }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{x=}\StringTok{'% change in Fv/Fm'}\NormalTok{,}\DataTypeTok{y=}\StringTok{'% change in symbionts per *M. cavernosa* cell'}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{SEASONAL_SHUFFLING_files/figure-latex/unnamed-chunk-7-7.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+  \CommentTok{#ggsave('bleaching_sensitivity_batches.pdf',device='pdf',width=7,height=5)}
+
+
+\CommentTok{#UPDATES FOR ROSS: This model is now also a mixed effects model, performed on transformed response data. A glmm was used instead of a lmm due to uneven sample sizes of from each colony in each treatemnt due to exclusion of control cores. This now shows the linear regression and 95% confidence interval for predicted values from the model. The plot shows MCAV only but stats have been done for all three species. }
+
+
+\CommentTok{#what if we try plotting end fv/fm and s:h rather than the relative change? And use prediction ellipses or mean and error bars rather than try to fit a linear model. }
+
+\KeywordTok{ggplot}\NormalTok{()}\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_point}\NormalTok{(}\DataTypeTok{data=}\NormalTok{mcavsensitivity,}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\NormalTok{post_y2,}\DataTypeTok{y=}\NormalTok{post_sh,}\DataTypeTok{colour=}\NormalTok{Batch))}\OperatorTok{+}
+\StringTok{  }\KeywordTok{theme_minimal}\NormalTok{(}\DataTypeTok{base_size =} \DecValTok{13}\NormalTok{)}\OperatorTok{%+replace%}
+\StringTok{    }\KeywordTok{theme}\NormalTok{(}\DataTypeTok{panel.border =} \KeywordTok{element_rect}\NormalTok{(}\DataTypeTok{colour=}\StringTok{'grey20'}\NormalTok{,}\DataTypeTok{size=}\FloatTok{0.5}\NormalTok{,}\DataTypeTok{fill=}\OtherTok{NA}\NormalTok{))}\OperatorTok{+}
+\StringTok{   }\KeywordTok{scale_colour_manual}\NormalTok{(}\DataTypeTok{values=}\KeywordTok{c}\NormalTok{(}\StringTok{'#3C5488B2'}\NormalTok{,}\StringTok{'#00A087B2'}\NormalTok{),}\DataTypeTok{labels=}\KeywordTok{c}\NormalTok{(}\StringTok{'April'}\NormalTok{,}\StringTok{'October'}\NormalTok{))}\OperatorTok{+}
+\StringTok{ }\KeywordTok{theme}\NormalTok{(}\DataTypeTok{panel.spacing =} \KeywordTok{unit}\NormalTok{(}\FloatTok{1.2}\NormalTok{, }\StringTok{"lines"}\NormalTok{),}\DataTypeTok{legend.position =} \StringTok{'right'}\NormalTok{)}\OperatorTok{+}
+\StringTok{  }\KeywordTok{theme}\NormalTok{(}\DataTypeTok{legend.title=}\KeywordTok{element_text}\NormalTok{(}\DataTypeTok{size=}\DecValTok{0}\NormalTok{), }\DataTypeTok{axis.title.y =} \KeywordTok{element_markdown}\NormalTok{())}\OperatorTok{+}
+\KeywordTok{theme}\NormalTok{(}\DataTypeTok{legend.position =} \KeywordTok{c}\NormalTok{(}\FloatTok{0.8}\NormalTok{,}\FloatTok{0.5}\NormalTok{))}\OperatorTok{+}
+\StringTok{  }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{x=}\StringTok{'Fv/Fm after heat stress'}\NormalTok{,}\DataTypeTok{y=}\StringTok{'symbionts per *M. cavernosa* cell after heat stress'}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{SEASONAL_SHUFFLING_files/figure-latex/unnamed-chunk-7-8.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ggplot}\NormalTok{()}\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_point}\NormalTok{(}\DataTypeTok{data=}\NormalTok{mcavsensitivity,}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\NormalTok{change_y2,}\DataTypeTok{y=}\NormalTok{post_sh,}\DataTypeTok{colour=}\NormalTok{Batch))}\OperatorTok{+}
+\StringTok{  }\KeywordTok{theme_minimal}\NormalTok{(}\DataTypeTok{base_size =} \DecValTok{13}\NormalTok{)}\OperatorTok{%+replace%}
+\StringTok{    }\KeywordTok{theme}\NormalTok{(}\DataTypeTok{panel.border =} \KeywordTok{element_rect}\NormalTok{(}\DataTypeTok{colour=}\StringTok{'grey20'}\NormalTok{,}\DataTypeTok{size=}\FloatTok{0.5}\NormalTok{,}\DataTypeTok{fill=}\OtherTok{NA}\NormalTok{))}\OperatorTok{+}
+\StringTok{   }\KeywordTok{scale_colour_manual}\NormalTok{(}\DataTypeTok{values=}\KeywordTok{c}\NormalTok{(}\StringTok{'#3C5488B2'}\NormalTok{,}\StringTok{'#00A087B2'}\NormalTok{),}\DataTypeTok{labels=}\KeywordTok{c}\NormalTok{(}\StringTok{'April'}\NormalTok{,}\StringTok{'October'}\NormalTok{))}\OperatorTok{+}
+\StringTok{ }\KeywordTok{theme}\NormalTok{(}\DataTypeTok{panel.spacing =} \KeywordTok{unit}\NormalTok{(}\FloatTok{1.2}\NormalTok{, }\StringTok{"lines"}\NormalTok{),}\DataTypeTok{legend.position =} \StringTok{'right'}\NormalTok{)}\OperatorTok{+}
+\StringTok{  }\KeywordTok{theme}\NormalTok{(}\DataTypeTok{legend.title=}\KeywordTok{element_text}\NormalTok{(}\DataTypeTok{size=}\DecValTok{0}\NormalTok{), }\DataTypeTok{axis.title.y =} \KeywordTok{element_markdown}\NormalTok{())}\OperatorTok{+}
+\KeywordTok{theme}\NormalTok{(}\DataTypeTok{legend.position =} \KeywordTok{c}\NormalTok{(}\FloatTok{0.8}\NormalTok{,}\FloatTok{0.5}\NormalTok{))}\OperatorTok{+}
+\StringTok{  }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{x=}\StringTok{'reduction in Fv/Fm'}\NormalTok{,}\DataTypeTok{y=}\StringTok{'symbionts per *M. cavernosa* cell after heat stress'}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{SEASONAL_SHUFFLING_files/figure-latex/unnamed-chunk-7-9.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{allbleach=}\KeywordTok{rbind}\NormalTok{(ofav_DHW,ssid_DHW,mcav_DHW)}
+\NormalTok{allbleach}\OperatorTok{$}\NormalTok{Species=}\KeywordTok{factor}\NormalTok{(allbleach}\OperatorTok{$}\NormalTok{Species,}\DataTypeTok{levels=}\KeywordTok{c}\NormalTok{(}\StringTok{'M.cavernosa'}\NormalTok{,}\StringTok{'O.faveolata'}\NormalTok{,}\StringTok{'S.siderea'}\NormalTok{))}
+\NormalTok{allrecov=}\KeywordTok{rbind}\NormalTok{(mcav_recov, ofav_recov, ssid_recov)}
+\NormalTok{allrecov}\OperatorTok{$}\NormalTok{Species=}\KeywordTok{factor}\NormalTok{(allrecov}\OperatorTok{$}\NormalTok{Species,}\DataTypeTok{levels=}\KeywordTok{c}\NormalTok{(}\StringTok{'M.cavernosa'}\NormalTok{,}\StringTok{'O.faveolata'}\NormalTok{,}\StringTok{'S.siderea'}\NormalTok{))}
+\NormalTok{allrecov}\OperatorTok{$}\NormalTok{InitialDom=}\KeywordTok{revalue}\NormalTok{(allrecov}\OperatorTok{$}\NormalTok{InitialDom,}\KeywordTok{c}\NormalTok{(}\StringTok{'D'}\NormalTok{=}\StringTok{'d'}\NormalTok{,}\StringTok{'B'}\NormalTok{=}\StringTok{'nond'}\NormalTok{,}\StringTok{'C'}\NormalTok{=}\StringTok{'nond'}\NormalTok{))}
+\NormalTok{allrecov}\OperatorTok{$}\NormalTok{InitialDom=}\KeywordTok{factor}\NormalTok{(allrecov}\OperatorTok{$}\NormalTok{InitialDom)}
+\NormalTok{allbleach}\OperatorTok{$}\NormalTok{InitialDom=}\KeywordTok{revalue}\NormalTok{(allbleach}\OperatorTok{$}\NormalTok{InitialDom,}\KeywordTok{c}\NormalTok{(}\StringTok{'D'}\NormalTok{=}\StringTok{'d'}\NormalTok{,}\StringTok{'B'}\NormalTok{=}\StringTok{'nond'}\NormalTok{,}\StringTok{'C'}\NormalTok{=}\StringTok{'nond'}\NormalTok{))}
+\NormalTok{allbleach}\OperatorTok{$}\NormalTok{InitialDom=}\KeywordTok{factor}\NormalTok{(allbleach}\OperatorTok{$}\NormalTok{InitialDom)}
+\NormalTok{allbleach}\OperatorTok{$}\NormalTok{Batch=}\KeywordTok{factor}\NormalTok{(allbleach}\OperatorTok{$}\NormalTok{Batch)}
+\NormalTok{allrecov}\OperatorTok{$}\NormalTok{Batch=}\KeywordTok{factor}\NormalTok{(allrecov}\OperatorTok{$}\NormalTok{Batch)}
+\NormalTok{allbleach}\OperatorTok{$}\NormalTok{Colony=}\KeywordTok{factor}\NormalTok{(allbleach}\OperatorTok{$}\NormalTok{Colony)}
+\NormalTok{allrecov}\OperatorTok{$}\NormalTok{Colony=}\KeywordTok{factor}\NormalTok{(allrecov}\OperatorTok{$}\NormalTok{Colony)}
+
+
+\NormalTok{allbleach<-allbleach[}\OperatorTok{-}\KeywordTok{c}\NormalTok{(}\DecValTok{167}\NormalTok{),] }
+\NormalTok{allrecov<-allrecov[}\OperatorTok{-}\KeywordTok{c}\NormalTok{(}\DecValTok{86}\NormalTok{,}\DecValTok{239}\NormalTok{),]}\CommentTok{#model highlighted this one datapoint as an outlier in both dataframes}
+  
+
+\NormalTok{bleachingmod2<-}\KeywordTok{glmer}\NormalTok{(Shprop}\OperatorTok{~}\NormalTok{DHW}\OperatorTok{*}\NormalTok{Species}\OperatorTok{*}\NormalTok{InitialDom}\OperatorTok{+}\NormalTok{(}\DecValTok{1}\OperatorTok{|}\NormalTok{Colony), }\DataTypeTok{data=}\NormalTok{allbleach)}
+\KeywordTok{plot_resqq}\NormalTok{(bleachingmod2) }\CommentTok{#perform statistical tests on mixed effects model}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{SEASONAL_SHUFFLING_files/figure-latex/unnamed-chunk-9-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{bleachingmod3<-}\KeywordTok{as_lmerModLmerTest}\NormalTok{(bleachingmod2)}
+  \KeywordTok{summary}\NormalTok{(bleachingmod3)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Linear mixed model fit by REML. t-tests use Satterthwaite's method [
+## lmerModLmerTest]
+## Formula: Shprop ~ DHW * Species * InitialDom + (1 | Colony)
+##    Data: allbleach
+## 
+## REML criterion at convergence: 62.9
+## 
+## Scaled residuals: 
+##     Min      1Q  Median      3Q     Max 
+## -2.1750 -0.4013 -0.0358  0.3297  5.1995 
+## 
+## Random effects:
+##  Groups   Name        Variance Std.Dev.
+##  Colony   (Intercept) 0.006468 0.08042 
+##  Residual             0.060175 0.24531 
+## Number of obs: 147, groups:  Colony, 29
+## 
+## Fixed effects:
+##                                         Estimate Std. Error         df t value
+## (Intercept)                             1.054054   0.125491  77.511446   8.399
+## DHW                                    -0.059963   0.017904 120.365702  -3.349
+## SpeciesO.faveolata                     -0.057977   0.159516  67.688528  -0.363
+## SpeciesS.siderea                       -0.099000   0.102079  67.803938  -0.970
+## InitialDomnond                         -0.023200   0.113848  86.620959  -0.204
+## DHW:SpeciesO.faveolata                 -0.009859   0.020228 119.185291  -0.487
+## DHW:SpeciesS.siderea                    0.002114   0.016147 121.484396   0.131
+## DHW:InitialDomnond                     -0.044485   0.015250 121.587128  -2.917
+## SpeciesO.faveolata:InitialDomnond      -0.033899   0.164764  68.629139  -0.206
+## DHW:SpeciesO.faveolata:InitialDomnond   0.023099   0.019905 120.391812   1.161
+##                                       Pr(>|t|)    
+## (Intercept)                           1.65e-12 ***
+## DHW                                    0.00108 ** 
+## SpeciesO.faveolata                     0.71740    
+## SpeciesS.siderea                       0.33557    
+## InitialDomnond                         0.83901    
+## DHW:SpeciesO.faveolata                 0.62690    
+## DHW:SpeciesS.siderea                   0.89605    
+## DHW:InitialDomnond                     0.00421 ** 
+## SpeciesO.faveolata:InitialDomnond      0.83760    
+## DHW:SpeciesO.faveolata:InitialDomnond  0.24814    
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Correlation of Fixed Effects:
+##             (Intr) DHW    SpcsO. SpcsS. IntlDm DHW:SpO. DHW:SS DHW:ID SO.:ID
+## DHW         -0.592                                                          
+## SpecsO.fvlt -0.787  0.466                                                   
+## SpecisS.sdr -0.798  0.536  0.627                                            
+## InitilDmnnd -0.907  0.507  0.714  0.639                                     
+## DHW:SpcsO.f  0.524 -0.885 -0.590 -0.475 -0.449                              
+## DHW:SpcsS.s  0.482 -0.901 -0.379 -0.597 -0.370  0.798                       
+## DHW:IntlDmn  0.540 -0.852 -0.425 -0.440 -0.596  0.754    0.701              
+## SpcsO.fv:ID  0.627 -0.351 -0.862 -0.442 -0.691  0.483    0.256  0.412       
+## DHW:SpO.:ID -0.414  0.653  0.507  0.337  0.456 -0.798   -0.537 -0.766 -0.597
+## fit warnings:
+## fixed-effect model matrix is rank deficient so dropping 2 columns / coefficients
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+  \KeywordTok{anova}\NormalTok{(bleachingmod3)}\CommentTok{#no significant difference in bleaching (DHW interaction with species) between species p=0.818834, but a significant interaction between DHW and initial symbiont type (p=0.00421), with nond-hosting corals bleaching more. }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Type III Analysis of Variance Table with Satterthwaite's method
+##                         Sum Sq Mean Sq NumDF   DenDF  F value    Pr(>F)    
+## DHW                    22.5923 22.5923     1 118.404 375.4414 < 2.2e-16 ***
+## Species                 0.0952  0.0476     2  56.230   0.7907  0.458514    
+## InitialDom              0.0143  0.0143     1  68.629   0.2375  0.627558    
+## DHW:Species             0.0241  0.0120     2 120.106   0.2002  0.818834    
+## DHW:InitialDom          0.6590  0.6590     1 120.392  10.9518  0.001234 ** 
+## Species:InitialDom      0.0025  0.0025     1  68.629   0.0423  0.837599    
+## DHW:Species:InitialDom  0.0810  0.0810     1 120.392   1.3468  0.248139    
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#now looking at any batch differences within each coral species:}
+\NormalTok{  mcavbleachingmod<-}\KeywordTok{glmer}\NormalTok{(Shprop}\OperatorTok{~}\NormalTok{DHW}\OperatorTok{*}\NormalTok{Batch}\OperatorTok{+}\NormalTok{(}\DecValTok{1}\OperatorTok{|}\NormalTok{Colony), }\DataTypeTok{data=}\KeywordTok{filter}\NormalTok{(allbleach,allbleach}\OperatorTok{$}\NormalTok{Species}\OperatorTok{==}\StringTok{'M.cavernosa'}\NormalTok{))}
+  \KeywordTok{plot_resqq}\NormalTok{(mcavbleachingmod)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{SEASONAL_SHUFFLING_files/figure-latex/unnamed-chunk-9-2.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{  mcavbleachingmod2<-}\KeywordTok{as_lmerModLmerTest}\NormalTok{(mcavbleachingmod)}
+  \KeywordTok{summary}\NormalTok{(mcavbleachingmod2)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Linear mixed model fit by REML. t-tests use Satterthwaite's method [
+## lmerModLmerTest]
+## Formula: Shprop ~ DHW * Batch + (1 | Colony)
+##    Data: filter(allbleach, allbleach$Species == "M.cavernosa")
+## 
+## REML criterion at convergence: -5.1
+## 
+## Scaled residuals: 
+##     Min      1Q  Median      3Q     Max 
+## -2.4227 -0.0828  0.0082  0.0650  5.2633 
+## 
+## Random effects:
+##  Groups   Name        Variance Std.Dev.
+##  Colony   (Intercept) 0.00000  0.0000  
+##  Residual             0.03716  0.1928  
+## Number of obs: 55, groups:  Colony, 10
+## 
+## Fixed effects:
+##             Estimate Std. Error       df t value Pr(>|t|)    
+## (Intercept)  1.01595    0.05271 51.00000  19.274  < 2e-16 ***
+## DHW         -0.04102    0.01307 51.00000  -3.138  0.00283 ** 
+## Batch2      -0.02849    0.07227 51.00000  -0.394  0.69507    
+## DHW:Batch2  -0.08481    0.01590 51.00000  -5.335 2.21e-06 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Correlation of Fixed Effects:
+##            (Intr) DHW    Batch2
+## DHW        -0.682              
+## Batch2     -0.729  0.497       
+## DHW:Batch2  0.561 -0.822 -0.682
+## optimizer (nloptwrap) convergence code: 0 (OK)
+## boundary (singular) fit: see ?isSingular
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+  \KeywordTok{anova}\NormalTok{(mcavbleachingmod2) }\CommentTok{#significant interaction between DHW and batch on proportion of symbionts retained, p=2.21e-06, with the october batch losing more.}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Type III Analysis of Variance Table with Satterthwaite's method
+##           Sum Sq Mean Sq NumDF DenDF  F value    Pr(>F)    
+## DHW       4.0937  4.0937     1    51 110.1738 2.410e-14 ***
+## Batch     0.0058  0.0058     1    51   0.1554    0.6951    
+## DHW:Batch 1.0577  1.0577     1    51  28.4652 2.207e-06 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{recovmod<-}\KeywordTok{glm}\NormalTok{(Shprop}\OperatorTok{~}\NormalTok{Recov.Days}\OperatorTok{*}\NormalTok{Species}\OperatorTok{*}\NormalTok{InitialDom, }\DataTypeTok{data=}\NormalTok{allrecov, }\DataTypeTok{family=}\StringTok{'quasipoisson'}\NormalTok{)}
+\KeywordTok{plot}\NormalTok{(recovmod)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{SEASONAL_SHUFFLING_files/figure-latex/unnamed-chunk-9-3.pdf}
+\includegraphics{SEASONAL_SHUFFLING_files/figure-latex/unnamed-chunk-9-4.pdf}
+\includegraphics{SEASONAL_SHUFFLING_files/figure-latex/unnamed-chunk-9-5.pdf}
+\includegraphics{SEASONAL_SHUFFLING_files/figure-latex/unnamed-chunk-9-6.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{recoveryfit=}\StringTok{ }\KeywordTok{with}\NormalTok{(}\KeywordTok{summary}\NormalTok{(recovmod), }\DecValTok{1} \OperatorTok{-}\StringTok{ }\NormalTok{deviance}\OperatorTok{/}\NormalTok{null.deviance)}
+\NormalTok{recoveryfit }\CommentTok{#0.5469, R^2 for plotted quasipoisson model (without batch)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.5469235
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{recovmod2<-}\KeywordTok{glmer}\NormalTok{(Shprop}\OperatorTok{~}\NormalTok{Recov.Days}\OperatorTok{*}\NormalTok{Species}\OperatorTok{*}\NormalTok{InitialDom}\OperatorTok{+}\NormalTok{(}\DecValTok{1}\OperatorTok{|}\NormalTok{Colony), }\DataTypeTok{data=}\NormalTok{allrecov)}
+\KeywordTok{plot_resqq}\NormalTok{(recovmod2)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{SEASONAL_SHUFFLING_files/figure-latex/unnamed-chunk-9-7.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{recovmod3<-}\KeywordTok{as_lmerModLmerTest}\NormalTok{(recovmod2)}
+\KeywordTok{summary}\NormalTok{(recovmod3)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Linear mixed model fit by REML. t-tests use Satterthwaite's method [
+## lmerModLmerTest]
+## Formula: Shprop ~ Recov.Days * Species * InitialDom + (1 | Colony)
+##    Data: allrecov
+## 
+## REML criterion at convergence: 1250.9
+## 
+## Scaled residuals: 
+##     Min      1Q  Median      3Q     Max 
+## -2.7901 -0.2597 -0.0424  0.0247 10.8057 
+## 
+## Random effects:
+##  Groups   Name        Variance Std.Dev.
+##  Colony   (Intercept)  0.1652  0.4064  
+##  Residual             17.4242  4.1742  
+## Number of obs: 217, groups:  Colony, 29
+## 
+## Fixed effects:
+##                                               Estimate Std. Error        df
+## (Intercept)                                    3.67046    1.79581 120.33950
+## Recov.Days                                    -0.12507    0.03986 188.75632
+## SpeciesO.faveolata                            -3.00438    2.22969 110.98030
+## SpeciesS.siderea                              -3.44919    1.48290 124.40494
+## InitialDomnond                                -3.65091    1.65218 130.04791
+## Recov.Days:SpeciesO.faveolata                  0.14223    0.05070 188.65474
+## Recov.Days:SpeciesS.siderea                    0.15282    0.03292 187.61232
+## Recov.Days:InitialDomnond                      0.16279    0.03721 188.75877
+## SpeciesO.faveolata:InitialDomnond              2.96527    2.31684 114.40581
+## Recov.Days:SpeciesO.faveolata:InitialDomnond  -0.17354    0.05372 188.60438
+##                                              t value Pr(>|t|)    
+## (Intercept)                                    2.044  0.04315 *  
+## Recov.Days                                    -3.138  0.00197 ** 
+## SpeciesO.faveolata                            -1.347  0.18058    
+## SpeciesS.siderea                              -2.326  0.02164 *  
+## InitialDomnond                                -2.210  0.02887 *  
+## Recov.Days:SpeciesO.faveolata                  2.805  0.00556 ** 
+## Recov.Days:SpeciesS.siderea                    4.642 6.48e-06 ***
+## Recov.Days:InitialDomnond                      4.376 2.00e-05 ***
+## SpeciesO.faveolata:InitialDomnond              1.280  0.20318    
+## Recov.Days:SpeciesO.faveolata:InitialDomnond  -3.231  0.00146 ** 
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Correlation of Fixed Effects:
+##             (Intr) Rcv.Dy SpcsO. SpcsS. IntlDm Rc.D:SO. R.D:SS R.D:ID SO.:ID
+## Recov.Days  -0.748                                                          
+## SpecsO.fvlt -0.805  0.603                                                   
+## SpecisS.sdr -0.825  0.625  0.664                                            
+## InitilDmnnd -0.920  0.702  0.741  0.694                                     
+## Rcv.Dys:SO.  0.588 -0.786 -0.746 -0.491 -0.552                              
+## Rcv.Dys:SS.  0.624 -0.826 -0.503 -0.756 -0.543  0.649                       
+## Rcv.Dys:InD  0.692 -0.933 -0.557 -0.536 -0.752  0.734    0.718              
+## SpcsO.fv:ID  0.656 -0.500 -0.867 -0.495 -0.713  0.655    0.387  0.536       
+## Rc.D:SO.:ID -0.479  0.646  0.643  0.371  0.521 -0.869   -0.497 -0.693 -0.746
+## fit warnings:
+## fixed-effect model matrix is rank deficient so dropping 2 columns / coefficients
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{anova}\NormalTok{(recovmod3)}\CommentTok{# symbiont recovery was significantly differnet between species (recovery days * symbiont density interaction), with ofav p=0.00556 and ssid p=6.48e-06 recovering more than mcav for a given amount of recovery (likely indicative of the delay in symbiont recovery seen in mcav). There was also a significant interaction between initial symbiont genus and recovery days p=2.00e-05, with corals initially not hosting Durusdinium recovering more with a given amount of recovery. }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Type III Analysis of Variance Table with Satterthwaite's method
+##                               Sum Sq Mean Sq NumDF  DenDF F value    Pr(>F)    
+## Recov.Days                    336.61  336.61     1 188.77 19.3184 1.844e-05 ***
+## Species                        81.15   40.57     2 103.20  2.3286 0.1025280    
+## InitialDom                     61.05   61.05     1 114.41  3.5035 0.0637941 .  
+## Recov.Days:Species            304.78  152.39     2 188.33  8.7458 0.0002333 ***
+## Recov.Days:InitialDom         139.59  139.59     1 188.60  8.0111 0.0051531 ** 
+## Species:InitialDom             28.54   28.54     1 114.41  1.6381 0.2031778    
+## Recov.Days:Species:InitialDom 181.85  181.85     1 188.60 10.4364 0.0014578 ** 
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{    mcavrecovmod<-}\KeywordTok{glmer}\NormalTok{(Shprop}\OperatorTok{~}\NormalTok{Recov.Days}\OperatorTok{*}\NormalTok{Batch}\OperatorTok{+}\NormalTok{(}\DecValTok{1}\OperatorTok{|}\NormalTok{Colony), }\DataTypeTok{data=}\KeywordTok{filter}\NormalTok{(allrecov,allrecov}\OperatorTok{$}\NormalTok{Species}\OperatorTok{==}\StringTok{'M.cavernosa'}\NormalTok{))}
+  \KeywordTok{plot_resqq}\NormalTok{(mcavrecovmod)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{SEASONAL_SHUFFLING_files/figure-latex/unnamed-chunk-9-8.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{  mcavrecovmod2<-}\KeywordTok{as_lmerModLmerTest}\NormalTok{(mcavrecovmod)}
+  \KeywordTok{summary}\NormalTok{(mcavrecovmod2)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Linear mixed model fit by REML. t-tests use Satterthwaite's method [
+## lmerModLmerTest]
+## Formula: Shprop ~ Recov.Days * Batch + (1 | Colony)
+##    Data: filter(allrecov, allrecov$Species == "M.cavernosa")
+## 
+## REML criterion at convergence: 416.1
+## 
+## Scaled residuals: 
+##     Min      1Q  Median      3Q     Max 
+## -1.5973 -0.4961 -0.1152  0.1772  5.0981 
+## 
+## Random effects:
+##  Groups   Name        Variance Std.Dev.
+##  Colony   (Intercept) 0.1195   0.3457  
+##  Residual             8.3119   2.8830  
+## Number of obs: 82, groups:  Colony, 10
+## 
+## Fixed effects:
+##                   Estimate Std. Error       df t value Pr(>|t|)    
+## (Intercept)       -0.44603    0.75590 66.15752  -0.590  0.55716    
+## Recov.Days         0.08342    0.01772 70.99172   4.706 1.21e-05 ***
+## Batch2             0.23704    0.98147 74.25824   0.242  0.80982    
+## Recov.Days:Batch2 -0.06258    0.02139 70.90131  -2.926  0.00461 ** 
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Correlation of Fixed Effects:
+##             (Intr) Rcv.Dy Batch2
+## Recov.Days  -0.769              
+## Batch2      -0.753  0.592       
+## Rcv.Dys:Bt2  0.637 -0.829 -0.755
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+  \KeywordTok{anova}\NormalTok{(mcavrecovmod2) }\CommentTok{#there was a significant interaction p=0.004611 of batch on the relationship between symbiont density and recovery days, with the October batch recovering less.}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Type III Analysis of Variance Table with Satterthwaite's method
+##                   Sum Sq Mean Sq NumDF  DenDF F value    Pr(>F)    
+## Recov.Days       197.495 197.495     1 70.951 23.7606 6.437e-06 ***
+## Batch              0.485   0.485     1 74.258  0.0583  0.809820    
+## Recov.Days:Batch  71.158  71.158     1 70.901  8.5610  0.004611 ** 
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{  Spec.labs=}\KeywordTok{c}\NormalTok{(}\StringTok{'M. cavernosa'}\NormalTok{,}\StringTok{'O. faveolata'}\NormalTok{,}\StringTok{'S. siderea'}\NormalTok{)}
+\KeywordTok{names}\NormalTok{(Spec.labs)=}\KeywordTok{c}\NormalTok{(}\StringTok{'M.cavernosa'}\NormalTok{,}\StringTok{'O.faveolata'}\NormalTok{,}\StringTok{'S.siderea'}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{shuffling}{%
+\subsection{SHUFFLING}\label{shuffling}}
+
+\hypertarget{figure-2-inter--and-intra-species-variation-in-the-shuffling-towards-durusdinium-after-recovery-from-heat-stress.}{%
+\subsubsection{Figure 2: Inter- and intra-species variation in the
+shuffling towards durusdinium after recovery from heat
+stress.}\label{figure-2-inter--and-intra-species-variation-in-the-shuffling-towards-durusdinium-after-recovery-from-heat-stress.}}
+
+Comparison of Proportion D before start of heat stress compared to two
+months into recovery. Data are binned at intervals of 0.02 (for variable
+Proportion D), and size aesthetic relates to number of cores in each bin
+to reduce overplotting. Data from April and October are both included
+here.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mcavshift<-}\KeywordTok{filter}\NormalTok{(mcav_wide_batches,}\OperatorTok{!}\KeywordTok{is.na}\NormalTok{(postDcat),}\OperatorTok{!}\KeywordTok{is.na}\NormalTok{(preDcat))}
+\NormalTok{ofavshift<-}\KeywordTok{filter}\NormalTok{(ofav_wide_batches,}\OperatorTok{!}\KeywordTok{is.na}\NormalTok{(postDcat),}\OperatorTok{!}\KeywordTok{is.na}\NormalTok{(preDcat))}
+\NormalTok{ssidshift<-}\KeywordTok{filter}\NormalTok{(ssid_wide_batches,}\OperatorTok{!}\KeywordTok{is.na}\NormalTok{(postDcat),}\OperatorTok{!}\KeywordTok{is.na}\NormalTok{(preDcat))}
+\NormalTok{beforeaftershift<-}\KeywordTok{rbind}\NormalTok{(mcavshift,ofavshift,ssidshift)}
+\NormalTok{beforeaftershift}\OperatorTok{$}\NormalTok{Treatment<-}\KeywordTok{factor}\NormalTok{(beforeaftershift}\OperatorTok{$}\NormalTok{Treatment,}\DataTypeTok{levels=}\KeywordTok{c}\NormalTok{(}\StringTok{'Manipulated'}\NormalTok{,}\StringTok{'Control'}\NormalTok{))}
+\NormalTok{gaindd=}\KeywordTok{expression}\NormalTok{(}\KeywordTok{paste}\NormalTok{(}\StringTok{"Gained"}\NormalTok{,}\KeywordTok{italic}\NormalTok{(}\StringTok{" Durusdinium"}\NormalTok{)))}
+\NormalTok{lostd=}\KeywordTok{expression}\NormalTok{(}\KeywordTok{paste}\NormalTok{(}\StringTok{"Lost"}\NormalTok{,}\KeywordTok{italic}\NormalTok{(}\StringTok{" Durusdinium"}\NormalTok{)))}
+
+   \KeywordTok{ggplot}\NormalTok{()}\OperatorTok{+}\KeywordTok{geom_count}\NormalTok{(}\DataTypeTok{data=}\NormalTok{(beforeaftershift),}
+     \KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\NormalTok{preDcat,}\DataTypeTok{y=}\NormalTok{postDcat,}\DataTypeTok{colour=}\NormalTok{Treatment))}\OperatorTok{+}
+\KeywordTok{facet_grid}\NormalTok{(}\DataTypeTok{cols=}\KeywordTok{vars}\NormalTok{(Species),}\DataTypeTok{labeller=}\KeywordTok{labeller}\NormalTok{(}\DataTypeTok{Species=}\NormalTok{Spec.labs))}\OperatorTok{+}
+\KeywordTok{geom_abline}\NormalTok{(}\DataTypeTok{slope=}\DecValTok{1}\NormalTok{,}\DataTypeTok{intercept =} \DecValTok{0}\NormalTok{,}\DataTypeTok{linetype=}\StringTok{'dotted'}\NormalTok{)}\OperatorTok{+}
+\StringTok{  }\KeywordTok{scale_color_manual}\NormalTok{(}\DataTypeTok{values=}\KeywordTok{c}\NormalTok{(}\StringTok{'brown2'}\NormalTok{,}\StringTok{'blue3'}\NormalTok{),}\DataTypeTok{labels=}\KeywordTok{c}\NormalTok{(}\StringTok{'Bleached'}\NormalTok{,}\StringTok{'Control'}\NormalTok{))}\OperatorTok{+}
+\StringTok{  }\KeywordTok{theme_minimal}\NormalTok{(}\DataTypeTok{base_size =} \DecValTok{15}\NormalTok{)}\OperatorTok{%+replace%}
+\StringTok{    }\KeywordTok{theme}\NormalTok{(}\DataTypeTok{panel.border =} \KeywordTok{element_rect}\NormalTok{(}\DataTypeTok{colour=}\StringTok{'grey20'}\NormalTok{,}\DataTypeTok{fill=}\OtherTok{NA}\NormalTok{),}
+          \DataTypeTok{panel.grid.minor.x =} \KeywordTok{element_blank}\NormalTok{(),}
+          \DataTypeTok{panel.grid.minor.y =} \KeywordTok{element_blank}\NormalTok{())}\OperatorTok{+}
+\StringTok{  }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{x=}\StringTok{'Proportion *Durusdinium* before'}\NormalTok{,}\DataTypeTok{y=}\StringTok{'Proportion *Durusdinium* after'}\NormalTok{)}\OperatorTok{+}
+\StringTok{ }\KeywordTok{guides}\NormalTok{(}\DataTypeTok{size=}\KeywordTok{guide_legend}\NormalTok{(}\DataTypeTok{title=}\StringTok{'Binned n'}\NormalTok{))}\OperatorTok{+}
+\StringTok{  }\KeywordTok{scale_size}\NormalTok{(}\DataTypeTok{range=}\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{14}\NormalTok{),}\DataTypeTok{breaks=}\NormalTok{(}\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{6}\NormalTok{,}\DecValTok{10}\NormalTok{)))}\OperatorTok{+}
+\StringTok{  }\KeywordTok{theme}\NormalTok{(}\DataTypeTok{axis.title.x =} \KeywordTok{element_markdown}\NormalTok{(),}\DataTypeTok{axis.title.y=}\KeywordTok{element_markdown}\NormalTok{())}\OperatorTok{+}
+\StringTok{  }\KeywordTok{theme}\NormalTok{(}\DataTypeTok{strip.text.x =} \KeywordTok{element_text}\NormalTok{(}\DataTypeTok{face =} \StringTok{'italic'}\NormalTok{),}
+      \DataTypeTok{panel.spacing =} \KeywordTok{unit}\NormalTok{(}\FloatTok{1.5}\NormalTok{, }\StringTok{"lines"}\NormalTok{), }\DataTypeTok{legend.position =} \StringTok{'bottom'}\NormalTok{, }\DataTypeTok{legend.title=}\KeywordTok{element_text}\NormalTok{(}\DataTypeTok{size=}\DecValTok{12}\NormalTok{))}\OperatorTok{+}
+\StringTok{      }\KeywordTok{guides}\NormalTok{(}\DataTypeTok{colour =} \KeywordTok{guide_legend}\NormalTok{(}\DataTypeTok{title=}\StringTok{''}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{SEASONAL_SHUFFLING_files/figure-latex/unnamed-chunk-10-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#ggsave('redblue_shift.pdf',device='pdf', width=10,height=5) #add 'gained durusdinium'/'lost durusdinium' labels}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{figure-3a-shuffling-towards-high-proportions-of-durusdinium-after-heat-stress-recovery-was-greatest-in-m.-cavernosa-followed-by-o.-faveolata-followed-by-s.-siderea.}{%
+\subsubsection{Figure 3a: Shuffling towards high proportions of
+Durusdinium after heat stress recovery was greatest in M. cavernosa,
+followed by O. faveolata, followed by S.
+siderea.}\label{figure-3a-shuffling-towards-high-proportions-of-durusdinium-after-heat-stress-recovery-was-greatest-in-m.-cavernosa-followed-by-o.-faveolata-followed-by-s.-siderea.}}
+
+Emulating the `symbiont shuffling' plot to compare coral species, as in
+Cunning et al 2018 figure 3b. In order to be able to include mcav, which
+has no variation in initial proportion d, the following mcav models are
+independent of initial proportion d, then integrated in with the
+previous ofav \& ssid predicted effects.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{shufflemod=}\KeywordTok{lmer}\NormalTok{(post_propD }\OperatorTok{~}\StringTok{ }\NormalTok{pre_propD }\OperatorTok{+}\StringTok{ }\NormalTok{Treatment}\OperatorTok{*}\NormalTok{Species}\OperatorTok{*}\NormalTok{Batch}\OperatorTok{+}\NormalTok{(}\DecValTok{1}\OperatorTok{|}\NormalTok{Colony),}
+                 \DataTypeTok{data=}\NormalTok{batches)}
+\NormalTok{shufflemod2=}\KeywordTok{glm}\NormalTok{(post_propD}\OperatorTok{~}\NormalTok{pre_propD }\OperatorTok{+}\StringTok{ }\NormalTok{Treatment}\OperatorTok{*}\NormalTok{Species}\OperatorTok{*}\NormalTok{Batch, }\DataTypeTok{data=}\NormalTok{batches, }\DataTypeTok{family=}\StringTok{'quasibinomial'}\NormalTok{)}
+
+\KeywordTok{plot_resqq}\NormalTok{(shufflemod) }
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{SEASONAL_SHUFFLING_files/figure-latex/unnamed-chunk-11-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{plot}\NormalTok{(shufflemod2)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{SEASONAL_SHUFFLING_files/figure-latex/unnamed-chunk-11-2.pdf}
+\includegraphics{SEASONAL_SHUFFLING_files/figure-latex/unnamed-chunk-11-3.pdf}
+\includegraphics{SEASONAL_SHUFFLING_files/figure-latex/unnamed-chunk-11-4.pdf}
+\includegraphics{SEASONAL_SHUFFLING_files/figure-latex/unnamed-chunk-11-5.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#these two models (quasibinomial family vs linear mixed effects) give fairly differnet results...}
+
+\KeywordTok{summary}\NormalTok{(shufflemod)}\CommentTok{# Model summary}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Linear mixed model fit by REML. t-tests use Satterthwaite's method [
+## lmerModLmerTest]
+## Formula: post_propD ~ pre_propD + Treatment * Species * Batch + (1 | Colony)
+##    Data: batches
+## 
+## REML criterion at convergence: 38.2
+## 
+## Scaled residuals: 
+##      Min       1Q   Median       3Q      Max 
+## -2.70264 -0.41847 -0.03774  0.41929  2.53018 
+## 
+## Random effects:
+##  Groups   Name        Variance Std.Dev.
+##  Colony   (Intercept) 0.01996  0.1413  
+##  Residual             0.05266  0.2295  
+## Number of obs: 105, groups:  Colony, 29
+## 
+## Fixed effects:
+##                                                  Estimate Std. Error       df
+## (Intercept)                                       0.88340    0.07730 53.50301
+## pre_propD                                         0.59718    0.09715 31.47720
+## TreatmentControl                                 -0.89499    0.12754 78.92189
+## SpeciesO.faveolata                               -0.25219    0.11305 50.69438
+## SpeciesS.siderea                                 -0.42798    0.11937 47.68955
+## BatchOctober                                      0.12362    0.08833 68.59613
+## TreatmentControl:SpeciesO.faveolata               0.58869    0.18219 81.18425
+## TreatmentControl:SpeciesS.siderea                 0.51816    0.18053 77.77864
+## TreatmentControl:BatchOctober                    -0.11775    0.17995 78.02351
+## SpeciesO.faveolata:BatchOctober                  -0.18054    0.13902 72.46015
+## SpeciesS.siderea:BatchOctober                    -0.13107    0.13288 74.16874
+## TreatmentControl:SpeciesO.faveolata:BatchOctober -0.10542    0.26833 83.10055
+## TreatmentControl:SpeciesS.siderea:BatchOctober    0.36282    0.26333 82.61570
+##                                                  t value Pr(>|t|)    
+## (Intercept)                                       11.428 5.62e-16 ***
+## pre_propD                                          6.147 7.59e-07 ***
+## TreatmentControl                                  -7.017 6.95e-10 ***
+## SpeciesO.faveolata                                -2.231  0.03015 *  
+## SpeciesS.siderea                                  -3.585  0.00079 ***
+## BatchOctober                                       1.400  0.16616    
+## TreatmentControl:SpeciesO.faveolata                3.231  0.00178 ** 
+## TreatmentControl:SpeciesS.siderea                  2.870  0.00528 ** 
+## TreatmentControl:BatchOctober                     -0.654  0.51482    
+## SpeciesO.faveolata:BatchOctober                   -1.299  0.19817    
+## SpeciesS.siderea:BatchOctober                     -0.986  0.32718    
+## TreatmentControl:SpeciesO.faveolata:BatchOctober  -0.393  0.69541    
+## TreatmentControl:SpeciesS.siderea:BatchOctober     1.378  0.17198    
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#bleaching and initial proportion dusursdinium both had significant effects on shuffling (p=6.95e-10 and p=7.59e-07 respectively). Batch did not significantly affect shuffling (p=0.16616).}
+                              
+
+\CommentTok{#Get fitted values averaging across initial proportion durusdinium}
+\NormalTok{eff <-}\StringTok{ }\KeywordTok{effect}\NormalTok{(}\KeywordTok{c}\NormalTok{(}\StringTok{'pre_propD'}\NormalTok{, }\StringTok{'Species'}\NormalTok{,}\StringTok{'Treatment'}\NormalTok{), shufflemod, }
+              \DataTypeTok{xlevels=}\KeywordTok{list}\NormalTok{(}\DataTypeTok{pre_propD=}\KeywordTok{seq}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DataTypeTok{by=}\FloatTok{0.01}\NormalTok{)))}
+\CommentTok{# Get all fitted values and subsets for each treatment}
+\NormalTok{res <-}\StringTok{ }\KeywordTok{droplevels}\NormalTok{(}\KeywordTok{data.frame}\NormalTok{(eff))}
+
+\NormalTok{res}\OperatorTok{$}\NormalTok{Species <-}\StringTok{ }\KeywordTok{factor}\NormalTok{(res}\OperatorTok{$}\NormalTok{Species, }\DataTypeTok{levels=}\KeywordTok{c}\NormalTok{(}\StringTok{"O.faveolata"}\NormalTok{, }\StringTok{"S.siderea"}\NormalTok{, }\StringTok{"M.cavernosa"}\NormalTok{))}
+\NormalTok{res.Bl <-}\StringTok{ }\KeywordTok{subset}\NormalTok{(}\KeywordTok{data.frame}\NormalTok{(eff), Treatment}\OperatorTok{==}\StringTok{"Manipulated"}\NormalTok{)}
+\NormalTok{res.Ct <-}\StringTok{ }\KeywordTok{subset}\NormalTok{(}\KeywordTok{data.frame}\NormalTok{(eff), Treatment}\OperatorTok{==}\StringTok{"Control"}\NormalTok{)}
+\CommentTok{# Get AUC for fitted values, lower and upper confidence limits}
+\NormalTok{auc <-}\StringTok{ }\KeywordTok{aggregate}\NormalTok{(res[, }\KeywordTok{c}\NormalTok{(}\StringTok{"fit"}\NormalTok{, }\StringTok{"lower"}\NormalTok{, }\StringTok{"upper"}\NormalTok{)], }
+                 \DataTypeTok{by=}\KeywordTok{list}\NormalTok{(}\DataTypeTok{Species=}\NormalTok{res}\OperatorTok{$}\NormalTok{Species, }\DataTypeTok{Treatment=}\NormalTok{res}\OperatorTok{$}\NormalTok{Treatment), }
+                 \DataTypeTok{FUN=}\ControlFlowTok{function}\NormalTok{(x) (}\KeywordTok{mean}\NormalTok{(x)}\OperatorTok{-}\FloatTok{0.5}\NormalTok{)}\OperatorTok{/}\FloatTok{0.5}\NormalTok{)}
+                
+\CommentTok{#force limits of 1 and -1 on ofav and ssid}
+\NormalTok{auc[}\DecValTok{4}\NormalTok{,}\DecValTok{5}\NormalTok{]=}\FloatTok{1.0}
+\NormalTok{auc.list <-}\StringTok{ }\KeywordTok{split}\NormalTok{(auc, }\KeywordTok{list}\NormalTok{(auc}\OperatorTok{$}\NormalTok{Treatment))}
+\NormalTok{auc}\OperatorTok{$}\NormalTok{Treatment=}\KeywordTok{factor}\NormalTok{(auc}\OperatorTok{$}\NormalTok{Treatment, }\DataTypeTok{levels=}\KeywordTok{c}\NormalTok{(}\StringTok{'Manipulated'}\NormalTok{,}\StringTok{'Control'}\NormalTok{))}
+\KeywordTok{levels}\NormalTok{(auc}\OperatorTok{$}\NormalTok{Treatment)<-}\KeywordTok{c}\NormalTok{(}\StringTok{'Bleached'}\NormalTok{,}\StringTok{'Control'}\NormalTok{)}
+\NormalTok{auc}\OperatorTok{$}\NormalTok{Species=}\KeywordTok{factor}\NormalTok{(auc}\OperatorTok{$}\NormalTok{Species, }\DataTypeTok{levels=}\KeywordTok{c}\NormalTok{(}\StringTok{'M.cavernosa'}\NormalTok{, }\StringTok{'O.faveolata'}\NormalTok{, }\StringTok{'S.siderea'}\NormalTok{))}
+
+\CommentTok{#UPDATES FOR ROSS: I have now changed this so it is based on a mixed effects model (colony as a random factor as in all other analyses), and the result looks fairly differnet from before (which was based on a glm with quasibinomial distribution). Limited predicted values to between 1 and -1. What is the significance of the (-0.5/0.5) in the aggregation function?}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#using model independent of initial prop d for mcav}
+\NormalTok{shufflemod2=}\KeywordTok{lmer}\NormalTok{(post_propD }\OperatorTok{~}\NormalTok{Treatment}\OperatorTok{*}\NormalTok{Species}\OperatorTok{*}\NormalTok{Batch}\OperatorTok{+}\NormalTok{(}\DecValTok{1}\OperatorTok{|}\NormalTok{Colony),}
+                 \DataTypeTok{data=}\NormalTok{batches)}
+\KeywordTok{plot_resqq}\NormalTok{(shufflemod2) }
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{SEASONAL_SHUFFLING_files/figure-latex/unnamed-chunk-12-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{summary}\NormalTok{(shufflemod2)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Linear mixed model fit by REML. t-tests use Satterthwaite's method [
+## lmerModLmerTest]
+## Formula: post_propD ~ Treatment * Species * Batch + (1 | Colony)
+##    Data: batches
+## 
+## REML criterion at convergence: 68.5
+## 
+## Scaled residuals: 
+##      Min       1Q   Median       3Q      Max 
+## -2.56595 -0.29433  0.06883  0.35489  2.28865 
+## 
+## Random effects:
+##  Groups   Name        Variance Std.Dev.
+##  Colony   (Intercept) 0.05966  0.2443  
+##  Residual             0.06123  0.2475  
+## Number of obs: 108, groups:  Colony, 30
+## 
+## Fixed effects:
+##                                                  Estimate Std. Error       df
+## (Intercept)                                       0.88490    0.10345 44.86844
+## TreatmentControl                                 -0.90026    0.14093 75.47542
+## SpeciesO.faveolata                               -0.08228    0.14647 44.85383
+## SpeciesS.siderea                                 -0.20658    0.14575 44.55474
+## BatchOctober                                      0.12790    0.09591 69.67963
+## TreatmentControl:SpeciesO.faveolata               0.73218    0.20115 77.38500
+## TreatmentControl:SpeciesS.siderea                 0.57034    0.19799 75.06017
+## TreatmentControl:BatchOctober                    -0.12784    0.19847 74.76893
+## SpeciesO.faveolata:BatchOctober                  -0.14478    0.15171 72.75896
+## SpeciesS.siderea:BatchOctober                     0.08178    0.13793 71.67140
+## TreatmentControl:SpeciesO.faveolata:BatchOctober -0.31940    0.29652 78.95345
+## TreatmentControl:SpeciesS.siderea:BatchOctober    0.22211    0.28892 77.88603
+##                                                  t value Pr(>|t|)    
+## (Intercept)                                        8.554 5.59e-11 ***
+## TreatmentControl                                  -6.388 1.25e-08 ***
+## SpeciesO.faveolata                                -0.562  0.57707    
+## SpeciesS.siderea                                  -1.417  0.16334    
+## BatchOctober                                       1.334  0.18670    
+## TreatmentControl:SpeciesO.faveolata                3.640  0.00049 ***
+## TreatmentControl:SpeciesS.siderea                  2.881  0.00517 ** 
+## TreatmentControl:BatchOctober                     -0.644  0.52144    
+## SpeciesO.faveolata:BatchOctober                   -0.954  0.34308    
+## SpeciesS.siderea:BatchOctober                      0.593  0.55513    
+## TreatmentControl:SpeciesO.faveolata:BatchOctober  -1.077  0.28469    
+## TreatmentControl:SpeciesS.siderea:BatchOctober     0.769  0.44437    
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Correlation of Fixed Effects:
+##             (Intr) TrtmnC SpcsO. SpcsS. BtchOc TrC:SO. TrC:SS. TrC:BO SO.:BO
+## TrtmntCntrl -0.371                                                          
+## SpecsO.fvlt -0.706  0.262                                                   
+## SpecisS.sdr -0.710  0.263  0.501                                            
+## BatchOctobr -0.473  0.396  0.334  0.336                                     
+## TrtmntC:SO.  0.260 -0.701 -0.374 -0.185 -0.278                              
+## TrtmntC:SS.  0.264 -0.712 -0.187 -0.362 -0.282  0.499                       
+## TrtmntCn:BO  0.261 -0.718 -0.184 -0.185 -0.538  0.503   0.511               
+## SpcsO.fv:BO  0.299 -0.250 -0.436 -0.212 -0.632  0.381   0.178   0.340       
+## SpcsS.sd:BO  0.329 -0.275 -0.232 -0.473 -0.695  0.193   0.408   0.374  0.440
+## TrtC:SO.:BO -0.175  0.481  0.265  0.124  0.360 -0.719  -0.342  -0.669 -0.580
+## TrtC:SS.:BO -0.179  0.493  0.127  0.264  0.370 -0.346  -0.729  -0.687 -0.234
+##             SS.:BO TC:SO.:
+## TrtmntCntrl               
+## SpecsO.fvlt               
+## SpecisS.sdr               
+## BatchOctobr               
+## TrtmntC:SO.               
+## TrtmntC:SS.               
+## TrtmntCn:BO               
+## SpcsO.fv:BO               
+## SpcsS.sd:BO               
+## TrtC:SO.:BO -0.251        
+## TrtC:SS.:BO -0.560  0.460
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#again for the initial durusdinium independent model, batch is not a significant driver of shuffling, p= 0.18670. }
+\NormalTok{shufflemodmcav=}\KeywordTok{glm}\NormalTok{(post_propD }\OperatorTok{~}\NormalTok{Treatment}\OperatorTok{*}\NormalTok{Batch,}
+                 \DataTypeTok{data=}\KeywordTok{subset}\NormalTok{(batches, batches}\OperatorTok{$}\NormalTok{Species}\OperatorTok{==}\StringTok{'M.cavernosa'}\NormalTok{), }\DataTypeTok{family=}\StringTok{'quasibinomial'}\NormalTok{)}
+\KeywordTok{plot}\NormalTok{(shufflemodmcav)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{SEASONAL_SHUFFLING_files/figure-latex/unnamed-chunk-12-2.pdf}
+\includegraphics{SEASONAL_SHUFFLING_files/figure-latex/unnamed-chunk-12-3.pdf}
+\includegraphics{SEASONAL_SHUFFLING_files/figure-latex/unnamed-chunk-12-4.pdf}
+\includegraphics{SEASONAL_SHUFFLING_files/figure-latex/unnamed-chunk-12-5.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{summary}\NormalTok{(shufflemodmcav)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## glm(formula = post_propD ~ Treatment * Batch, family = "quasibinomial", 
+##     data = subset(batches, batches$Species == "M.cavernosa"))
+## 
+## Deviance Residuals: 
+##      Min        1Q    Median        3Q       Max  
+## -1.46467  -0.00008   0.05084   0.35840   0.50746  
+## 
+## Coefficients:
+##                                Estimate Std. Error t value Pr(>|t|)    
+## (Intercept)                      1.9848     0.4277   4.641 4.99e-05 ***
+## TreatmentControl               -21.5508  2508.1870  -0.009    0.993    
+## BatchOctober                     4.6658     3.9044   1.195    0.240    
+## TreatmentControl:BatchOctober   10.9378  2508.1906   0.004    0.997    
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## (Dispersion parameter for quasibinomial family taken to be 0.2719874)
+## 
+##     Null deviance: 42.0350  on 37  degrees of freedom
+## Residual deviance:  6.7725  on 34  degrees of freedom
+##   (2 observations deleted due to missingness)
+## AIC: NA
+## 
+## Number of Fisher Scoring iterations: 18
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{eff2 <-}\StringTok{ }\KeywordTok{effect}\NormalTok{(}\KeywordTok{c}\NormalTok{(}\StringTok{'Species'}\NormalTok{,}\StringTok{'Treatment'}\NormalTok{,}\StringTok{'Batch'}\NormalTok{), shufflemod2)}
+
+\CommentTok{# Get all fitted values and subsets for each treatment level}
+\NormalTok{res2 <-}\StringTok{ }\KeywordTok{droplevels}\NormalTok{(}\KeywordTok{data.frame}\NormalTok{(eff2))}
+\CommentTok{#force limits of 1 and 0 on mcav confidence intervals}
+\NormalTok{res2[}\DecValTok{1}\NormalTok{,}\DecValTok{7}\NormalTok{]=}\DecValTok{1}
+\NormalTok{res2[}\DecValTok{7}\NormalTok{,}\DecValTok{4}\NormalTok{]=}\DecValTok{1}
+\NormalTok{res2[}\DecValTok{7}\NormalTok{,}\DecValTok{7}\NormalTok{]=}\DecValTok{1}
+\NormalTok{res2[}\DecValTok{4}\NormalTok{,}\DecValTok{4}\NormalTok{]=}\DecValTok{0}
+\NormalTok{res2[}\DecValTok{4}\NormalTok{,}\DecValTok{6}\NormalTok{]=}\DecValTok{0}
+\NormalTok{res2[}\DecValTok{10}\NormalTok{,}\DecValTok{4}\NormalTok{]=}\DecValTok{0}
+\NormalTok{res2[}\DecValTok{10}\NormalTok{,}\DecValTok{6}\NormalTok{]=}\DecValTok{0}
+
+\NormalTok{res2}\OperatorTok{$}\NormalTok{Species <-}\StringTok{ }\KeywordTok{factor}\NormalTok{(res2}\OperatorTok{$}\NormalTok{Species, }\DataTypeTok{levels=}\KeywordTok{c}\NormalTok{(}\StringTok{'M.cavernosa'}\NormalTok{,}\StringTok{"O.faveolata"}\NormalTok{, }\StringTok{"S.siderea"}\NormalTok{))}
+\NormalTok{res2.Bl <-}\StringTok{ }\KeywordTok{subset}\NormalTok{(}\KeywordTok{data.frame}\NormalTok{(eff2), Treatment}\OperatorTok{==}\StringTok{"Manipulated"}\NormalTok{)}
+\NormalTok{res2.Ct <-}\StringTok{ }\KeywordTok{subset}\NormalTok{(}\KeywordTok{data.frame}\NormalTok{(eff2), Treatment}\OperatorTok{==}\StringTok{"Control"}\NormalTok{)}
+\CommentTok{# Get AUC for fitted values, lower and upper confidence limits}
+\NormalTok{auc2 <-}\StringTok{ }\KeywordTok{aggregate}\NormalTok{(res2[, }\KeywordTok{c}\NormalTok{(}\StringTok{"fit"}\NormalTok{, }\StringTok{"lower"}\NormalTok{, }\StringTok{"upper"}\NormalTok{)], }
+                 \DataTypeTok{by=}\KeywordTok{list}\NormalTok{(}\DataTypeTok{Species=}\NormalTok{res2}\OperatorTok{$}\NormalTok{Species, }\DataTypeTok{Treatment=}\NormalTok{res2}\OperatorTok{$}\NormalTok{Treatment),}
+                 \DataTypeTok{FUN=}\ControlFlowTok{function}\NormalTok{(x) (}\KeywordTok{mean}\NormalTok{(x)))}
+\KeywordTok{levels}\NormalTok{(auc2}\OperatorTok{$}\NormalTok{Treatment)<-}\KeywordTok{c}\NormalTok{(}\StringTok{'Control'}\NormalTok{,}\StringTok{'Bleached'}\NormalTok{)}
+
+\NormalTok{auc2.list <-}\StringTok{ }\KeywordTok{split}\NormalTok{(auc2, }\KeywordTok{list}\NormalTok{(auc2}\OperatorTok{$}\NormalTok{Treatment))}
+
+\NormalTok{ofavssidshuff<-auc[}\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{4}\NormalTok{,}\DecValTok{5}\NormalTok{),]}
+\NormalTok{mcavshuff<-auc2[}\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{4}\NormalTok{),]}
+\NormalTok{speciesshuff<-}\KeywordTok{rbind}\NormalTok{(ofavssidshuff,mcavshuff)}
+\NormalTok{speciesshuff}\OperatorTok{$}\NormalTok{Species=}\KeywordTok{factor}\NormalTok{(speciesshuff}\OperatorTok{$}\NormalTok{Species, }\DataTypeTok{levels=}\KeywordTok{c}\NormalTok{(}\StringTok{'M.cavernosa'}\NormalTok{, }\StringTok{'O.faveolata'}\NormalTok{, }\StringTok{'S.siderea'}\NormalTok{))}
+
+\CommentTok{#quote the shuffling metric for bleached cores of each species, 'S': mcav=0.94245186, ofav=0.80645955, ssid=0.50105511. }
+
+\KeywordTok{ggplot}\NormalTok{(}\DataTypeTok{data=}\NormalTok{speciesshuff)}\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_hline}\NormalTok{(}\DataTypeTok{yintercept=}\DecValTok{0}\NormalTok{,}\DataTypeTok{linetype=}\StringTok{'dashed'}\NormalTok{)}\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_errorbar}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{ymin=}\NormalTok{lower, }\DataTypeTok{ymax=}\NormalTok{upper, }\DataTypeTok{x=}\NormalTok{Species, }\DataTypeTok{colour=}\NormalTok{Species, }\DataTypeTok{group=}\NormalTok{Treatment),}\DataTypeTok{size=}\FloatTok{0.5}\NormalTok{, }\DataTypeTok{position=}\KeywordTok{position_dodge}\NormalTok{(}\DataTypeTok{width=}\FloatTok{0.5}\NormalTok{), }\DataTypeTok{width=}\FloatTok{0.2}\NormalTok{)}\OperatorTok{+}
+\StringTok{   }\KeywordTok{geom_point}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{y=}\NormalTok{fit, }\DataTypeTok{x=}\NormalTok{Species,}\DataTypeTok{shape=}\NormalTok{Treatment, }\DataTypeTok{colour=}\NormalTok{Species),}\DataTypeTok{size=}\DecValTok{2}\NormalTok{, }\DataTypeTok{position=}\KeywordTok{position_dodge}\NormalTok{(}\DataTypeTok{width=}\FloatTok{0.5}\NormalTok{))}\OperatorTok{+}
+\StringTok{  }\KeywordTok{theme_minimal}\NormalTok{(}\DataTypeTok{base_size =} \DecValTok{13}\NormalTok{)}\OperatorTok{%+replace%}
+\StringTok{   }\KeywordTok{theme}\NormalTok{(}\DataTypeTok{panel.border =} \KeywordTok{element_rect}\NormalTok{(}\DataTypeTok{colour=}\StringTok{'grey20'}\NormalTok{,}\DataTypeTok{fill=}\OtherTok{NA}\NormalTok{),}
+          \DataTypeTok{panel.grid.minor.x =} \KeywordTok{element_blank}\NormalTok{(),}
+         \DataTypeTok{panel.grid.major.x =} \KeywordTok{element_blank}\NormalTok{(),}
+          \DataTypeTok{panel.grid.minor.y =} \KeywordTok{element_blank}\NormalTok{())}\OperatorTok{+}
+\StringTok{  }\KeywordTok{scale_color_manual}\NormalTok{(}\DataTypeTok{values=}\KeywordTok{c}\NormalTok{(}\StringTok{'deeppink2'}\NormalTok{,}\StringTok{'darkorange1'}\NormalTok{, }\StringTok{'darkturquoise'}\NormalTok{))}\OperatorTok{+}
+\StringTok{  }\KeywordTok{guides}\NormalTok{(}\DataTypeTok{colour=}\NormalTok{F, }\DataTypeTok{shape=}\KeywordTok{guide_legend}\NormalTok{(}\DataTypeTok{title=}\StringTok{''}\NormalTok{))}\OperatorTok{+}
+\StringTok{  }\KeywordTok{theme}\NormalTok{(}\DataTypeTok{legend.position=}\KeywordTok{c}\NormalTok{(}\FloatTok{0.1}\NormalTok{,}\FloatTok{0.15}\NormalTok{))}\OperatorTok{+}
+\StringTok{  }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{y=}\StringTok{'Symbiont Shuffling'}\NormalTok{, }\DataTypeTok{x=}\StringTok{''}\NormalTok{)}\OperatorTok{+}
+\StringTok{  }\KeywordTok{scale_y_continuous}\NormalTok{(}\DataTypeTok{limits=}\KeywordTok{c}\NormalTok{(}\OperatorTok{-}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{),}\DataTypeTok{expand=}\KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{))}\OperatorTok{+}
+\StringTok{   }\KeywordTok{scale_x_discrete}\NormalTok{(}\DataTypeTok{labels=}\KeywordTok{c}\NormalTok{(mcav,ofav,ssid), }\DataTypeTok{expand=}\KeywordTok{expansion}\NormalTok{(}\DataTypeTok{mult=}\KeywordTok{c}\NormalTok{(}\FloatTok{0.5}\NormalTok{,}\FloatTok{0.2}\NormalTok{)))}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{SEASONAL_SHUFFLING_files/figure-latex/unnamed-chunk-12-6.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#ggsave('speciesshuffle.pdf',device='pdf', width=7,height=5)}
+\CommentTok{#add 'more durusdinium/less durusdinium' labels post-save}
+
+\CommentTok{#QUESTION FOR ROSS: unsure whether or not to use the '-0.5/0.5' in the aggregate function here (it seems to give a more conservative estimate for shuffling in bleached mcav, but does not work for the mcav controls)......as shown below}
+
+
+\CommentTok{# Get AUC for fitted values, lower and upper confidence limits}
+\NormalTok{auc2 <-}\StringTok{ }\KeywordTok{aggregate}\NormalTok{(res2[, }\KeywordTok{c}\NormalTok{(}\StringTok{"fit"}\NormalTok{, }\StringTok{"lower"}\NormalTok{, }\StringTok{"upper"}\NormalTok{)], }
+                 \DataTypeTok{by=}\KeywordTok{list}\NormalTok{(}\DataTypeTok{Species=}\NormalTok{res2}\OperatorTok{$}\NormalTok{Species, }\DataTypeTok{Treatment=}\NormalTok{res2}\OperatorTok{$}\NormalTok{Treatment),}
+                 \DataTypeTok{FUN=}\ControlFlowTok{function}\NormalTok{(x) (}\KeywordTok{mean}\NormalTok{(x)}\OperatorTok{-}\FloatTok{0.5}\NormalTok{)}\OperatorTok{/}\FloatTok{0.5}\NormalTok{)}
+\KeywordTok{levels}\NormalTok{(auc2}\OperatorTok{$}\NormalTok{Treatment)<-}\KeywordTok{c}\NormalTok{(}\StringTok{'Control'}\NormalTok{,}\StringTok{'Bleached'}\NormalTok{)}
+\NormalTok{auc2}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##       Species Treatment           fit      lower      upper
+## 1 M.cavernosa   Control -1.0000000000 -1.0000000 -0.4732779
+## 2 O.faveolata   Control -0.1950366838 -0.7576407  0.3675674
+## 3   S.siderea   Control  0.0007565134 -0.5582910  0.5598040
+## 4 M.cavernosa  Bleached  0.8849037164  0.4888545  1.0000000
+## 5 O.faveolata  Bleached  0.5883544891  0.1428467  1.0338623
+## 6   S.siderea  Bleached  0.5663219334  0.1568355  0.9758084
+\end{verbatim}
+
+\hypertarget{shuffling-and-photochemical-efficiency}{%
+\subsection{shuffling and photochemical
+efficiency}\label{shuffling-and-photochemical-efficiency}}
+
+\hypertarget{figure-s1-differnet-photochemical-disadvantages-of-hosting-durusdinium-at-ambient-temperatures-cannot-explain-the-difference-in-shuffling-between-o.-faveolata-and-s.-siderea.}{%
+\subsubsection{Figure S1: Differnet photochemical disadvantages of
+hosting Durusdinium at ambient temperatures cannot explain the
+difference in shuffling between O. faveolata and S.
+siderea.}\label{figure-s1-differnet-photochemical-disadvantages-of-hosting-durusdinium-at-ambient-temperatures-cannot-explain-the-difference-in-shuffling-between-o.-faveolata-and-s.-siderea.}}
+
+Recreating Cunning et al 2018 plot of the relative photochemical
+disadvantages of hosting durusdinium at ambient temperatures to explain
+species hierarchy (ofav\textgreater{}ssid) in shuffling.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{ipam=}\KeywordTok{filter}\NormalTok{(allbleach,allbleach}\OperatorTok{$}\NormalTok{Timepoint}\OperatorTok{==}\StringTok{'Pre-bleach'}\NormalTok{,allbleach}\OperatorTok{$}\NormalTok{Species}\OperatorTok{!=}\StringTok{'M.cavernosa'}\NormalTok{)}
+
+\KeywordTok{ggplot}\NormalTok{()}\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_smooth}\NormalTok{(}\DataTypeTok{method=}\StringTok{'glm'}\NormalTok{,}\DataTypeTok{data=}\NormalTok{ipam,}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{y=}\NormalTok{Y2,}\DataTypeTok{x=}\NormalTok{PropD,}\DataTypeTok{colour=}\NormalTok{Species, }\DataTypeTok{linetype=}\NormalTok{Batch),}\DataTypeTok{method.args =} \KeywordTok{list}\NormalTok{(}\DataTypeTok{family =} \StringTok{"quasibinomial"}\NormalTok{))}\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_point}\NormalTok{(}\DataTypeTok{data=}\NormalTok{ipam,}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{y=}\NormalTok{Y2,}\DataTypeTok{x=}\NormalTok{PropD,}\DataTypeTok{colour=}\NormalTok{Species, }\DataTypeTok{shape=}\NormalTok{Batch))}\OperatorTok{+}
+\StringTok{  }\KeywordTok{scale_colour_manual}\NormalTok{(}\DataTypeTok{values=}\KeywordTok{c}\NormalTok{(}\StringTok{'darkorange1'}\NormalTok{,}\StringTok{'darkturquoise'}\NormalTok{),}\DataTypeTok{labels=}\KeywordTok{c}\NormalTok{(ofav,ssid))}\OperatorTok{+}
+\StringTok{  }\KeywordTok{theme_minimal}\NormalTok{(}\DataTypeTok{base_size =} \DecValTok{15}\NormalTok{)}\OperatorTok{+}
+\StringTok{  }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{y=}\StringTok{'Initial (ambient) Fv/Fm'}\NormalTok{,}\DataTypeTok{x=}\StringTok{'Proportion *Durusdinium*'}\NormalTok{)}\OperatorTok{+}
+\StringTok{  }\KeywordTok{theme}\NormalTok{(}\DataTypeTok{axis.title.x=} \KeywordTok{element_markdown}\NormalTok{(),}\DataTypeTok{legend.title=}\KeywordTok{element_blank}\NormalTok{(),}\DataTypeTok{legend.position=}\StringTok{'bottom'}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## `geom_smooth()` using formula 'y ~ x'
+\end{verbatim}
+
+\includegraphics{SEASONAL_SHUFFLING_files/figure-latex/unnamed-chunk-13-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#ggsave('inity2.pdf',device='pdf', width=7,height=5)}
+
+\NormalTok{ipaminitmod=}\KeywordTok{lmer}\NormalTok{(Y2}\OperatorTok{~}\NormalTok{PropD}\OperatorTok{*}\NormalTok{Species}\OperatorTok{*}\NormalTok{Batch}\OperatorTok{+}\NormalTok{(}\DecValTok{1}\OperatorTok{|}\NormalTok{Colony),}\DataTypeTok{data=}\NormalTok{ipam)}
+\KeywordTok{plot_resqq}\NormalTok{(ipaminitmod)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{SEASONAL_SHUFFLING_files/figure-latex/unnamed-chunk-13-2.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{summary}\NormalTok{(ipaminitmod)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Linear mixed model fit by REML. t-tests use Satterthwaite's method [
+## lmerModLmerTest]
+## Formula: Y2 ~ PropD * Species * Batch + (1 | Colony)
+##    Data: ipam
+## 
+## REML criterion at convergence: -203.3
+## 
+## Scaled residuals: 
+##      Min       1Q   Median       3Q      Max 
+## -1.86465 -0.49506 -0.03011  0.50441  1.80649 
+## 
+## Random effects:
+##  Groups   Name        Variance  Std.Dev.
+##  Colony   (Intercept) 0.0001145 0.01070 
+##  Residual             0.0002989 0.01729 
+## Number of obs: 51, groups:  Colony, 19
+## 
+## Fixed effects:
+##                                 Estimate Std. Error         df t value Pr(>|t|)
+## (Intercept)                    0.5293324  0.0070538 25.0437420  75.042  < 2e-16
+## PropD                         -0.0032823  0.0134075 27.9645585  -0.245 0.808391
+## SpeciesS.siderea               0.0001896  0.0108844 26.2466965   0.017 0.986235
+## Batch2                         0.0363517  0.0096538 37.8622808   3.766 0.000564
+## PropD:SpeciesS.siderea        -0.0216401  0.0186729 31.1020055  -1.159 0.255317
+## PropD:Batch2                  -0.0017877  0.0163661 33.5505728  -0.109 0.913669
+## SpeciesS.siderea:Batch2       -0.0099099  0.0158472 33.9985376  -0.625 0.535923
+## PropD:SpeciesS.siderea:Batch2 -0.0053723  0.0239426 32.1793643  -0.224 0.823879
+##                                  
+## (Intercept)                   ***
+## PropD                            
+## SpeciesS.siderea                 
+## Batch2                        ***
+## PropD:SpeciesS.siderea           
+## PropD:Batch2                     
+## SpeciesS.siderea:Batch2          
+## PropD:SpeciesS.siderea:Batch2    
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Correlation of Fixed Effects:
+##             (Intr) PropD  SpcsS. Batch2 PrD:SS. PrD:B2 SS.:B2
+## PropD       -0.554                                           
+## SpecisS.sdr -0.648  0.359                                    
+## Batch2      -0.517  0.289  0.335                             
+## PrpD:SpcsS.  0.398 -0.718 -0.621 -0.207                      
+## PropD:Btch2  0.317 -0.564 -0.205 -0.634  0.405               
+## SpcsS.sd:B2  0.315 -0.176 -0.420 -0.609  0.246   0.386       
+## PrpD:SS.:B2 -0.217  0.386  0.312  0.434 -0.526  -0.684 -0.731
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#UPDATE FOR ROSS: I'm not sure this plot is needed, maybe just the stats, given there isn't a significant finding here. No significant differnece in the interaction between proportion durusdinium and coral species on Fv/Fm (p=0.255). However, initial Fv/Fm values were generally significantly higher in October (compared to april), regardless of coral species and proportion durusdinium (p=0.0005), although I don't think this is particularly relevant to the story of this paper?}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{figure-s2-despite-greater-symbiont-loss-in-the-october-m.-cavernosa-corals-shuffling-between-april-and-october-were-similar-for-all-three-coral-species.}{%
+\subsubsection{(Figure S2:) Despite greater symbiont loss in the October
+M. cavernosa corals, shuffling between April and October were similar
+for all three coral
+species.}\label{figure-s2-despite-greater-symbiont-loss-in-the-october-m.-cavernosa-corals-shuffling-between-april-and-october-were-similar-for-all-three-coral-species.}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#before getting fitted values, test statistical significance of batch for each species inidivually:}
+\NormalTok{ofavbatchmod=}\KeywordTok{lmer}\NormalTok{(post_propD }\OperatorTok{~}\StringTok{ }\NormalTok{pre_propD }\OperatorTok{+}\StringTok{ }\NormalTok{Batch}\OperatorTok{+}\NormalTok{(}\DecValTok{1}\OperatorTok{|}\NormalTok{Colony),}
+                 \DataTypeTok{data=}\KeywordTok{filter}\NormalTok{(batches, batches}\OperatorTok{$}\NormalTok{Species}\OperatorTok{==}\StringTok{'O.faveolata'}\NormalTok{, Treatment}\OperatorTok{==}\StringTok{'Manipulated'}\NormalTok{))}
+\NormalTok{ssidbatchmod=}\KeywordTok{lmer}\NormalTok{(post_propD }\OperatorTok{~}\StringTok{ }\NormalTok{pre_propD }\OperatorTok{+}\StringTok{ }\NormalTok{Batch}\OperatorTok{+}\NormalTok{(}\DecValTok{1}\OperatorTok{|}\NormalTok{Colony),}
+                 \DataTypeTok{data=}\KeywordTok{filter}\NormalTok{(batches, batches}\OperatorTok{$}\NormalTok{Species}\OperatorTok{==}\StringTok{'S.siderea'}\NormalTok{, Treatment}\OperatorTok{==}\StringTok{'Manipulated'}\NormalTok{))  }
+\NormalTok{mcavbatchmod=}\KeywordTok{lmer}\NormalTok{(post_propD }\OperatorTok{~}\NormalTok{Batch}\OperatorTok{+}\NormalTok{(}\DecValTok{1}\OperatorTok{|}\NormalTok{Colony),}
+                 \DataTypeTok{data=}\KeywordTok{filter}\NormalTok{(batches, batches}\OperatorTok{$}\NormalTok{Species}\OperatorTok{==}\StringTok{'M.cavernosa'}\NormalTok{, Treatment}\OperatorTok{==}\StringTok{'Manipulated'}\NormalTok{))}
+\KeywordTok{summary}\NormalTok{(ofavbatchmod) }\CommentTok{#p=0.546701}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Linear mixed model fit by REML. t-tests use Satterthwaite's method [
+## lmerModLmerTest]
+## Formula: post_propD ~ pre_propD + Batch + (1 | Colony)
+##    Data: filter(batches, batches$Species == "O.faveolata", Treatment ==  
+##     "Manipulated")
+## 
+## REML criterion at convergence: 11.9
+## 
+## Scaled residuals: 
+##      Min       1Q   Median       3Q      Max 
+## -1.84265 -0.10735  0.09364  0.20476  1.67041 
+## 
+## Random effects:
+##  Groups   Name        Variance Std.Dev.
+##  Colony   (Intercept) 0.08313  0.2883  
+##  Residual             0.03990  0.1997  
+## Number of obs: 22, groups:  Colony, 10
+## 
+## Fixed effects:
+##              Estimate Std. Error       df t value Pr(>|t|)    
+## (Intercept)   0.70531    0.12833  7.45285   5.496 0.000736 ***
+## pre_propD     0.35253    0.23111  6.33618   1.525 0.175414    
+## BatchOctober -0.06274    0.10098 11.32362  -0.621 0.546701    
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Correlation of Fixed Effects:
+##             (Intr) pr_prD
+## pre_propD   -0.539       
+## BatchOctobr -0.202 -0.145
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{summary}\NormalTok{(ssidbatchmod) }\CommentTok{#p=0.85918}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Linear mixed model fit by REML. t-tests use Satterthwaite's method [
+## lmerModLmerTest]
+## Formula: post_propD ~ pre_propD + Batch + (1 | Colony)
+##    Data: filter(batches, batches$Species == "S.siderea", Treatment ==  
+##     "Manipulated")
+## 
+## REML criterion at convergence: 17.4
+## 
+## Scaled residuals: 
+##      Min       1Q   Median       3Q      Max 
+## -2.15335 -0.08276 -0.01649  0.13550  1.81479 
+## 
+## Random effects:
+##  Groups   Name        Variance Std.Dev.
+##  Colony   (Intercept) 0.03293  0.1815  
+##  Residual             0.07492  0.2737  
+## Number of obs: 25, groups:  Colony, 9
+## 
+## Fixed effects:
+##              Estimate Std. Error       df t value Pr(>|t|)   
+## (Intercept)   0.50616    0.13036 11.20440   3.883  0.00247 **
+## pre_propD     0.48309    0.19318 11.98865   2.501  0.02790 * 
+## BatchOctober  0.02277    0.12658 18.68964   0.180  0.85918   
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Correlation of Fixed Effects:
+##             (Intr) pr_prD
+## pre_propD   -0.658       
+## BatchOctobr -0.101 -0.420
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{summary}\NormalTok{(mcavbatchmod) }\CommentTok{#p=0.0505}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Linear mixed model fit by REML. t-tests use Satterthwaite's method [
+## lmerModLmerTest]
+## Formula: post_propD ~ Batch + (1 | Colony)
+##    Data: filter(batches, batches$Species == "M.cavernosa", Treatment ==  
+##     "Manipulated")
+## 
+## REML criterion at convergence: -10.5
+## 
+## Scaled residuals: 
+##     Min      1Q  Median      3Q     Max 
+## -2.7890 -0.2055  0.1068  0.4819  1.2017 
+## 
+## Random effects:
+##  Groups   Name        Variance Std.Dev.
+##  Colony   (Intercept) 0.01003  0.1002  
+##  Residual             0.02478  0.1574  
+## Number of obs: 28, groups:  Colony, 10
+## 
+## Fixed effects:
+##              Estimate Std. Error       df t value Pr(>|t|)    
+## (Intercept)   0.88288    0.05391 18.20147  16.377 2.43e-12 ***
+## BatchOctober  0.12636    0.06082 20.57959   2.078   0.0505 .  
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Correlation of Fixed Effects:
+##             (Intr)
+## BatchOctobr -0.576
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{eff <-}\StringTok{ }\KeywordTok{effect}\NormalTok{(}\KeywordTok{c}\NormalTok{(}\StringTok{'pre_propD'}\NormalTok{, }\StringTok{'Species'}\NormalTok{,}\StringTok{'Treatment'}\NormalTok{, }\StringTok{'Batch'}\NormalTok{), shufflemod, }
+              \DataTypeTok{xlevels=}\KeywordTok{list}\NormalTok{(}\DataTypeTok{pre_propD=}\KeywordTok{seq}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DataTypeTok{by=}\FloatTok{0.01}\NormalTok{)))}
+\CommentTok{# Get all fitted values and subsets for each treatment and now also batch}
+\NormalTok{res <-}\StringTok{ }\KeywordTok{droplevels}\NormalTok{(}\KeywordTok{data.frame}\NormalTok{(eff))}
+
+\NormalTok{res}\OperatorTok{$}\NormalTok{Species <-}\StringTok{ }\KeywordTok{factor}\NormalTok{(res}\OperatorTok{$}\NormalTok{Species, }\DataTypeTok{levels=}\KeywordTok{c}\NormalTok{(}\StringTok{"O.faveolata"}\NormalTok{, }\StringTok{"S.siderea"}\NormalTok{, }\StringTok{"M.cavernosa"}\NormalTok{))}
+\NormalTok{res.Bl <-}\StringTok{ }\KeywordTok{subset}\NormalTok{(}\KeywordTok{data.frame}\NormalTok{(eff), Treatment}\OperatorTok{==}\StringTok{"Manipulated"}\NormalTok{)}
+\NormalTok{res.Ct <-}\StringTok{ }\KeywordTok{subset}\NormalTok{(}\KeywordTok{data.frame}\NormalTok{(eff), Treatment}\OperatorTok{==}\StringTok{"Control"}\NormalTok{)}
+\NormalTok{res.Ap<-}\StringTok{ }\KeywordTok{subset}\NormalTok{(}\KeywordTok{data.frame}\NormalTok{(eff), Batch}\OperatorTok{==}\StringTok{'April'}\NormalTok{)}
+\NormalTok{res.Oc<-}\StringTok{ }\KeywordTok{subset}\NormalTok{(}\KeywordTok{data.frame}\NormalTok{(eff), Batch}\OperatorTok{==}\StringTok{'October'}\NormalTok{)}
+\CommentTok{# Get AUC for fitted values, lower and upper confidence limits}
+\NormalTok{auc <-}\StringTok{ }\KeywordTok{aggregate}\NormalTok{(res[, }\KeywordTok{c}\NormalTok{(}\StringTok{"fit"}\NormalTok{, }\StringTok{"lower"}\NormalTok{, }\StringTok{"upper"}\NormalTok{)], }
+                 \DataTypeTok{by=}\KeywordTok{list}\NormalTok{(}\DataTypeTok{Species=}\NormalTok{res}\OperatorTok{$}\NormalTok{Species, }\DataTypeTok{Treatment=}\NormalTok{res}\OperatorTok{$}\NormalTok{Treatment, }\DataTypeTok{Batch=}\NormalTok{res}\OperatorTok{$}\NormalTok{Batch), }
+                 \DataTypeTok{FUN=}\ControlFlowTok{function}\NormalTok{(x) (}\KeywordTok{mean}\NormalTok{(x)}\OperatorTok{-}\FloatTok{0.5}\NormalTok{)}\OperatorTok{/}\FloatTok{0.5}\NormalTok{)}
+
+\NormalTok{auc[}\DecValTok{4}\NormalTok{,}\DecValTok{6}\NormalTok{]=}\FloatTok{1.0}
+\NormalTok{auc[}\DecValTok{10}\NormalTok{,}\DecValTok{6}\NormalTok{]=}\FloatTok{1.0}
+\NormalTok{auc}\OperatorTok{$}\NormalTok{Treatment=}\KeywordTok{factor}\NormalTok{(auc}\OperatorTok{$}\NormalTok{Treatment, }\DataTypeTok{levels=}\KeywordTok{c}\NormalTok{(}\StringTok{'Manipulated'}\NormalTok{,}\StringTok{'Control'}\NormalTok{))}
+\KeywordTok{levels}\NormalTok{(auc}\OperatorTok{$}\NormalTok{Treatment)<-}\KeywordTok{c}\NormalTok{(}\StringTok{'Bleached'}\NormalTok{,}\StringTok{'Control'}\NormalTok{)}
+\NormalTok{auc}\OperatorTok{$}\NormalTok{Species=}\KeywordTok{factor}\NormalTok{(auc}\OperatorTok{$}\NormalTok{Species, }\DataTypeTok{levels=}\KeywordTok{c}\NormalTok{(}\StringTok{'M.cavernosa'}\NormalTok{, }\StringTok{'O.faveolata'}\NormalTok{, }\StringTok{'S.siderea'}\NormalTok{))}
+\NormalTok{auc}\OperatorTok{$}\NormalTok{Batch=}\KeywordTok{factor}\NormalTok{(auc}\OperatorTok{$}\NormalTok{Batch, }\DataTypeTok{levels=}\KeywordTok{c}\NormalTok{(}\StringTok{'April'}\NormalTok{,}\StringTok{'October'}\NormalTok{))}
+\NormalTok{ofavssidbatchshuff<-}\StringTok{ }\NormalTok{auc[}\OperatorTok{-}\KeywordTok{c}\NormalTok{(}\DecValTok{3}\NormalTok{,}\DecValTok{6}\NormalTok{,}\DecValTok{9}\NormalTok{,}\DecValTok{12}\NormalTok{),]}
+
+
+\NormalTok{eff2 <-}\StringTok{ }\KeywordTok{effect}\NormalTok{(}\KeywordTok{c}\NormalTok{(}\StringTok{'Species'}\NormalTok{,}\StringTok{'Treatment'}\NormalTok{,}\StringTok{'Batch'}\NormalTok{), shufflemod2)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## NOTE: SpeciesTreatmentBatch is not a high-order term in the model
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{res2 <-}\StringTok{ }\KeywordTok{droplevels}\NormalTok{(}\KeywordTok{data.frame}\NormalTok{(eff2))}
+\CommentTok{#force limits of 1 and 0 on mcav confidence intervals}
+\NormalTok{res2[}\DecValTok{1}\NormalTok{,}\DecValTok{7}\NormalTok{]=}\DecValTok{1}
+\NormalTok{res2[}\DecValTok{7}\NormalTok{,}\DecValTok{4}\NormalTok{]=}\DecValTok{1}
+\NormalTok{res2[}\DecValTok{7}\NormalTok{,}\DecValTok{7}\NormalTok{]=}\DecValTok{1}
+\NormalTok{res2[}\DecValTok{4}\NormalTok{,}\DecValTok{4}\NormalTok{]=}\DecValTok{0}
+\NormalTok{res2[}\DecValTok{4}\NormalTok{,}\DecValTok{6}\NormalTok{]=}\DecValTok{0}
+\NormalTok{res2[}\DecValTok{10}\NormalTok{,}\DecValTok{4}\NormalTok{]=}\DecValTok{0}
+\NormalTok{res2[}\DecValTok{10}\NormalTok{,}\DecValTok{6}\NormalTok{]=}\DecValTok{0}
+
+\NormalTok{res2}\OperatorTok{$}\NormalTok{Species <-}\StringTok{ }\KeywordTok{factor}\NormalTok{(res2}\OperatorTok{$}\NormalTok{Species, }\DataTypeTok{levels=}\KeywordTok{c}\NormalTok{(}\StringTok{'M.cavernosa'}\NormalTok{,}\StringTok{"O.faveolata"}\NormalTok{, }\StringTok{"S.siderea"}\NormalTok{))}
+\NormalTok{res2.Bl <-}\StringTok{ }\KeywordTok{subset}\NormalTok{(}\KeywordTok{data.frame}\NormalTok{(eff2), Treatment}\OperatorTok{==}\StringTok{"Manipulated"}\NormalTok{)}
+\NormalTok{res2.Ct <-}\StringTok{ }\KeywordTok{subset}\NormalTok{(}\KeywordTok{data.frame}\NormalTok{(eff2), Treatment}\OperatorTok{==}\StringTok{"Control"}\NormalTok{)}
+\NormalTok{res2.Ap<-}\StringTok{ }\KeywordTok{subset}\NormalTok{(}\KeywordTok{data.frame}\NormalTok{(eff2), Batch}\OperatorTok{==}\StringTok{'April'}\NormalTok{)}
+\NormalTok{res2.Oc<-}\StringTok{ }\KeywordTok{subset}\NormalTok{(}\KeywordTok{data.frame}\NormalTok{(eff2), Batch}\OperatorTok{==}\StringTok{'October'}\NormalTok{)}
+
+\CommentTok{# Get AUC for fitted values, lower and upper confidence limits}
+\NormalTok{auc2 <-}\StringTok{ }\KeywordTok{aggregate}\NormalTok{(res2[, }\KeywordTok{c}\NormalTok{(}\StringTok{"fit"}\NormalTok{, }\StringTok{"lower"}\NormalTok{, }\StringTok{"upper"}\NormalTok{)], }
+                 \DataTypeTok{by=}\KeywordTok{list}\NormalTok{(}\DataTypeTok{Species=}\NormalTok{res2}\OperatorTok{$}\NormalTok{Species, }\DataTypeTok{Treatment=}\NormalTok{res2}\OperatorTok{$}\NormalTok{Treatment, }\DataTypeTok{Batch=}\NormalTok{res2}\OperatorTok{$}\NormalTok{Batch),}
+                 \DataTypeTok{FUN=}\ControlFlowTok{function}\NormalTok{(x) (}\KeywordTok{mean}\NormalTok{(x)))}
+\KeywordTok{levels}\NormalTok{(auc2}\OperatorTok{$}\NormalTok{Treatment)<-}\KeywordTok{c}\NormalTok{(}\StringTok{'Control'}\NormalTok{,}\StringTok{'Bleached'}\NormalTok{)}
+\NormalTok{mcavbatchshuff<-}\StringTok{ }\NormalTok{auc2[}\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{4}\NormalTok{,}\DecValTok{7}\NormalTok{,}\DecValTok{10}\NormalTok{),]}
+\NormalTok{batchshuff<-}\StringTok{ }\KeywordTok{rbind}\NormalTok{(ofavssidbatchshuff, mcavbatchshuff)}
+\NormalTok{batchshuff}\OperatorTok{$}\NormalTok{spbatch<-}\StringTok{ }\KeywordTok{interaction}\NormalTok{ (batchshuff}\OperatorTok{$}\NormalTok{Batch,batchshuff}\OperatorTok{$}\NormalTok{Species)}
+
+\KeywordTok{ggplot}\NormalTok{(}\DataTypeTok{data=}\KeywordTok{filter}\NormalTok{(batchshuff,batchshuff}\OperatorTok{$}\NormalTok{Treatment}\OperatorTok{==}\StringTok{'Bleached'}\NormalTok{))}\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_errorbar}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{ymin=}\NormalTok{lower, }\DataTypeTok{ymax=}\NormalTok{upper, }\DataTypeTok{x=}\NormalTok{Species, }\DataTypeTok{colour=}\NormalTok{Species, }\DataTypeTok{group=}\NormalTok{Batch),}\DataTypeTok{size=}\FloatTok{0.5}\NormalTok{, }\DataTypeTok{position=}\KeywordTok{position_dodge}\NormalTok{(}\DataTypeTok{width=}\FloatTok{0.5}\NormalTok{), }\DataTypeTok{width=}\FloatTok{0.2}\NormalTok{)}\OperatorTok{+}
+\StringTok{   }\KeywordTok{geom_point}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{y=}\NormalTok{fit, }\DataTypeTok{x=}\NormalTok{Species, }\DataTypeTok{shape=}\NormalTok{Batch, }\DataTypeTok{colour=}\NormalTok{Species),}\DataTypeTok{size=}\DecValTok{2}\NormalTok{, }\DataTypeTok{position=}\KeywordTok{position_dodge}\NormalTok{(}\DataTypeTok{width=}\FloatTok{0.5}\NormalTok{))}\OperatorTok{+}
+\StringTok{  }\KeywordTok{theme_minimal}\NormalTok{(}\DataTypeTok{base_size =} \DecValTok{13}\NormalTok{)}\OperatorTok{%+replace%}
+\StringTok{   }\KeywordTok{theme}\NormalTok{(}\DataTypeTok{panel.border =} \KeywordTok{element_rect}\NormalTok{(}\DataTypeTok{colour=}\StringTok{'grey20'}\NormalTok{,}\DataTypeTok{fill=}\OtherTok{NA}\NormalTok{),}
+          \DataTypeTok{panel.grid.minor.x =} \KeywordTok{element_blank}\NormalTok{(),}
+         \DataTypeTok{panel.grid.major.x =} \KeywordTok{element_blank}\NormalTok{(),}
+          \DataTypeTok{panel.grid.minor.y =} \KeywordTok{element_blank}\NormalTok{())}\OperatorTok{+}
+\StringTok{  }\KeywordTok{scale_color_manual}\NormalTok{(}\DataTypeTok{values=}\KeywordTok{c}\NormalTok{(}\StringTok{'deeppink2'}\NormalTok{,}\StringTok{'darkorange1'}\NormalTok{, }\StringTok{'darkturquoise'}\NormalTok{))}\OperatorTok{+}
+\StringTok{  }\KeywordTok{guides}\NormalTok{(}\DataTypeTok{colour=}\NormalTok{F, }\DataTypeTok{shape=}\KeywordTok{guide_legend}\NormalTok{(}\DataTypeTok{title=}\StringTok{''}\NormalTok{))}\OperatorTok{+}
+\StringTok{  }\KeywordTok{theme}\NormalTok{(}\DataTypeTok{legend.position=}\KeywordTok{c}\NormalTok{(}\FloatTok{0.1}\NormalTok{,}\FloatTok{0.15}\NormalTok{))}\OperatorTok{+}
+\StringTok{  }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{y=}\StringTok{'Symbiont Shuffling in Bleached Corals'}\NormalTok{, }\DataTypeTok{x=}\StringTok{''}\NormalTok{)}\OperatorTok{+}
+\StringTok{  }\KeywordTok{scale_y_continuous}\NormalTok{(}\DataTypeTok{limits=}\KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{1}\NormalTok{),}\DataTypeTok{expand=}\KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{SEASONAL_SHUFFLING_files/figure-latex/unnamed-chunk-14-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#ggsave('shufflebatches.pdf',device='pdf',width=7,height=5)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{figure-3b-shuffling-occurred-later-in-recovery-in-m.-cavernosa-compared-to-o.-faveolata-and-s.-siderea.}{%
+\subsubsection{Figure 3b: Shuffling occurred later in recovery in M.
+cavernosa compared to O. faveolata and S.
+siderea.}\label{figure-3b-shuffling-occurred-later-in-recovery-in-m.-cavernosa-compared-to-o.-faveolata-and-s.-siderea.}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{shuffletimes=}\KeywordTok{read.csv}\NormalTok{(}\StringTok{'shuffle_timepoints.csv'}\NormalTok{,}\DataTypeTok{header =}\NormalTok{T)}
+\NormalTok{shuffletimes}\OperatorTok{$}\NormalTok{Treatment=}\KeywordTok{factor}\NormalTok{(shuffletimes}\OperatorTok{$}\NormalTok{Treatment)}
+\NormalTok{shuff=}\KeywordTok{read.csv}\NormalTok{(}\StringTok{'shuff.csv'}\NormalTok{,}\DataTypeTok{header =}\NormalTok{ T)}
+\NormalTok{shuff}\OperatorTok{$}\NormalTok{Colony=}\KeywordTok{factor}\NormalTok{(shuff}\OperatorTok{$}\NormalTok{Colony)}
+\NormalTok{shuff}\OperatorTok{$}\NormalTok{Species=}\KeywordTok{factor}\NormalTok{(shuff}\OperatorTok{$}\NormalTok{Species)}
+\NormalTok{shuff}\OperatorTok{$}\NormalTok{Timepoint=}\KeywordTok{as.integer}\NormalTok{(shuff}\OperatorTok{$}\NormalTok{Timepoint,}\DataTypeTok{length=}\DecValTok{3}\NormalTok{)}
+
+
+\NormalTok{shuffmod=}\KeywordTok{lmer}\NormalTok{(PropD}\OperatorTok{~}\NormalTok{PropD0}\OperatorTok{+}\NormalTok{Species}\OperatorTok{*}\NormalTok{Timepoint}\OperatorTok{+}\NormalTok{(}\DecValTok{1}\OperatorTok{|}\NormalTok{Colony),}\DataTypeTok{data=}\NormalTok{shuff)}
+\KeywordTok{plot_resqq}\NormalTok{(shuffmod)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{SEASONAL_SHUFFLING_files/figure-latex/unnamed-chunk-15-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{summary}\NormalTok{(shuffmod)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Linear mixed model fit by REML. t-tests use Satterthwaite's method [
+## lmerModLmerTest]
+## Formula: PropD ~ PropD0 + Species * Timepoint + (1 | Colony)
+##    Data: shuff
+## 
+## REML criterion at convergence: 104.6
+## 
+## Scaled residuals: 
+##     Min      1Q  Median      3Q     Max 
+## -2.5126 -0.4678  0.0141  0.4194  3.7174 
+## 
+## Random effects:
+##  Groups   Name        Variance Std.Dev.
+##  Colony   (Intercept) 0.03418  0.1849  
+##  Residual             0.07168  0.2677  
+## Number of obs: 208, groups:  Colony, 29
+## 
+## Fixed effects:
+##                               Estimate Std. Error        df t value Pr(>|t|)
+## (Intercept)                   -0.42076    0.09910  92.91601  -4.246 5.16e-05
+## PropD0                         0.39576    0.09866  45.80985   4.011 0.000221
+## SpeciesO.faveolata             0.77968    0.14591  96.40165   5.344 6.09e-07
+## SpeciesS.siderea               0.94733    0.16291  97.27006   5.815 7.71e-08
+## Timepoint                      0.44927    0.03626 174.74719  12.391  < 2e-16
+## SpeciesO.faveolata:Timepoint  -0.32474    0.05375 174.54374  -6.042 8.96e-09
+## SpeciesS.siderea:Timepoint    -0.42711    0.05572 175.65745  -7.665 1.17e-12
+##                                 
+## (Intercept)                  ***
+## PropD0                       ***
+## SpeciesO.faveolata           ***
+## SpeciesS.siderea             ***
+## Timepoint                    ***
+## SpeciesO.faveolata:Timepoint ***
+## SpeciesS.siderea:Timepoint   ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Correlation of Fixed Effects:
+##             (Intr) PropD0 SpcsO. SpcsS. Timpnt SpO.:T
+## PropD0      -0.002                                   
+## SpecsO.fvlt -0.679 -0.202                            
+## SpecisS.sdr -0.608 -0.358  0.485                     
+## Timepoint   -0.736  0.000  0.500  0.447              
+## SpcsO.fvl:T  0.496 -0.013 -0.729 -0.297 -0.675       
+## SpcsS.sdr:T  0.479  0.012 -0.327 -0.720 -0.651  0.439
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{anova}\NormalTok{(shuffmod,}\DataTypeTok{test=}\StringTok{'F'}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Type III Analysis of Variance Table with Satterthwaite's method
+##                   Sum Sq Mean Sq NumDF  DenDF F value    Pr(>F)    
+## PropD0            1.1534  1.1534     1  45.81  16.091 0.0002209 ***
+## Species           3.0202  1.5101     2 100.17  21.066 2.308e-08 ***
+## Timepoint         5.4417  5.4417     1 175.23  75.914 2.180e-15 ***
+## Species:Timepoint 4.8481  2.4241     2 175.19  33.817 3.808e-13 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{propD1=}\KeywordTok{lmer}\NormalTok{(PropD }\OperatorTok{~}\StringTok{ }\NormalTok{PropD0}\OperatorTok{+}\NormalTok{Timepoint}\OperatorTok{*}\NormalTok{Species}\OperatorTok{+}\NormalTok{(}\DecValTok{1}\OperatorTok{|}\NormalTok{Colony),}
+             \DataTypeTok{data=}\NormalTok{shuff)}
+
+\NormalTok{eff1 <-}\StringTok{ }\KeywordTok{effect}\NormalTok{(}\KeywordTok{c}\NormalTok{(}\StringTok{'PropD0'}\NormalTok{, }\StringTok{'Timepoint'}\NormalTok{, }\StringTok{'Species'}\NormalTok{), propD1, }
+              \DataTypeTok{xlevels=}\KeywordTok{list}\NormalTok{(}\DataTypeTok{PropD0=}\KeywordTok{seq}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DataTypeTok{by=}\FloatTok{0.01}\NormalTok{)))}
+
+\NormalTok{res <-}\StringTok{ }\KeywordTok{droplevels}\NormalTok{(}\KeywordTok{data.frame}\NormalTok{(eff1))}
+\NormalTok{res}\OperatorTok{$}\NormalTok{Species <-}\StringTok{ }\KeywordTok{factor}\NormalTok{(res}\OperatorTok{$}\NormalTok{Species, }\DataTypeTok{levels=}\KeywordTok{c}\NormalTok{(}\StringTok{"O.faveolata"}\NormalTok{, }\StringTok{"S.siderea"}\NormalTok{))}
+\CommentTok{# Get AUC for fitted values, lower and upper confidence limits}
+\NormalTok{auc1 <-}\StringTok{ }\KeywordTok{aggregate}\NormalTok{(res[, }\KeywordTok{c}\NormalTok{(}\StringTok{"fit"}\NormalTok{, }\StringTok{"lower"}\NormalTok{, }\StringTok{"upper"}\NormalTok{)], }
+                 \DataTypeTok{by=}\KeywordTok{list}\NormalTok{(}\DataTypeTok{Species=}\NormalTok{res}\OperatorTok{$}\NormalTok{Species,}\DataTypeTok{Timepoint=}\NormalTok{res}\OperatorTok{$}\NormalTok{Timepoint), }
+                 \DataTypeTok{FUN=}\ControlFlowTok{function}\NormalTok{(x) (}\KeywordTok{mean}\NormalTok{(x)}\OperatorTok{-}\FloatTok{0.5}\NormalTok{)}\OperatorTok{/}\FloatTok{0.5}\NormalTok{)}
+
+\CommentTok{#now an intial prop d independent model for mcav}
+\NormalTok{propD2=}\KeywordTok{lmer}\NormalTok{(PropD }\OperatorTok{~}\StringTok{ }\NormalTok{Timepoint}\OperatorTok{*}\NormalTok{Species}\OperatorTok{+}\NormalTok{(}\DecValTok{1}\OperatorTok{|}\NormalTok{Colony),}
+             \DataTypeTok{data=}\NormalTok{shuff)}
+
+\NormalTok{eff2 <-}\StringTok{ }\KeywordTok{effect}\NormalTok{(}\KeywordTok{c}\NormalTok{(}\StringTok{'Timepoint'}\NormalTok{, }\StringTok{'Species'}\NormalTok{), propD2)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## NOTE: TimepointSpecies is not a high-order term in the model
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{res <-}\StringTok{ }\KeywordTok{droplevels}\NormalTok{(}\KeywordTok{data.frame}\NormalTok{(eff2))}
+\NormalTok{res}\OperatorTok{$}\NormalTok{Species <-}\StringTok{ }\KeywordTok{factor}\NormalTok{(res}\OperatorTok{$}\NormalTok{Species, }\DataTypeTok{levels=}\KeywordTok{c}\NormalTok{(}\StringTok{"M.cavernosa"}\NormalTok{))}
+\CommentTok{# Get AUC for fitted values, lower and upper confidence limits}
+\NormalTok{auc2 <-}\StringTok{ }\KeywordTok{aggregate}\NormalTok{(res[, }\KeywordTok{c}\NormalTok{(}\StringTok{"fit"}\NormalTok{, }\StringTok{"lower"}\NormalTok{, }\StringTok{"upper"}\NormalTok{)], }
+                 \DataTypeTok{by=}\KeywordTok{list}\NormalTok{(}\DataTypeTok{Species=}\NormalTok{res}\OperatorTok{$}\NormalTok{Species,}\DataTypeTok{Timepoint=}\NormalTok{res}\OperatorTok{$}\NormalTok{Timepoint), }
+                 \DataTypeTok{FUN=}\ControlFlowTok{function}\NormalTok{(x) (}\KeywordTok{mean}\NormalTok{(x)))}
+
+
+\NormalTok{aucall <-}\StringTok{ }\KeywordTok{rbind}\NormalTok{(auc1, auc2)}
+\NormalTok{aucall}\OperatorTok{$}\NormalTok{Timepoint=}\KeywordTok{factor}\NormalTok{(aucall}\OperatorTok{$}\NormalTok{Timepoint, }\DataTypeTok{levels=}\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{3}\NormalTok{))}
+\NormalTok{aucall[}\DecValTok{11}\NormalTok{,}\DecValTok{4}\NormalTok{]=}\DecValTok{0}
+\NormalTok{aucall[}\DecValTok{9}\NormalTok{,}\DecValTok{5}\NormalTok{]=}\DecValTok{1}
+\NormalTok{aucall[}\DecValTok{15}\NormalTok{,}\DecValTok{5}\NormalTok{]=}\DecValTok{1}
+\NormalTok{aucall=aucall[}\OperatorTok{-}\KeywordTok{c}\NormalTok{(}\DecValTok{3}\NormalTok{,}\DecValTok{4}\NormalTok{,}\DecValTok{7}\NormalTok{,}\DecValTok{8}\NormalTok{,}\DecValTok{12}\NormalTok{,}\DecValTok{14}\NormalTok{),]}
+\NormalTok{aucall}\OperatorTok{$}\NormalTok{Species=}\KeywordTok{factor}\NormalTok{(aucall}\OperatorTok{$}\NormalTok{Species, }\DataTypeTok{levels=}\KeywordTok{c}\NormalTok{(}\StringTok{'M.cavernosa'}\NormalTok{,}\StringTok{'O.faveolata'}\NormalTok{,}\StringTok{'S.siderea'}\NormalTok{))}
+
+
+\CommentTok{##########}
+\NormalTok{ofav=}\KeywordTok{expression}\NormalTok{(}\KeywordTok{paste}\NormalTok{(}\KeywordTok{italic}\NormalTok{(}\StringTok{"O. faveolata"}\NormalTok{)))}
+\NormalTok{ssid=}\KeywordTok{expression}\NormalTok{(}\KeywordTok{paste}\NormalTok{(}\KeywordTok{italic}\NormalTok{(}\StringTok{"S. siderea"}\NormalTok{)))}
+\NormalTok{mcav=}\KeywordTok{expression}\NormalTok{(}\KeywordTok{paste}\NormalTok{(}\KeywordTok{italic}\NormalTok{(}\StringTok{"M. cavernosa"}\NormalTok{)))}
+
+\KeywordTok{ggplot}\NormalTok{(aucall, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ Timepoint, }\DataTypeTok{y =}\NormalTok{ fit, }\DataTypeTok{group =}\NormalTok{ Species)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_errorbar}\NormalTok{(}\DataTypeTok{data=}\NormalTok{aucall, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{ymin =}\NormalTok{ lower, }\DataTypeTok{ymax =}\NormalTok{ upper), }
+                \DataTypeTok{position =} \KeywordTok{position_dodge}\NormalTok{(}\FloatTok{0.2}\NormalTok{), }\DataTypeTok{lwd =} \FloatTok{0.2}\NormalTok{, }\DataTypeTok{width =} \FloatTok{0.2}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_point}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{color =}\NormalTok{ Species),}
+             \DataTypeTok{position =} \KeywordTok{position_dodge}\NormalTok{(}\FloatTok{0.2}\NormalTok{), }\DataTypeTok{size =} \FloatTok{2.5}\NormalTok{)}\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_hline}\NormalTok{(}\DataTypeTok{yintercept =} \DecValTok{0}\NormalTok{, }\DataTypeTok{lwd =} \FloatTok{0.1}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{scale_y_continuous}\NormalTok{(}\DataTypeTok{limits =} \KeywordTok{c}\NormalTok{(}\OperatorTok{-}\FloatTok{0.25}\NormalTok{, }\DecValTok{1}\NormalTok{))}\OperatorTok{+}
+\StringTok{  }\KeywordTok{scale_x_discrete}\NormalTok{(}\DataTypeTok{labels=}\KeywordTok{c}\NormalTok{(}\StringTok{'Post heat stress'}\NormalTok{,}\StringTok{'1 month recovery'}\NormalTok{,}\StringTok{'2 month recovery'}\NormalTok{),}\DataTypeTok{expand=}\KeywordTok{expansion}\NormalTok{(}\DataTypeTok{mult=}\KeywordTok{c}\NormalTok{(}\FloatTok{0.2}\NormalTok{,}\FloatTok{0.4}\NormalTok{)))}\OperatorTok{+}
+\StringTok{  }\KeywordTok{theme_minimal}\NormalTok{(}\DataTypeTok{base_size =} \DecValTok{13}\NormalTok{)}\OperatorTok{%+replace%}
+\StringTok{   }\KeywordTok{theme}\NormalTok{(}\DataTypeTok{panel.border =} \KeywordTok{element_rect}\NormalTok{(}\DataTypeTok{colour=}\StringTok{'grey20'}\NormalTok{,}\DataTypeTok{fill=}\OtherTok{NA}\NormalTok{),}
+          \DataTypeTok{panel.grid.minor.x =} \KeywordTok{element_blank}\NormalTok{(),}
+         \DataTypeTok{panel.grid.major.x =} \KeywordTok{element_blank}\NormalTok{(),}
+          \DataTypeTok{panel.grid.minor.y =} \KeywordTok{element_blank}\NormalTok{())}\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_line}\NormalTok{(}\DataTypeTok{linetype=}\StringTok{'dashed'}\NormalTok{,}\DataTypeTok{alpha=}\FloatTok{0.6}\NormalTok{,}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{colour=}\NormalTok{Species),}\DataTypeTok{position =} \KeywordTok{position_dodge}\NormalTok{(}\FloatTok{0.2}\NormalTok{))}\OperatorTok{+}
+\StringTok{  }\KeywordTok{scale_colour_manual}\NormalTok{(}\DataTypeTok{values=}\KeywordTok{c}\NormalTok{(}\StringTok{'deeppink2'}\NormalTok{,}\StringTok{'darkorange1'}\NormalTok{,}\StringTok{'darkturquoise'}\NormalTok{),}\DataTypeTok{labels=}\KeywordTok{c}\NormalTok{(mcav,ofav,ssid), }\DataTypeTok{name=}\StringTok{''}\NormalTok{)}\OperatorTok{+}
+\StringTok{  }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{y=}\StringTok{'Cumulative Symbiont Shuffling'}\NormalTok{,}\DataTypeTok{x=}\StringTok{''}\NormalTok{)}\OperatorTok{+}
+\StringTok{  }\KeywordTok{annotate}\NormalTok{(}\DataTypeTok{geom=}\StringTok{'text'}\NormalTok{,}\DataTypeTok{x=}\FloatTok{3.4}\NormalTok{,}\DataTypeTok{y=}\FloatTok{0.1}\NormalTok{,}\DataTypeTok{label=}\NormalTok{gaindd,}\DataTypeTok{size=}\DecValTok{4}\NormalTok{)}\OperatorTok{+}
+\StringTok{   }\KeywordTok{annotate}\NormalTok{(}\DataTypeTok{geom=}\StringTok{'text'}\NormalTok{,}\DataTypeTok{x=}\FloatTok{3.4}\NormalTok{,}\DataTypeTok{y=}\OperatorTok{-}\FloatTok{0.1}\NormalTok{,}\DataTypeTok{label=}\NormalTok{lostd,}\DataTypeTok{size=}\DecValTok{4}\NormalTok{)}\OperatorTok{+}
+\StringTok{  }\KeywordTok{theme}\NormalTok{(}\DataTypeTok{legend.position =} \StringTok{'bottom'}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{SEASONAL_SHUFFLING_files/figure-latex/unnamed-chunk-15-2.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#ggsave('shuffletimingcumulative.pdf',device='pdf',height=5,width=7)}
+
+\CommentTok{###UPDATE FOR ROSS: again, I have changed this to usea mixed effects model, and have forced limits of 1 and -1 for the errorbars (1 and 0 for mcav which had no initial durusdinium). The predicted values are based of a model which controls for pre-heat stress proportion durusdinium (rather than proportion durusdinium at the previous timepoint). Again, I'm unsure of the '-0.5/0.5' part of the aggregate function- this plot shows lower predicted shuffling in ofav and ssid compared to original plots based on a glm with quasibinomial distribution. Making 'timepoint' an integer rather than a factor in the model also changed things. Would liek to perform stats on the interaction effect on shuffling between timepoint and species, but unsire how since mcav fitted to a separate model. }
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{figure-3c-o.-faveolata-and-s.siderea-corals-that-initially-hosted-background-durusdinium-shuffled-more-quickly-and-more-fully-to-durusdinium-than-those-with-no-initial-durusdinium.}{%
+\subsubsection{Figure 3c: O. faveolata and S.siderea corals that
+initially hosted background Durusdinium shuffled more quickly and more
+fully to Durusdinium than those with no initial
+Durusdinium.}\label{figure-3c-o.-faveolata-and-s.siderea-corals-that-initially-hosted-background-durusdinium-shuffled-more-quickly-and-more-fully-to-durusdinium-than-those-with-no-initial-durusdinium.}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#now look at timing for ofav and ssid switching and shuffling}
+\NormalTok{shufftimesofss=}\KeywordTok{read.csv}\NormalTok{(}\StringTok{'shuffle_timepointsofavssid.csv'}\NormalTok{,}\DataTypeTok{head=}\NormalTok{T)}
+\NormalTok{shufftimesofss=}\KeywordTok{filter}\NormalTok{(shufftimesofss,(shufftimesofss}\OperatorTok{$}\NormalTok{Treatment}\OperatorTok{==}\StringTok{'Manipulated'}\NormalTok{))}
+\NormalTok{shufftimesofss=}\KeywordTok{filter}\NormalTok{(shufftimesofss,(shufftimesofss}\OperatorTok{$}\NormalTok{initial.d}\OperatorTok{!=}\StringTok{'NA'}\NormalTok{))}
+\NormalTok{shuffmod2=}\KeywordTok{lmer}\NormalTok{(PropD2}\OperatorTok{~}\NormalTok{initial.d}\OperatorTok{*}\NormalTok{Species}\OperatorTok{+}\NormalTok{(}\DecValTok{1}\OperatorTok{|}\NormalTok{Colony),}\DataTypeTok{data=}\NormalTok{shufftimesofss)}
+\KeywordTok{plot_resqq}\NormalTok{(shuffmod2)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{SEASONAL_SHUFFLING_files/figure-latex/unnamed-chunk-16-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{summary}\NormalTok{(shuffmod2) }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Linear mixed model fit by REML. t-tests use Satterthwaite's method [
+## lmerModLmerTest]
+## Formula: PropD2 ~ initial.d * Species + (1 | Colony)
+##    Data: shufftimesofss
+## 
+## REML criterion at convergence: 14.1
+## 
+## Scaled residuals: 
+##      Min       1Q   Median       3Q      Max 
+## -2.06511 -0.05183 -0.03832  0.37651  1.61534 
+## 
+## Random effects:
+##  Groups   Name        Variance Std.Dev.
+##  Colony   (Intercept) 0.07282  0.2699  
+##  Residual             0.06080  0.2466  
+## Number of obs: 19, groups:  Colony, 11
+## 
+## Fixed effects:
+##                             Estimate Std. Error       df t value Pr(>|t|)   
+## (Intercept)                  0.04340    0.15703  7.73680   0.276  0.78952   
+## initial.dy                   0.59597    0.19799 14.11762   3.010  0.00929 **
+## SpeciesS.siderea            -0.04340    0.30244  9.04668  -0.143  0.88905   
+## initial.dy:SpeciesS.siderea -0.09597    0.41571 10.65192  -0.231  0.82180   
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Correlation of Fixed Effects:
+##             (Intr) intl.d SpcsS.
+## initial.dy  -0.633              
+## SpecisS.sdr -0.519  0.329       
+## intl.dy:SS.  0.302 -0.476 -0.688
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{anova}\NormalTok{(shuffmod2,}\DataTypeTok{test=}\StringTok{'F'}\NormalTok{)}\CommentTok{# prop d significantly higher in those that started with some d p=0.02371}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Type III Analysis of Variance Table with Satterthwaite's method
+##                    Sum Sq Mean Sq NumDF   DenDF F value  Pr(>F)  
+## initial.d         0.42255 0.42255     1 10.6519  6.9504 0.02371 *
+## Species           0.01054 0.01054     1  8.0401  0.1733 0.68804  
+## initial.d:Species 0.00324 0.00324     1 10.6519  0.0533 0.82180  
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{shuffmod3=}\KeywordTok{lmer}\NormalTok{(PropD3}\OperatorTok{~}\NormalTok{initial.d}\OperatorTok{*}\NormalTok{Species}\OperatorTok{+}\NormalTok{(}\DecValTok{1}\OperatorTok{|}\NormalTok{Colony),}\DataTypeTok{data=}\NormalTok{shufftimesofss)}
+\KeywordTok{plot_resqq}\NormalTok{(shuffmod3)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{SEASONAL_SHUFFLING_files/figure-latex/unnamed-chunk-16-2.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{summary}\NormalTok{(shuffmod3) }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Linear mixed model fit by REML. t-tests use Satterthwaite's method [
+## lmerModLmerTest]
+## Formula: PropD3 ~ initial.d * Species + (1 | Colony)
+##    Data: shufftimesofss
+## 
+## REML criterion at convergence: 24.8
+## 
+## Scaled residuals: 
+##     Min      1Q  Median      3Q     Max 
+## -1.2491 -0.8478  0.0000  0.9146  1.2343 
+## 
+## Random effects:
+##  Groups   Name        Variance Std.Dev.
+##  Colony   (Intercept) 0.0000   0.0000  
+##  Residual             0.1641   0.4051  
+## Number of obs: 22, groups:  Colony, 12
+## 
+## Fixed effects:
+##                              Estimate Std. Error        df t value Pr(>|t|)   
+## (Intercept)                  0.506007   0.143226 18.000000   3.533  0.00238 **
+## initial.dy                   0.493993   0.202552 18.000000   2.439  0.02532 * 
+## SpeciesS.siderea            -0.006007   0.248074 18.000000  -0.024  0.98095   
+## initial.dy:SpeciesS.siderea  0.006007   0.405104 18.000000   0.015  0.98833   
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Correlation of Fixed Effects:
+##             (Intr) intl.d SpcsS.
+## initial.dy  -0.707              
+## SpecisS.sdr -0.577  0.408       
+## intl.dy:SS.  0.354 -0.500 -0.612
+## optimizer (nloptwrap) convergence code: 0 (OK)
+## boundary (singular) fit: see ?isSingular
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{anova}\NormalTok{(shuffmod3,}\DataTypeTok{test=}\StringTok{'F'}\NormalTok{)}\CommentTok{# prop d significantly higher in those that started with some d p=0.02456}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Type III Analysis of Variance Table with Satterthwaite's method
+##                    Sum Sq Mean Sq NumDF DenDF F value  Pr(>F)  
+## initial.d         0.98802 0.98802     1    18  6.0205 0.02456 *
+## Species           0.00004 0.00004     1    18  0.0002 0.98833  
+## initial.d:Species 0.00004 0.00004     1    18  0.0002 0.98833  
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{shuffmod4=}\KeywordTok{lmer}\NormalTok{(PropD4}\OperatorTok{~}\NormalTok{initial.d}\OperatorTok{*}\NormalTok{Species}\OperatorTok{+}\NormalTok{(}\DecValTok{1}\OperatorTok{|}\NormalTok{Colony),}\DataTypeTok{data=}\NormalTok{shufftimesofss)}
+\KeywordTok{plot_resqq}\NormalTok{(shuffmod4)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{SEASONAL_SHUFFLING_files/figure-latex/unnamed-chunk-16-3.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{summary}\NormalTok{(shuffmod4)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Linear mixed model fit by REML. t-tests use Satterthwaite's method [
+## lmerModLmerTest]
+## Formula: PropD4 ~ initial.d * Species + (1 | Colony)
+##    Data: shufftimesofss
+## 
+## REML criterion at convergence: 20.7
+## 
+## Scaled residuals: 
+##      Min       1Q   Median       3Q      Max 
+## -1.22228 -0.70611 -0.04998  0.15747  1.72820 
+## 
+## Random effects:
+##  Groups   Name        Variance Std.Dev.
+##  Colony   (Intercept) 0.02019  0.1421  
+##  Residual             0.11494  0.3390  
+## Number of obs: 22, groups:  Colony, 12
+## 
+## Fixed effects:
+##                             Estimate Std. Error       df t value Pr(>|t|)  
+## (Intercept)                  0.48417    0.15660 10.12194   3.092   0.0113 *
+## initial.dy                   0.46078    0.20573 11.85230   2.240   0.0451 *
+## SpeciesS.siderea            -0.10025    0.22646  7.52952  -0.443   0.6704  
+## initial.dy:SpeciesS.siderea  0.08997    0.36966 12.24422   0.243   0.8117  
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Correlation of Fixed Effects:
+##             (Intr) intl.d SpcsS.
+## initial.dy  -0.731              
+## SpecisS.sdr -0.692  0.506       
+## intl.dy:SS.  0.407 -0.557 -0.601
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{anova}\NormalTok{(shuffmod4,}\DataTypeTok{test=}\StringTok{'F'}\NormalTok{) }\CommentTok{# prop d significantly higher in those that started with some d p=0.01777}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Type III Analysis of Variance Table with Satterthwaite's method
+##                    Sum Sq Mean Sq NumDF  DenDF F value  Pr(>F)  
+## initial.d         0.86064 0.86064     1 12.244  7.4878 0.01777 *
+## Species           0.00999 0.00999     1  9.893  0.0869 0.77421  
+## initial.d:Species 0.00681 0.00681     1 12.244  0.0592 0.81173  
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{shufftimesofss=}\StringTok{ }\KeywordTok{pivot_longer}\NormalTok{(}\DataTypeTok{data=}\NormalTok{shufftimesofss, }\DataTypeTok{cols=}\KeywordTok{starts_with}\NormalTok{(}\StringTok{'PropD'}\NormalTok{),}
+               \DataTypeTok{names_to=}\StringTok{'Timepoint'}\NormalTok{, }\DataTypeTok{names_prefix=}\StringTok{'PropD'}\NormalTok{, }\DataTypeTok{values_to=}\StringTok{'PropD'}\NormalTok{,}
+               \DataTypeTok{values_drop_na=}\NormalTok{T)}
+
+\NormalTok{switchex=}\KeywordTok{expression}\NormalTok{(}\KeywordTok{paste}\NormalTok{(}\StringTok{'no initial '}\NormalTok{, }\KeywordTok{italic}\NormalTok{(}\StringTok{"Durusdinium "}\NormalTok{)))}
+\NormalTok{shuffex=}\KeywordTok{expression}\NormalTok{(}\KeywordTok{paste}\NormalTok{(}\StringTok{'>0 initial '}\NormalTok{, }\KeywordTok{italic}\NormalTok{(}\StringTok{"Durusdinium "}\NormalTok{), }\StringTok{'≤ 25%'}\NormalTok{))}
+
+\KeywordTok{ggplot}\NormalTok{(shufftimesofss, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ Timepoint, }\DataTypeTok{y =}\NormalTok{ PropD, }\DataTypeTok{group=}\NormalTok{initial.d)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{stat_summary}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{shape=}\NormalTok{initial.d, }\DataTypeTok{colour=}\NormalTok{initial.d),}\DataTypeTok{fun.data=}\StringTok{'mean_se'}\NormalTok{,}
+             \DataTypeTok{position =} \KeywordTok{position_dodge}\NormalTok{(}\FloatTok{0.2}\NormalTok{), }\DataTypeTok{size=}\FloatTok{0.5}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{scale_x_discrete}\NormalTok{(}\DataTypeTok{labels=}\KeywordTok{c}\NormalTok{(}\StringTok{'Pre heat stress'}\NormalTok{,}\StringTok{'Post heat stress'}\NormalTok{,}\StringTok{'1 month recovery'}\NormalTok{,}\StringTok{'2 month recovery'}\NormalTok{))}\OperatorTok{+}
+\StringTok{  }\KeywordTok{scale_shape_manual}\NormalTok{(}\DataTypeTok{values=}\KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{15}\NormalTok{),}\DataTypeTok{labels=}\KeywordTok{c}\NormalTok{(switchex,shuffex))}\OperatorTok{+}
+\StringTok{  }\KeywordTok{scale_colour_manual}\NormalTok{(}\DataTypeTok{values=}\KeywordTok{c}\NormalTok{(}\StringTok{'blue3'}\NormalTok{,}\StringTok{'brown2'}\NormalTok{),}\DataTypeTok{labels=}\KeywordTok{c}\NormalTok{(switchex,shuffex))}\OperatorTok{+}
+\StringTok{  }\KeywordTok{stat_summary}\NormalTok{(}\DataTypeTok{geom=}\StringTok{'line'}\NormalTok{, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{linetype=}\NormalTok{initial.d, }\DataTypeTok{colour=}\NormalTok{initial.d),}\DataTypeTok{position =} \KeywordTok{position_dodge}\NormalTok{(}\FloatTok{0.2}\NormalTok{))}\OperatorTok{+}
+\StringTok{  }\KeywordTok{scale_linetype_manual}\NormalTok{(}\DataTypeTok{values=}\KeywordTok{c}\NormalTok{(}\StringTok{'dashed'}\NormalTok{,}\StringTok{'solid'}\NormalTok{),}\DataTypeTok{labels=}\KeywordTok{c}\NormalTok{(switchex,shuffex))}\OperatorTok{+}
+\StringTok{  }\KeywordTok{theme_minimal}\NormalTok{(}\DataTypeTok{base_size =} \DecValTok{15}\NormalTok{)}\OperatorTok{%+replace%}
+\StringTok{   }\KeywordTok{theme}\NormalTok{(}\DataTypeTok{panel.border =} \KeywordTok{element_rect}\NormalTok{(}\DataTypeTok{colour=}\StringTok{'grey20'}\NormalTok{,}\DataTypeTok{fill=}\OtherTok{NA}\NormalTok{),}
+          \DataTypeTok{panel.grid.minor.x =} \KeywordTok{element_blank}\NormalTok{(),}
+         \DataTypeTok{panel.grid.major.x =} \KeywordTok{element_blank}\NormalTok{(),}
+          \DataTypeTok{panel.grid.minor.y =} \KeywordTok{element_blank}\NormalTok{())}\OperatorTok{+}
+\StringTok{  }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{y=}\StringTok{"Proportion *Durusdinium* <br /> (*O. faveolata* & *S. siderea*)"}\NormalTok{, }\DataTypeTok{x=}\StringTok{''}\NormalTok{)}\OperatorTok{+}
+\StringTok{  }\KeywordTok{theme}\NormalTok{(}\DataTypeTok{legend.position =} \StringTok{'bottom'}\NormalTok{,}\DataTypeTok{legend.title=}\KeywordTok{element_text}\NormalTok{(}\DataTypeTok{size=}\DecValTok{0}\NormalTok{), }\DataTypeTok{axis.title.y =} \KeywordTok{element_markdown}\NormalTok{())}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{SEASONAL_SHUFFLING_files/figure-latex/unnamed-chunk-16-4.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#ggsave('ofavshuffswitch.pdf',device='pdf',height=5,width=7)}
+
+\CommentTok{###UPDATE FOR ROSS: I have corrected this analysis to be based on proportion d (mean +-SE), rather than the shuffling metric, given that this is a comparison between those with and without any initial d. 25% initial d was taken as the threshold, so those with no initial d were compared against those with >0 but <25% initial d. Due to small sample size, ofav and ssid are grouped together here (model finds no significant affect of species).  }
+\end{Highlighting}
+\end{Shaded}
+
+\end{document}

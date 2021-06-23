@@ -1,8 +1,8 @@
 ---
 title: "Buzzoni D., Cunning R. and Baker A. C. (2021) Initial Algal Symbiont Communities Affect Shuffling to Durusdinium after Coral Bleaching and Reflect Seasonal Differences in Bleaching Sensitivity"
 output:
-  pdf_document: default
   html_document: default
+  pdf_document: default
 ---
 ```{r, echo=F, warning=FALSE,message=FALSE}
 library(plyr)
@@ -36,12 +36,12 @@ library(tidyr)
 
 ```{r, echo=F}
 #data file per species per batch (batches 'S' and 'W')
-Sofav_wide=read.csv('/Users/Daisy/Documents/CRFL/Tissue vectoring/qPCR/R/Emerald_vector_cores/ofav_wide.csv')
-Sssid_wide=read.csv('/Users/Daisy/Documents/CRFL/Tissue vectoring/qPCR/R/Emerald_vector_cores/ssid_wide.csv')
-Smcav_wide=read.csv('/Users/Daisy/Documents/CRFL/Tissue vectoring/qPCR/R/Emerald_vector_cores/mcav_wide.csv')
-Wofav_wide=read.csv('/Users/Daisy/Documents/CRFL/Tissue vectoring/qPCR/R/Emerald_vector_cores/Wofav_wide.csv')
-Wssid_wide=read.csv('/Users/Daisy/Documents/CRFL/Tissue vectoring/qPCR/R/Emerald_vector_cores/Wssid_wide.csv')
-Wmcav_wide=read.csv('/Users/Daisy/Documents/CRFL/Tissue vectoring/qPCR/R/Emerald_vector_cores/Wmcav_wide.csv')
+Sofav_wide=read.csv('ofav_wide.csv')
+Sssid_wide=read.csv('ssid_wide.csv')
+Smcav_wide=read.csv('mcav_wide.csv')
+Wofav_wide=read.csv('Wofav_wide.csv')
+Wssid_wide=read.csv('Wssid_wide.csv')
+Wmcav_wide=read.csv('Wmcav_wide.csv')
 ofav_wide_batches=rbind(Sofav_wide,Wofav_wide)
 ssid_wide_batches=rbind(Sssid_wide,Wssid_wide)
 mcav_wide_batches=rbind(Smcav_wide,Wmcav_wide)
@@ -55,10 +55,10 @@ batches$Colony=as.factor(batches$Colony)
 ## SEASONAL TEMPERATURES
 ### Figure 1a: Temperatures are seasonal
 ```{r,warning=FALSE,message=FALSE}
-temp3=read.csv("/Users/Daisy/Documents/CRFL/Tissue vectoring/qPCR/R/Emerald_vector_cores/foweytemps5yrs.csv")
+temp3=read.csv("foweytemps5yrs.csv")
 temp3$date=as.Date(with(temp3, paste('2019',MM, DD,sep="-")), "%Y-%m-%d")
  temp3$WTMP=as.numeric(paste(temp3$WTMP))
- temp=read.csv("/Users/Daisy/Documents/CRFL/Tissue vectoring/qPCR/R/Emerald_vector_cores/temp.csv")
+ temp=read.csv("temp.csv")
 temp$Date=as.Date(temp$Date,format = "%d/%m/%Y")
  
  ggplot()+stat_summary(data=temp3,aes(x=date,y=WTMP,fill='darkgreen'),fun.data=mean_se,geom='ribbon',alpha=0.6)+theme_minimal(base_size = 15)%+replace%
@@ -244,7 +244,7 @@ summary(ssidpredmod)# p0.09
 
 ## BLEACHING SENSITIVITY & RATE
 ```{r,echo=F,warning=F,message=F,fig.show='hide'}
-bleaching_tidy=read.csv('/Users/Daisy/Documents/CRFL/Tissue vectoring/qPCR/R/Emerald_vector_cores/bleaching_tidy_dates.csv')
+bleaching_tidy=read.csv('bleaching_tidy_dates.csv')
 blch_sensitivity=dplyr::filter(bleaching_tidy,Treatment=='Bleached')
 blch_sensitivity=subset(blch_sensitivity,select=c(1,3,4,6,8,10,11,15,17))
 sensitivity_pre=dplyr::filter(blch_sensitivity, Timepoint=='Pre-bleach')
@@ -350,22 +350,18 @@ theme(legend.position = c(0.8,0.5))+
 ```
 
 
-Those with >0.75 initial prop D were grouped and those with <0.25 prop D were grouped (this excluded very few datapoints). Since cores were pulled and sampled after exposure to differnet DHW, there is variation in DHW exposure, as displayed on the x-axis below.
-
 ```{r,echo=F}
-ofav_DHW=read.csv('/Users/Daisy/Documents/CRFL/Tissue vectoring/qPCR/R/Emerald_vector_cores/ofav_bleaching_DHW.csv')
-ssid_DHW=read.csv('/Users/Daisy/Documents/CRFL/Tissue vectoring/qPCR/R/Emerald_vector_cores/ssid_bleaching_DHW.csv')
-mcav_DHW=read.csv('/Users/Daisy/Documents/CRFL/Tissue vectoring/qPCR/R/Emerald_vector_cores/mcav_bleaching_DHW.csv')
-ofav_recov=read.csv('/Users/Daisy/Documents/CRFL/Tissue vectoring/qPCR/R/Emerald_vector_cores/ofav_recov_days.csv')
-ssid_recov=read.csv('/Users/Daisy/Documents/CRFL/Tissue vectoring/qPCR/R/Emerald_vector_cores/ssid_recov_days.csv')
-mcav_recov=read.csv('/Users/Daisy/Documents/CRFL/Tissue vectoring/qPCR/R/Emerald_vector_cores/mcav_recov_days.csv')
+ofav_DHW=read.csv('ofav_bleaching_DHW.csv')
+ssid_DHW=read.csv('ssid_bleaching_DHW.csv')
+mcav_DHW=read.csv('mcav_bleaching_DHW.csv')
+ofav_recov=read.csv('ofav_recov_days.csv')
+ssid_recov=read.csv('ssid_recov_days.csv')
+mcav_recov=read.csv('mcav_recov_days.csv')
 ofav=expression(paste(italic("O. faveolata")))
 ssid=expression(paste(italic("S. siderea")))
 mcav=expression(paste(italic("M. cavernosa"))) 
 ```
 
-
-### Coral species and dominant symbiont genus both shape the trajectories of symbiont loss and recovery over bleaching.
 
 ```{r, warning=F, message=F}
 allbleach=rbind(ofav_DHW,ssid_DHW,mcav_DHW)
@@ -386,10 +382,6 @@ allbleach<-allbleach[-c(167),]
 allrecov<-allrecov[-c(86,239),]#model highlighted this one datapoint as an outlier in both dataframes
   
 
-bleachingmod<-glm(Shprop~DHW*Species*InitialDom, data=allbleach, family='quasipoisson') #plot data with a quassipoisson model
-bleachingfit= with(summary(bleachingmod), 1 - deviance/null.deviance)
-bleachingfit #0.8533836, R2 for plotted quasipoisson model with batch, 0.6939 without batch
-
 bleachingmod2<-glmer(Shprop~DHW*Species*InitialDom+(1|Colony), data=allbleach)
 plot_resqq(bleachingmod2) #perform statistical tests on mixed effects model
 bleachingmod3<-as_lmerModLmerTest(bleachingmod2)
@@ -403,17 +395,6 @@ bleachingmod3<-as_lmerModLmerTest(bleachingmod2)
   summary(mcavbleachingmod2)
   anova(mcavbleachingmod2) #significant interaction between DHW and batch on proportion of symbionts retained, p=2.21e-06, with the october batch losing more.
   
-   ofavbleachingmod<-glmer(Shprop~DHW*InitialDom*Batch+(1|Colony), data=filter(allbleach,allbleach$Species=='O.faveolata'))
-  plot_resqq(ofavbleachingmod)
-  ofavbleachingmod2<-as_lmerModLmerTest(ofavbleachingmod)
-  summary(ofavbleachingmod2)
-  anova(ofavbleachingmod2) #no significant batchxDHW interaction, p=0.6663 
-  
-  ssidbleachingmod<-glmer(Shprop~DHW*InitialDom*Batch+(1|Colony), data=filter(allbleach,allbleach$Species=='S.siderea'))
-  plot_resqq(ssidbleachingmod)
-  ssidbleachingmod2<-as_lmerModLmerTest(ssidbleachingmod)
-  summary(ssidbleachingmod2)
-  anova(ssidbleachingmod2)#no significant effect of batch on the relatinship between DHW an symbiont loss (interaction), p=0.2036
   
 recovmod<-glm(Shprop~Recov.Days*Species*InitialDom, data=allrecov, family='quasipoisson')
 plot(recovmod)
@@ -430,22 +411,8 @@ anova(recovmod3)# symbiont recovery was significantly differnet between species 
   plot_resqq(mcavrecovmod)
   mcavrecovmod2<-as_lmerModLmerTest(mcavrecovmod)
   summary(mcavrecovmod2)
-  anova(mcavrecovmod2) #there was a significant interaction p=0.004611 of batch on the relationchip between symbiont density and recovery days, with the October batch recovering less. 
+  anova(mcavrecovmod2) #there was a significant interaction p=0.004611 of batch on the relationship between symbiont density and recovery days, with the October batch recovering less.
   
-   ofavrecovmod<-glmer(Shprop~Recov.Days*InitialDom*Batch+(1|Colony), data=filter(allrecov,allrecov$Species=='O.faveolata'))
-  plot_resqq(ofavrecovmod)
-  ofavrecovmod2<-as_lmerModLmerTest(ofavrecovmod)
-  summary(ofavrecovmod2)
-  anova(ofavrecovmod2) #no significant interaction between days and batch p=0.515
-  
-   ssidrecovmod<-glmer(Shprop~Recov.Days*InitialDom*Batch+(1|Colony), data=filter(allrecov,allrecov$Species=='S.siderea'))
-  plot_resqq(ssidrecovmod)
-  ssidrecovmod2<-as_lmerModLmerTest(ssidrecovmod)
-  summary(ssidrecovmod2)
-  anova(ssidrecovmod2) #no significant interaction between days and batch p=0.816757
-  
-  
-  par(mfrow=c(1,2))
   Spec.labs=c('M. cavernosa','O. faveolata','S. siderea')
 names(Spec.labs)=c('M.cavernosa','O.faveolata','S.siderea')
 
@@ -488,25 +455,26 @@ geom_abline(slope=1,intercept = 0,linetype='dotted')+
 
 Emulating the 'symbiont shuffling' plot to compare coral species, as in Cunning et al 2018 figure 3b. In order to be able to include mcav, which has no variation in initial proportion d, the following mcav models are independent of initial proportion d, then integrated in with the previous ofav & ssid predicted effects. 
 ```{r,message=F,warning=F}
-shufflemod=lmer(post_propD ~ pre_propD + Treatment*Species*Batch+(1|Colony),
-                 data=batches)
-shufflemod2=glm(post_propD~pre_propD + Treatment*Species*Batch, data=batches, family='quasibinomial')
+shufflemod=glm(post_propD~pre_propD + Treatment*Species*Batch, data=filter(batches,batches$Species!='M.cavernosa'), family='quasibinomial')
+#NB a mixed effects model cannot be used here, since a quasibinomial distribution is needed to bound this metric between -1 and 1. 
 
-plot_resqq(shufflemod) 
-plot(shufflemod2)
-#these two models (quasibinomial family vs linear mixed effects) give fairly differnet results...
+# have a look at the data to see data distribution for the change in proportion Durusdinium
+ggplot(data=filter(batches,batches$Species!='M.cavernosa'),aes(y=post_propD, x=pre_propD))+
+  geom_smooth(aes(colour=Species, linetype=Treatment), method='glm',method.args = list(family = "quasibinomial"), alpha=0.1)+
+  geom_point(aes(colour=Species, shape=Treatment))+
+  geom_abline(slope=1,intercept = 0,linetype='dotted')+
+  theme_minimal()
 
 summary(shufflemod)# Model summary
-#bleaching and initial proportion dusursdinium both had significant effects on shuffling (p=6.95e-10 and p=7.59e-07 respectively). Batch did not significantly affect shuffling (p=0.16616).
+#treatment had significant effect on shuffling (p=0.0259). Batch did not significantly affect shuffling (p=0.8350).
                               
-
 #Get fitted values averaging across initial proportion durusdinium
 eff <- effect(c('pre_propD', 'Species','Treatment'), shufflemod, 
               xlevels=list(pre_propD=seq(0, 1, by=0.01)))
 # Get all fitted values and subsets for each treatment
 res <- droplevels(data.frame(eff))
 
-res$Species <- factor(res$Species, levels=c("O.faveolata", "S.siderea", "M.cavernosa"))
+res$Species <- factor(res$Species, levels=c("O.faveolata", "S.siderea"))
 res.Bl <- subset(data.frame(eff), Treatment=="Manipulated")
 res.Ct <- subset(data.frame(eff), Treatment=="Control")
 # Get AUC for fitted values, lower and upper confidence limits
@@ -514,58 +482,43 @@ auc <- aggregate(res[, c("fit", "lower", "upper")],
                  by=list(Species=res$Species, Treatment=res$Treatment), 
                  FUN=function(x) (mean(x)-0.5)/0.5)
                 
-#force limits of 1 and -1 on ofav and ssid
-auc[4,5]=1.0
 auc.list <- split(auc, list(auc$Treatment))
 auc$Treatment=factor(auc$Treatment, levels=c('Manipulated','Control'))
 levels(auc$Treatment)<-c('Bleached','Control')
-auc$Species=factor(auc$Species, levels=c('M.cavernosa', 'O.faveolata', 'S.siderea'))
+auc$Species=factor(auc$Species, levels=c('O.faveolata', 'S.siderea'))
 
-#UPDATES FOR ROSS: I have now changed this so it is based on a mixed effects model (colony as a random factor as in all other analyses), and the result looks fairly differnet from before (which was based on a glm with quasibinomial distribution). Limited predicted values to between 1 and -1. What is the significance of the (-0.5/0.5) in the aggregation function?
 ```
 
 ```{r,warning=F,message=F}
 #using model independent of initial prop d for mcav
-shufflemod2=lmer(post_propD ~Treatment*Species*Batch+(1|Colony),
-                 data=batches)
-plot_resqq(shufflemod2) 
+shufflemod2=lm(post_propD ~Treatment*Batch,
+                 data=subset(batches, batches$Species=='M.cavernosa'))
 summary(shufflemod2)
-#again for the initial durusdinium independent model, batch is not a significant driver of shuffling, p= 0.18670. 
-shufflemodmcav=glm(post_propD ~Treatment*Batch,
-                 data=subset(batches, batches$Species=='M.cavernosa'), family='quasibinomial')
-plot(shufflemodmcav)
-summary(shufflemodmcav)
+#again for the initial durusdinium independent model, batch is not a significant driver of shuffling, p= 0.066.  This model did not fit a quasibinomial distrubution, but is amost entirely bond between 0 and 1 regardless due to very large effect size & minimal variation in the data. 
 
-eff2 <- effect(c('Species','Treatment','Batch'), shufflemod2)
+ggplot(data=filter(batches,batches$Species=='M.cavernosa'),aes(y=post_propD, x=Treatment))+
+  geom_point(aes(shape=Treatment))+
+  theme_minimal()
+
+eff2 <- effect(c('Treatment'), shufflemod2)
 
 # Get all fitted values and subsets for each treatment level
 res2 <- droplevels(data.frame(eff2))
-#force limits of 1 and 0 on mcav confidence intervals
-res2[1,7]=1
-res2[7,4]=1
-res2[7,7]=1
-res2[4,4]=0
-res2[4,6]=0
-res2[10,4]=0
-res2[10,6]=0
 
-res2$Species <- factor(res2$Species, levels=c('M.cavernosa',"O.faveolata", "S.siderea"))
 res2.Bl <- subset(data.frame(eff2), Treatment=="Manipulated")
 res2.Ct <- subset(data.frame(eff2), Treatment=="Control")
 # Get AUC for fitted values, lower and upper confidence limits
 auc2 <- aggregate(res2[, c("fit", "lower", "upper")], 
-                 by=list(Species=res2$Species, Treatment=res2$Treatment),
+                 by=list(Treatment=res2$Treatment),
                  FUN=function(x) (mean(x)))
 levels(auc2$Treatment)<-c('Control','Bleached')
-
 auc2.list <- split(auc2, list(auc2$Treatment))
+auc2$Species=factor(rep('M.cavernosa'))
 
-ofavssidshuff<-auc[c(1,2,4,5),]
-mcavshuff<-auc2[c(1,4),]
-speciesshuff<-rbind(ofavssidshuff,mcavshuff)
+speciesshuff<-rbind(auc,auc2)
 speciesshuff$Species=factor(speciesshuff$Species, levels=c('M.cavernosa', 'O.faveolata', 'S.siderea'))
 
-#quote the shuffling metric for bleached cores of each species, 'S': mcav=0.94245186, ofav=0.80645955, ssid=0.50105511. 
+#quote the shuffling metric for bleached cores of each species, 'S': mcav=0.938948279, ofav=0.927486547, ssid=0.722313707. 
 
 ggplot(data=speciesshuff)+
   geom_hline(yintercept=0,linetype='dashed')+
@@ -580,20 +533,10 @@ ggplot(data=speciesshuff)+
   guides(colour=F, shape=guide_legend(title=''))+
   theme(legend.position=c(0.1,0.15))+
   labs(y='Symbiont Shuffling', x='')+
-  scale_y_continuous(limits=c(-1,1),expand=c(0,0))+
+  scale_y_continuous(limits=c(-1,1.01),expand=c(0,0))+
    scale_x_discrete(labels=c(mcav,ofav,ssid), expand=expansion(mult=c(0.5,0.2)))
 #ggsave('speciesshuffle.pdf',device='pdf', width=7,height=5)
 #add 'more durusdinium/less durusdinium' labels post-save
-
-#QUESTION FOR ROSS: unsure whether or not to use the '-0.5/0.5' in the aggregate function here (it seems to give a more conservative estimate for shuffling in bleached mcav, but does not work for the mcav controls)......as shown below
-
-
-# Get AUC for fitted values, lower and upper confidence limits
-auc2 <- aggregate(res2[, c("fit", "lower", "upper")], 
-                 by=list(Species=res2$Species, Treatment=res2$Treatment),
-                 FUN=function(x) (mean(x)-0.5)/0.5)
-levels(auc2$Treatment)<-c('Control','Bleached')
-auc2
 
 ```
 
@@ -623,15 +566,15 @@ summary(ipaminitmod)
 ### (Figure S2:) Despite greater symbiont loss in the October M. cavernosa corals, shuffling between April and October were similar for all three coral species. 
 ```{r, warning=F}
 #before getting fitted values, test statistical significance of batch for each species inidivually:
-ofavbatchmod=lmer(post_propD ~ pre_propD + Batch+(1|Colony),
-                 data=filter(batches, batches$Species=='O.faveolata', Treatment=='Manipulated'))
-ssidbatchmod=lmer(post_propD ~ pre_propD + Batch+(1|Colony),
-                 data=filter(batches, batches$Species=='S.siderea', Treatment=='Manipulated'))  
-mcavbatchmod=lmer(post_propD ~Batch+(1|Colony),
+ofavbatchmod=glm(post_propD ~ pre_propD+Batch,
+                 data=filter(batches, batches$Species=='O.faveolata', Treatment=='Manipulated'), family='quasibinomial')
+ssidbatchmod=glm(post_propD ~ pre_propD + Batch,
+                 data=filter(batches, batches$Species=='S.siderea', Treatment=='Manipulated'),family='quasibinomial')  
+mcavbatchmod=lm(post_propD ~Batch,
                  data=filter(batches, batches$Species=='M.cavernosa', Treatment=='Manipulated'))
-summary(ofavbatchmod) #p=0.546701
-summary(ssidbatchmod) #p=0.85918
-summary(mcavbatchmod) #p=0.0505
+summary(ofavbatchmod) #p=0.683
+summary(ssidbatchmod) #p=0.9768
+summary(mcavbatchmod) #p=0.107
 
 
 eff <- effect(c('pre_propD', 'Species','Treatment', 'Batch'), shufflemod, 
@@ -639,7 +582,7 @@ eff <- effect(c('pre_propD', 'Species','Treatment', 'Batch'), shufflemod,
 # Get all fitted values and subsets for each treatment and now also batch
 res <- droplevels(data.frame(eff))
 
-res$Species <- factor(res$Species, levels=c("O.faveolata", "S.siderea", "M.cavernosa"))
+res$Species <- factor(res$Species, levels=c("O.faveolata", "S.siderea"))
 res.Bl <- subset(data.frame(eff), Treatment=="Manipulated")
 res.Ct <- subset(data.frame(eff), Treatment=="Control")
 res.Ap<- subset(data.frame(eff), Batch=='April')
@@ -649,28 +592,16 @@ auc <- aggregate(res[, c("fit", "lower", "upper")],
                  by=list(Species=res$Species, Treatment=res$Treatment, Batch=res$Batch), 
                  FUN=function(x) (mean(x)-0.5)/0.5)
 
-auc[4,6]=1.0
-auc[10,6]=1.0
 auc$Treatment=factor(auc$Treatment, levels=c('Manipulated','Control'))
 levels(auc$Treatment)<-c('Bleached','Control')
-auc$Species=factor(auc$Species, levels=c('M.cavernosa', 'O.faveolata', 'S.siderea'))
+auc$Species=factor(auc$Species, levels=c('O.faveolata', 'S.siderea'))
 auc$Batch=factor(auc$Batch, levels=c('April','October'))
-ofavssidbatchshuff<- auc[-c(3,6,9,12),]
 
 
-eff2 <- effect(c('Species','Treatment','Batch'), shufflemod2)
+
+eff2 <- effect(c('Treatment','Batch'), shufflemod2)
 
 res2 <- droplevels(data.frame(eff2))
-#force limits of 1 and 0 on mcav confidence intervals
-res2[1,7]=1
-res2[7,4]=1
-res2[7,7]=1
-res2[4,4]=0
-res2[4,6]=0
-res2[10,4]=0
-res2[10,6]=0
-
-res2$Species <- factor(res2$Species, levels=c('M.cavernosa',"O.faveolata", "S.siderea"))
 res2.Bl <- subset(data.frame(eff2), Treatment=="Manipulated")
 res2.Ct <- subset(data.frame(eff2), Treatment=="Control")
 res2.Ap<- subset(data.frame(eff2), Batch=='April')
@@ -678,11 +609,11 @@ res2.Oc<- subset(data.frame(eff2), Batch=='October')
 
 # Get AUC for fitted values, lower and upper confidence limits
 auc2 <- aggregate(res2[, c("fit", "lower", "upper")], 
-                 by=list(Species=res2$Species, Treatment=res2$Treatment, Batch=res2$Batch),
+                 by=list(Treatment=res2$Treatment, Batch=res2$Batch),
                  FUN=function(x) (mean(x)))
 levels(auc2$Treatment)<-c('Control','Bleached')
-mcavbatchshuff<- auc2[c(1,4,7,10),]
-batchshuff<- rbind(ofavssidbatchshuff, mcavbatchshuff)
+auc2$Species=factor(rep('M.cavernosa'))
+batchshuff<- rbind(auc2, auc)
 batchshuff$spbatch<- interaction (batchshuff$Batch,batchshuff$Species)
 
 ggplot(data=filter(batchshuff,batchshuff$Treatment=='Bleached'))+
@@ -697,9 +628,10 @@ ggplot(data=filter(batchshuff,batchshuff$Treatment=='Bleached'))+
   guides(colour=F, shape=guide_legend(title=''))+
   theme(legend.position=c(0.1,0.15))+
   labs(y='Symbiont Shuffling in Bleached Corals', x='')+
-  scale_y_continuous(limits=c(0,1),expand=c(0,0))
+coord_cartesian(clip='on', ylim=c(0,1.0))+
+  scale_y_continuous(expand=c(0,0))
 #ggsave('shufflebatches.pdf',device='pdf',width=7,height=5)
-
+  
 ```
 
 ### Figure 3b: Shuffling occurred later in recovery in M. cavernosa compared to O. faveolata and S. siderea. 
@@ -747,9 +679,7 @@ auc2 <- aggregate(res[, c("fit", "lower", "upper")],
 
 aucall <- rbind(auc1, auc2)
 aucall$Timepoint=factor(aucall$Timepoint, levels=c(1,2,3))
-aucall[11,4]=0
-aucall[9,5]=1
-aucall[15,5]=1
+
 aucall=aucall[-c(3,4,7,8,12,14),]
 aucall$Species=factor(aucall$Species, levels=c('M.cavernosa','O.faveolata','S.siderea'))
 
