@@ -541,29 +541,20 @@ ggplot(data=speciesshuff)+
 ```
 
 ## shuffling and photochemical efficiency
-### Figure S1: Differnet photochemical disadvantages of hosting Durusdinium at ambient temperatures cannot explain the difference in shuffling between O. faveolata and S. siderea. 
+### Differnet photochemical disadvantages of hosting Durusdinium at ambient temperatures cannot explain the difference in shuffling between O. faveolata and S. siderea. 
 
-Recreating Cunning et al 2018 plot of the relative photochemical disadvantages of hosting durusdinium at ambient temperatures to explain species hierarchy (ofav>ssid) in shuffling.
+Recreating Cunning et al 2018 test of the relative photochemical disadvantages of hosting durusdinium at ambient temperatures to explain species hierarchy (ofav>ssid) in shuffling.
 ```{r, warning=F}
 ipam=filter(allbleach,allbleach$Timepoint=='Pre-bleach',allbleach$Species!='M.cavernosa')
-
-ggplot()+
-  geom_smooth(method='glm',data=ipam,aes(y=Y2,x=PropD,colour=Species, linetype=Batch),method.args = list(family = "quasibinomial"))+
-  geom_point(data=ipam,aes(y=Y2,x=PropD,colour=Species, shape=Batch))+
-  scale_colour_manual(values=c('darkorange1','darkturquoise'),labels=c(ofav,ssid))+
-  theme_minimal(base_size = 15)+
-  labs(y='Initial (ambient) Fv/Fm',x='Proportion *Durusdinium*')+
-  theme(axis.title.x= element_markdown(),legend.title=element_blank(),legend.position='bottom')
-#ggsave('inity2.pdf',device='pdf', width=7,height=5)
 
 ipaminitmod=lmer(Y2~PropD*Species*Batch+(1|Colony),data=ipam)
 plot_resqq(ipaminitmod)
 summary(ipaminitmod)
 
-#UPDATE FOR ROSS: I'm not sure this plot is needed, maybe just the stats, given there isn't a significant finding here. No significant differnece in the interaction between proportion durusdinium and coral species on Fv/Fm (p=0.255). However, initial Fv/Fm values were generally significantly higher in October (compared to april), regardless of coral species and proportion durusdinium (p=0.0005), although I don't think this is particularly relevant to the story of this paper?
+#UPDATE FOR ROSS: No significant differnece in the interaction between proportion durusdinium and coral species on Fv/Fm (p=0.255).
 ```
 
-### (Figure S2:) Despite greater symbiont loss in the October M. cavernosa corals, shuffling between April and October were similar for all three coral species. 
+### Figure S2: Despite greater symbiont loss in the October M. cavernosa corals, shuffling between April and October were similar for all three coral species. 
 ```{r, warning=F}
 #before getting fitted values, test statistical significance of batch for each species inidivually:
 ofavbatchmod=glm(post_propD ~ pre_propD+Batch,
@@ -624,7 +615,7 @@ ggplot(data=filter(batchshuff,batchshuff$Treatment=='Bleached'))+
           panel.grid.minor.x = element_blank(),
          panel.grid.major.x = element_blank(),
           panel.grid.minor.y = element_blank())+
-  scale_color_manual(values=c('deeppink2','darkorange1', 'darkturquoise'))+
+  scale_color_manual(values=c('deeppink2','darkorange1', 'darkturquoise'))+scale_x_discrete(labels=c(mcav,ofav,ssid))+
   guides(colour=F, shape=guide_legend(title=''))+
   theme(legend.position=c(0.1,0.15))+
   labs(y='Symbiont Shuffling in Bleached Corals', x='')+
@@ -644,45 +635,48 @@ shuff$Colony=factor(shuff$Colony)
 shuff$Species=factor(shuff$Species)
 shuff$Timepoint=as.integer(shuff$Timepoint,length=3)
 
+# have a look at the data to see data distribution for the change in proportion Durusdinium
+ggplot(data=filter(shuff,shuff$Species!='M.cavernosa'),aes(y=PropD, x=PropD0))+
+  geom_smooth(aes(colour=Species, linetype=factor(Timepoint)), method='glm',method.args = list(family = "quasibinomial"), alpha=0.1)+
+  geom_point(aes(colour=Species, shape=factor(Timepoint)))+
+  geom_abline(slope=1,intercept = 0,linetype='dotted')+
+  theme_minimal()
 
-shuffmod=lmer(PropD~PropD0+Species*Timepoint+(1|Colony),data=shuff)
-plot_resqq(shuffmod)
+
+shuffmod=glm(PropD~PropD0+Species*Timepoint,data=filter(shuff, shuff$Species!='M.cavernosa'), family='quasibinomial')
 summary(shuffmod)
 anova(shuffmod,test='F')
 
-propD1=lmer(PropD ~ PropD0+Timepoint*Species+(1|Colony),
-             data=shuff)
+propD1=glm(PropD ~ PropD0+Timepoint*Species,
+             data=filter(shuff, shuff$Species!='M.cavernosa'), family='quasibinomial')
 
 eff1 <- effect(c('PropD0', 'Timepoint', 'Species'), propD1, 
               xlevels=list(PropD0=seq(0, 1, by=0.01)))
 
 res <- droplevels(data.frame(eff1))
 res$Species <- factor(res$Species, levels=c("O.faveolata", "S.siderea"))
+res$Timepoint <- factor(res$Timepoint,levels=c('1','2','3'))
 # Get AUC for fitted values, lower and upper confidence limits
 auc1 <- aggregate(res[, c("fit", "lower", "upper")], 
                  by=list(Species=res$Species,Timepoint=res$Timepoint), 
                  FUN=function(x) (mean(x)-0.5)/0.5)
 
 #now an intial prop d independent model for mcav
-propD2=lmer(PropD ~ Timepoint*Species+(1|Colony),
-             data=shuff)
+propD2=lm(PropD ~ Timepoint,data=filter(shuff, shuff$Species=='M.cavernosa'))
 
-eff2 <- effect(c('Timepoint', 'Species'), propD2)
+eff2 <- effect(c('Timepoint'), propD2)
 
 res <- droplevels(data.frame(eff2))
-res$Species <- factor(res$Species, levels=c("M.cavernosa"))
+res$Timepoint <- factor(res$Timepoint,levels=c('1','2','3'))
 # Get AUC for fitted values, lower and upper confidence limits
 auc2 <- aggregate(res[, c("fit", "lower", "upper")], 
-                 by=list(Species=res$Species,Timepoint=res$Timepoint), 
+                 by=list(Timepoint=res$Timepoint), 
                  FUN=function(x) (mean(x)))
-
+auc2$Species=factor(rep('M.cavernosa'))
 
 aucall <- rbind(auc1, auc2)
 aucall$Timepoint=factor(aucall$Timepoint, levels=c(1,2,3))
-
-aucall=aucall[-c(3,4,7,8,12,14),]
 aucall$Species=factor(aucall$Species, levels=c('M.cavernosa','O.faveolata','S.siderea'))
-
 
 ##########
 ofav=expression(paste(italic("O. faveolata")))
@@ -695,7 +689,6 @@ ggplot(aucall, aes(x = Timepoint, y = fit, group = Species)) +
   geom_point(aes(color = Species),
              position = position_dodge(0.2), size = 2.5)+
   geom_hline(yintercept = 0, lwd = 0.1) +
-  scale_y_continuous(limits = c(-0.25, 1))+
   scale_x_discrete(labels=c('Post heat stress','1 month recovery','2 month recovery'),expand=expansion(mult=c(0.2,0.4)))+
   theme_minimal(base_size = 13)%+replace%
    theme(panel.border = element_rect(colour='grey20',fill=NA),
@@ -704,60 +697,65 @@ ggplot(aucall, aes(x = Timepoint, y = fit, group = Species)) +
           panel.grid.minor.y = element_blank())+
   geom_line(linetype='dashed',alpha=0.6,aes(colour=Species),position = position_dodge(0.2))+
   scale_colour_manual(values=c('deeppink2','darkorange1','darkturquoise'),labels=c(mcav,ofav,ssid), name='')+
+  coord_cartesian(clip='on', ylim=c(-.2,1.0))+
   labs(y='Cumulative Symbiont Shuffling',x='')+
   annotate(geom='text',x=3.4,y=0.1,label=gaindd,size=4)+
    annotate(geom='text',x=3.4,y=-0.1,label=lostd,size=4)+
-  theme(legend.position = 'bottom')
+  theme(legend.position = 'bottom')+
+  scale_y_continuous(expand=c(0,0))
 #ggsave('shuffletimingcumulative.pdf',device='pdf',height=5,width=7)
 
-###UPDATE FOR ROSS: again, I have changed this to usea mixed effects model, and have forced limits of 1 and -1 for the errorbars (1 and 0 for mcav which had no initial durusdinium). The predicted values are based of a model which controls for pre-heat stress proportion durusdinium (rather than proportion durusdinium at the previous timepoint). Again, I'm unsure of the '-0.5/0.5' part of the aggregate function- this plot shows lower predicted shuffling in ofav and ssid compared to original plots based on a glm with quasibinomial distribution. Making 'timepoint' an integer rather than a factor in the model also changed things. Would liek to perform stats on the interaction effect on shuffling between timepoint and species, but unsire how since mcav fitted to a separate model. 
+###UPDATE FOR ROSS: The predicted values are based of a model which controls for pre-heat stress proportion durusdinium (rather than proportion durusdinium at the previous timepoint). Making 'timepoint' an integer rather than a factor in the model also changed things. Would like to perform stats on the interaction effect on shuffling between timepoint and species, but unsure how since mcav fitted to a separate model. The '2-month recovery' points are very slightly differnet from those in the bleached Vs control shuffling plot, but I think this is indicative of shuffling at each timepoint being linked to each coral (rather than averaged within each species) for these predicted values, arther than a mistake in the code. 
 ```
 
 ### Figure 3c: O. faveolata and S.siderea corals that initially hosted background Durusdinium shuffled more quickly and more fully to Durusdinium than those with no initial Durusdinium. 
 
 ```{r, warning=F, message=F}
-#now look at timing for ofav and ssid switching and shuffling
-shufftimesofss=read.csv('shuffle_timepointsofavssid.csv',head=T)
-shufftimesofss=filter(shufftimesofss,(shufftimesofss$Treatment=='Manipulated'))
-shufftimesofss=filter(shufftimesofss,(shufftimesofss$initial.d!='NA'))
-shuffmod2=lmer(PropD2~initial.d*Species+(1|Colony),data=shufftimesofss)
-plot_resqq(shuffmod2)
-summary(shuffmod2) 
-anova(shuffmod2,test='F')# prop d significantly higher in those that started with some d p=0.02371
+#now look at timing for switching and shuffling
+shufflegroups<- filter(shuffletimes,shuffletimes$Treatment=='Manipulated')
+shufflegroups$initiald<-paste(shufflegroups$PropD1)
+shufflegroups<-filter(shufflegroups,shufflegroups$initiald!='NA')
+shufflegroups$initiald[shufflegroups$Species=='M.cavernosa' & shufflegroups$PropD1==0]='MC0'
+shufflegroups$initiald[shufflegroups$Species!='M.cavernosa' & shufflegroups$PropD1==0]='OFSS0'
+shufflegroups$initiald[shufflegroups$Species!='M.cavernosa' & shufflegroups$PropD1>0]='OFSS0TO50'
+shufflegroups$initiald[shufflegroups$Species!='M.cavernosa' & shufflegroups$PropD1>0.50]='OFSS50TO100'
+shufflegroups$initiald=factor(shufflegroups$initiald, levels=c('MC0','OFSS0','OFSS0TO50','OFSS50TO100'))
+shufflegroups<-filter(shufflegroups,shufflegroups$initiald!='NA')
 
-shuffmod3=lmer(PropD3~initial.d*Species+(1|Colony),data=shufftimesofss)
-plot_resqq(shuffmod3)
-summary(shuffmod3) 
-anova(shuffmod3,test='F')# prop d significantly higher in those that started with some d p=0.02456
+ 
 
-shuffmod4=lmer(PropD4~initial.d*Species+(1|Colony),data=shufftimesofss)
-plot_resqq(shuffmod4)
+shuffmod4=glm(PropD4~initiald,data=shufflegroups, family='quasibinomial')
 summary(shuffmod4)
-anova(shuffmod4,test='F') # prop d significantly higher in those that started with some d p=0.01777
+anova(shuffmod4,test='F')# prop d significantly higher after mcav switching compared to ofav/ssid switching p=6.40e-05***
 
-shufftimesofss= pivot_longer(data=shufftimesofss, cols=starts_with('PropD'),
+shufflegroups= pivot_longer(data=shufflegroups, cols=starts_with('PropD'),
                names_to='Timepoint', names_prefix='PropD', values_to='PropD',
                values_drop_na=T)
 
-switchex=expression(paste('no initial ', italic("Durusdinium ")))
-shuffex=expression(paste('>0 initial ', italic("Durusdinium "), '≤ 25%'))
+MCswitchex=expression(paste( italic("M. cavernosa "),'with 0.0                             '))
+OFSSswitchex=expression(paste( italic("O. faveolata & S. siderea "),'with 0.0  '))
+OFSSshuffex1=expression(paste( italic("O. faveolata & S. siderea "),'with >0.0 ≤ 0.5'))
+OFSSshuffex2=expression(paste( italic("O. faveolata & S. siderea "),'with >0.5'))
 
-ggplot(shufftimesofss, aes(x = Timepoint, y = PropD, group=initial.d)) +
-  stat_summary(aes(shape=initial.d, colour=initial.d),fun.data='mean_se',
-             position = position_dodge(0.2), size=0.5) +
+
+ggplot(shufflegroups, aes(x = Timepoint, y = PropD, group=initiald)) +
+  stat_summary(aes(colour=initiald),fun.data='mean_se',
+             position = position_dodge(0.2), size=0.3, show.legend =F) +
   scale_x_discrete(labels=c('Pre heat stress','Post heat stress','1 month recovery','2 month recovery'))+
-  scale_shape_manual(values=c(0,15),labels=c(switchex,shuffex))+
-  scale_colour_manual(values=c('blue3','brown2'),labels=c(switchex,shuffex))+
-  stat_summary(geom='line', aes(linetype=initial.d, colour=initial.d),position = position_dodge(0.2))+
-  scale_linetype_manual(values=c('dashed','solid'),labels=c(switchex,shuffex))+
+  stat_summary(geom='line', aes(linetype=initiald, colour=initiald),position = position_dodge(0.2))+
   theme_minimal(base_size = 15)%+replace%
    theme(panel.border = element_rect(colour='grey20',fill=NA),
           panel.grid.minor.x = element_blank(),
          panel.grid.major.x = element_blank(),
           panel.grid.minor.y = element_blank())+
-  labs(y="Proportion *Durusdinium* <br /> (*O. faveolata* & *S. siderea*)", x='')+
-  theme(legend.position = 'bottom',legend.title=element_text(size=0), axis.title.y = element_markdown())
-#ggsave('ofavshuffswitch.pdf',device='pdf',height=5,width=7)
+  scale_linetype_manual(values=c('solid','dashed','dashed','dashed'),labels=c(MCswitchex,OFSSswitchex,OFSSshuffex1, OFSSshuffex2), name='Initial proportion *Durusdinium* groups')+
+  scale_colour_manual(values=c('blue3','blue3','purple','brown2'),labels=c(MCswitchex,OFSSswitchex,OFSSshuffex1, OFSSshuffex2),name='Initial proportion *Durusdinium* groups')+
+  labs(y="Proportion *Durusdinium*", x='')+
+  guides(colour=guide_legend(nrow=2, byrow=TRUE, title.position ='top',title.hjust = 0.5),linetype=guide_legend(nrow=2, byrow=TRUE, title.position ='top',title.hjust = 0.5))+
+  theme(legend.position = 'bottom', legend.title=element_markdown(), axis.title.y = element_markdown())
+ 
+#ggsave('shuffswitch.pdf',device='pdf',height=5,width=7)
 
-###UPDATE FOR ROSS: I have corrected this analysis to be based on proportion d (mean +-SE), rather than the shuffling metric, given that this is a comparison between those with and without any initial d. 25% initial d was taken as the threshold, so those with no initial d were compared against those with >0 but <25% initial d. Due to small sample size, ofav and ssid are grouped together here (model finds no significant affect of species).  
+###UPDATE FOR ROSS: Due to small sample size, ofav and ssid are grouped together here (model finds no significant affect of species).
+   
 ```
