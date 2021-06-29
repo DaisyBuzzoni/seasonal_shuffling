@@ -92,7 +92,7 @@ Apr_Oct_sh_change=Apr_Oct_sh_change[,c(1,4,7)]
 Apr_Oct_sh_change$Apr_pre_sh=as.numeric(Apr_Oct_sh_change$Apr_pre_sh)
 Apr_Oct_sh_change$Oct_pre_sh=as.numeric(Apr_Oct_sh_change$Oct_pre_sh)
 Apr_Oct_sh_change$pre_sh_change= Apr_Oct_sh_change$Oct_pre_sh- Apr_Oct_sh_change$Apr_pre_sh
-Apr_Oct_sh_change$rel_sh_change= ((Apr_Oct_sh_change$Oct_pre_sh- Apr_Oct_sh_change$Apr_pre_sh)/Apr_Oct_sh_change$Apr_pre_sh)*100
+Apr_Oct_sh_change$rel_sh_change= ((Apr_Oct_sh_change$Oct_pre_sh- Apr_Oct_sh_change$Apr_pre_sh)/Apr_Oct_sh_change$Apr_pre_sh)
 Apr_Oct_sh_change$octtoapr<- Apr_Oct_sh_change$Oct_pre_sh/Apr_Oct_sh_change$Apr_pre_sh
 Apr_Oct_sh_change$Species=factor(Apr_Oct_sh_change$Colony)
 Apr_Oct_sh_change$Species= mapvalues(Apr_Oct_sh_change$Species,
@@ -142,6 +142,14 @@ ofavemmsh_contrasts<- ofavemm.sh$contrasts %>%
      confint()%>%
      as.data.frame() # NB these results are given on a log10 scale
 
+ofavemm.sh2<- emmeans(ofavpreshmod, specs=revpairwise~Batch, type='response') 
+summary(ofavemm.sh2) #alternatively, by backtransforming the predicted means for each batch, we can then calculate the percentage change, which may be more intuitive to interpret.
+ofavemmsh_pred<-as.data.frame(ofavemm.sh2$emmeans)
+
+ofavemmsh_pred$relchange<- (ofavemmsh_pred[2,2]-ofavemmsh_pred[1,2])/ofavemmsh_pred[1,2]
+ofavemmsh_pred$relupper<- (ofavemmsh_pred[2,6]-ofavemmsh_pred[1,5])/ofavemmsh_pred[1,2]
+ofavemmsh_pred$rellower<- (ofavemmsh_pred[2,5]-ofavemmsh_pred[1,6])/ofavemmsh_pred[1,2]
+
 
 ssidpreshmod=lmer(log10(pre_sh)~Batch+(1|Colony),data=filter(batches,batches$Species=='S.siderea'))
 plot_resqq(mcavpreshmod) # check residuals are normally distributed
@@ -154,6 +162,13 @@ ssidemmsh_contrasts<- ssidemm.sh$contrasts %>%
      confint()%>%
      as.data.frame() # NB these results are given on a log10 scale
 
+ssidemm.sh2<- emmeans(ssidpreshmod, specs=revpairwise~Batch, type='response') 
+summary(ssidemm.sh2) #alternatively, by backtransforming the predicted means for each batch, we can then calculate the percentage change, which may be more intuitive to interpret.
+ssidemmsh_pred<-as.data.frame(ssidemm.sh2$emmeans)
+
+ssidemmsh_pred$relchange<- (ssidemmsh_pred[2,2]-ssidemmsh_pred[1,2])/ssidemmsh_pred[1,2]
+ssidemmsh_pred$relupper<- (ssidemmsh_pred[2,6]-ssidemmsh_pred[1,5])/ssidemmsh_pred[1,2]
+ssidemmsh_pred$rellower<- (ssidemmsh_pred[2,5]-ssidemmsh_pred[1,6])/ssidemmsh_pred[1,2]
 
 #collate the dataframe for the log10 transformed contrast ratios
 sh_emmcontrasts<-rbind(mcavemmsh_contrasts,ofavemmsh_contrasts,ssidemmsh_contrasts)
@@ -161,11 +176,12 @@ sh_emmcontrasts$Species<-c('M.cavernosa','O.faveolata','S.siderea')
 sh_emmcontrasts$Species<-as.factor(sh_emmcontrasts$Species)
 sh_emmcontrasts$change_untransformed= 10^(sh_emmcontrasts$estimate)
 sh_emmcontrasts$lowerCI_change_untransformed= 10^(sh_emmcontrasts$lower.CL)
-sh_emmcontrasts$upperCI_change_untransformed= 10^(sh_emmcontrasts$upper.CL)
- 
-sh_emmcontrasts$rel_change_untransformed=sh_emmcontrasts$change_untransformed/sh_emmcontrasts$April_untransformed
-sh_emmcontrasts$rel_lower_untransformed=sh_emmcontrasts$lowerCI_change_untransformed/sh_emmcontrasts$April_untransformed
-sh_emmcontrasts$rel_upper_untransformed=sh_emmcontrasts$upperCI_change_untransformed/sh_emmcontrasts$April_untransformed
+sh_emmcontrasts$upperCI_change_untransformed= 10^(sh_emmcontrasts$upper.CL) #these ratios of oct:apr are now backtransformed and ready to be plotted 
+
+#for the alternative plot, collate the calculated relative changes
+sh_emmpredchange<-rbind(mcavemmsh_pred[1,],ofavemmsh_pred[1,],ssidemmsh_pred[1,])
+sh_emmpredchange$Species<-c('M.cavernosa','O.faveolata','S.siderea')
+sh_emmpredchange$Species<- as.factor(sh_emmpredchange$Species)
 
 
 #plot set-up
@@ -192,6 +208,22 @@ ggplot()+
   scale_y_continuous(breaks=c(0.5,1,2,4,6,8))+
      coord_cartesian(ylim=c(0.3,8))
 #ggsave('initialSH_seasonal_emmeans.pdf',device='pdf',width=7,height=5) # add 'higher in Oct'/'higher in Apr' labels to figure
+  
+  ggplot()+
+  geom_point(data=sh_emmpredchange, aes(x=Species,y=relchange, colour=Species), size=2)+ 
+  geom_point(data=Apr_Oct_sh_change, aes(x=Species,y=rel_sh_change, colour=Species), size=0.5,  position=position_jitter(width=0.1))+ #points are showing proportional change from apr to oct
+  geom_errorbar(data=sh_emmpredchange, aes(x=Species, ymin=rellower, ymax=relupper, colour=Species), size=0.5, width=0.2)+
+  theme_minimal(base_size = 15)%+replace%
+    theme(panel.border = element_rect(colour='grey20',fill=NA),
+          panel.grid.major.x = element_blank(),
+          panel.grid.minor.x = element_blank(),
+          panel.grid.minor.y = element_blank())+
+  labs(y='relative change in symbionts per host cell', x='')+
+   scale_x_discrete(labels=c(mcav,ofav,ssid), expand=expansion(add=c(0.4,1.2)))+
+  scale_color_manual(values=c('deeppink2','darkorange1', 'darkturquoise'))+
+  guides(colour=F)+
+  geom_hline(yintercept=0,linetype='dashed')
+
 
 #UPDATES FOR ROSS: This is now the emmeans predicted seasonal differnece, with 95% confidence intervals. Note some individual mcav datapoints are beyond the limits of the graph but accounted for in the predicted means and statistical calculations. 
 #potential problem with this plot is that by plotting the ratio, a ratio of 0.5 (50% decrease) may be equivalent to a ratio of 2 (100% increase)...? Is this plot disproportionately inflating positive values?
