@@ -32,6 +32,7 @@ library(png)
 library(ggrepel)
 library(redres)
 library(tidyr)
+library(plotrix)
 ```
 
 ```{r, echo=F}
@@ -163,7 +164,7 @@ ssidemmsh_contrasts<- ssidemm.sh$contrasts %>%
      as.data.frame() # NB these results are given on a log10 scale
 
 ssidemm.sh2<- emmeans(ssidpreshmod, specs=revpairwise~Batch, type='response') 
-summary(ssidemm.sh2) #alternatively, by backtransforming the predicted means for each batch, we can then calculate the percentage change, which may be more intuitive to interpret.
+summary(ssidemm.sh2) #alternatively, by backtransforming the predicted means for each batch, we can then calculate the percentage change, which may be more intuitive to interpret. However, this is misleading since it is the differnece of the averages, not the average difference. 
 ssidemmsh_pred<-as.data.frame(ssidemm.sh2$emmeans)
 
 ssidemmsh_pred$relchange<- (ssidemmsh_pred[2,2]-ssidemmsh_pred[1,2])/ssidemmsh_pred[1,2]
@@ -191,7 +192,7 @@ mcav=expression(paste(italic("M. cavernosa")))
 
 
 ggplot()+
-  geom_point(data=sh_emmcontrasts, aes(x=Species,y=(change_untransformed), colour=Species), size=2)+ #large points are showing estimated october:april 
+  geom_point(data=sh_emmcontrasts, aes(x=Species,y=change_untransformed, colour=Species), size=2)+ #large points are showing estimated october:april 
   geom_point(data=Apr_Oct_sh_change, aes(x=Species,y=octtoapr, colour=Species), size=0.5,  position=position_jitter(width=0.1))+ #small points are showing october s:h / april s:h
   geom_errorbar(data=sh_emmcontrasts, aes(x=Species, ymin=(lowerCI_change_untransformed), ymax=(upperCI_change_untransformed), colour=Species), size=0.5, width=0.2)+
   theme_minimal(base_size = 15)%+replace%
@@ -203,11 +204,27 @@ ggplot()+
    scale_x_discrete(labels=c(mcav,ofav,ssid), expand=expansion(add=c(0.4,1.2)))+
   scale_color_manual(values=c('deeppink2','darkorange1', 'darkturquoise'))+
   guides(colour=F)+
-  geom_hline(yintercept=1,linetype='dashed')
+  geom_hline(yintercept=0,linetype='dashed')
 
-  scale_y_continuous(breaks=c(0.5,1,2,4,6,8))+
-     coord_cartesian(ylim=c(0.3,8))
 #ggsave('initialSH_seasonal_emmeans.pdf',device='pdf',width=7,height=5) # add 'higher in Oct'/'higher in Apr' labels to figure
+
+
+#perhaps plotting on a log10 scale will correct the +ve -ve skew?
+ggplot()+
+  geom_point(data=sh_emmcontrasts, aes(x=Species,y=(estimate), colour=Species), size=2)+ #large points are showing estimated october:april 
+  geom_point(data=Apr_Oct_sh_change, aes(x=Species,y=log10(octtoapr), colour=Species), size=0.5,  position=position_jitter(width=0.1))+ #small points are showing october s:h / april s:h
+  geom_errorbar(data=sh_emmcontrasts, aes(x=Species, ymin=(lower.CL), ymax=(upper.CL), colour=Species), size=0.5, width=0.2)+
+  theme_minimal(base_size = 15)%+replace%
+    theme(panel.border = element_rect(colour='grey20',fill=NA),
+          panel.grid.major.x = element_blank(),
+          panel.grid.minor.x = element_blank(),
+          panel.grid.minor.y = element_blank())+
+  labs(y='log(October : April symbionts per host cell)', x='')+
+   scale_x_discrete(labels=c(mcav,ofav,ssid), expand=expansion(add=c(0.4,1.2)))+
+  scale_color_manual(values=c('deeppink2','darkorange1', 'darkturquoise'))+
+  guides(colour=F)+
+  geom_hline(yintercept=0,linetype='dashed')
+
   
   ggplot()+
   geom_point(data=sh_emmpredchange, aes(x=Species,y=relchange, colour=Species), size=2)+ 
@@ -225,8 +242,8 @@ ggplot()+
   geom_hline(yintercept=0,linetype='dashed')
 
 
-#UPDATES FOR ROSS: This is now the emmeans predicted seasonal differnece, with 95% confidence intervals. Note some individual mcav datapoints are beyond the limits of the graph but accounted for in the predicted means and statistical calculations. 
-#potential problem with this plot is that by plotting the ratio, a ratio of 0.5 (50% decrease) may be equivalent to a ratio of 2 (100% increase)...? Is this plot disproportionately inflating positive values?
+#UPDATES FOR ROSS: 
+#potential problem with this plot is that by plotting the ratio, a ratio of 0.5 (50% decrease) may be equivalent to a ratio of 2 (100% increase)...? Is this plot disproportionately inflating positive values? I have also now removed the scale limits so that every data point is shown.
 
 
 
@@ -265,7 +282,7 @@ summary(ofavpredmod) # p=0.2
 ssidpredmod=glmer(pre_propD~Batch+(1|Colony),data=filter(batches,batches$Species=='S.siderea'), family = 'binomial')
 summary(ssidpredmod)# p0.09
 
-#UPDATES FOR ROSS: Make it clear that this plot is showing raw data, not predictive model. glmer is now 'family quasibinomial'. 
+#Make it clear that this plot is showing raw data, not predictive model. glmer is now 'family quasibinomial'. 
 ```
 
 ## BLEACHING SENSITIVITY & RATE
@@ -303,59 +320,60 @@ blch_sensitivity$Colony=as.factor(blch_sensitivity$Colony)
 ### Figure 1d: M. cavernosa showed higher sensitivity to bleaching in October compared to April.
 
 ```{r, message=F, warning=F}
-blch_sensitivity=blch_sensitivity[-c(31,32,48,59,56,57,75),] #remove 're'_drop_sh' NAs, and 5 cores that increased symbiont density
+blch_sensitivity=blch_sensitivity[-c(56,57,75),] #remove 're'_drop_sh' NAs
 mcavsensitivity=subset(blch_sensitivity,Species=='M.cavernosa')
-mcavsensitivity$transformedshdrop<- (mcavsensitivity$rel_drop_sh)^2
-plot(mcavsensitivity$rel_drop_sh~mcavsensitivity$rel_drop_y2)
 
-mcavblchresmod=glmer((rel_drop_sh^2)~rel_drop_y2*Batch+(1|Colony),data=mcavsensitivity)
+mcavblchresmod=glmer(post_sh~Batch+(1|Colony),data=mcavsensitivity)
 plot_resqq(mcavblchresmod)
 summary(mcavblchresmod)
 mcavblchresmod2<- as_lmerModLmerTest(mcavblchresmod)
-summary(mcavblchresmod2)#the interaction between batch and drop in y2 is significant (p=0.0156).
+summary(mcavblchresmod2)#the effect of batch on post heat stress y2 is significant (0.002206).
 
 ofavsensitivity<-subset(blch_sensitivity,Species=='O.faveolata')
-plot(ofavsensitivity$rel_drop_sh~ofavsensitivity$rel_drop_y2)
-ofavblchresmod=glmer((rel_drop_sh^2)~rel_drop_y2*Batch+InitialDom+(1|Colony),data=ofavsensitivity)
+ofavblchresmod=glmer(post_sh~Batch+InitialDom+(1|Colony),data=ofavsensitivity)
 plot_resqq(ofavblchresmod)
 summary(ofavblchresmod)
 ofavblchresmod2<- as_lmerModLmerTest(ofavblchresmod)
-summary(ofavblchresmod2) #when separated by symbiont genus, the interaction between bacth and drop in y2 is insignificant (p=0.137)
+summary(ofavblchresmod2) #when separated by symbiont genus, the effect of batch on post heat stress y2 is insignificant (0.680)
 
 ssidsensitivity<-subset(blch_sensitivity,Species=='S.siderea')
-plot(ssidsensitivity$rel_drop_sh~ssidsensitivity$rel_drop_y2)
-ssidblchresmod=glmer((rel_drop_sh^2)~rel_drop_y2*Batch+InitialDom+(1|Colony),data=ssidsensitivity)
+ssidblchresmod=glmer(post_sh~Batch+InitialDom+(1|Colony),data=ssidsensitivity)
 plot_resqq(ssidblchresmod)
 summary(ssidblchresmod)
 ssidblchresmod2<- as_lmerModLmerTest(ssidblchresmod)
-summary(ssidblchresmod2) #when separated by symbiont genus, the interaction between bacth and drop in y2 is insignificant (p=0.447)
+summary(ssidblchresmod2) #when separated by symbiont genus, the effect of batch on post heat stress y2 is insignificant (0.258)
 
 mcavsensitivity$predicted<- predict(mcavblchresmod)
 mcavsensitivity$residuals<- residuals(mcavblchresmod)
-mcavsensitivity$untransformed_predicted<- -(mcavsensitivity$predicted^0.5) #all changes are negative, reverse transform sqaured response variable.   
+mcavsensitivityse<-mcavsensitivity %>%
+  group_by(Batch) %>%
+  summarise(se=std.error(post_sh))
+as.data.frame(mcavsensitivityse)
+mcavsensitivitysumm<-mcavsensitivity %>%
+  group_by(Batch) %>%
+  summarise(mean=mean(post_sh))
+as.data.frame(mcavsensitivitysumm)
+mcavsensitivitysumm$se<-mcavsensitivityse$se
+mcavsensitivitysey2<-mcavsensitivity %>%
+  group_by(Batch) %>%
+  summarise(sey2=std.error(post_y2))
+as.data.frame(mcavsensitivitysey2)
+mcavsensitivitymeany2<-mcavsensitivity %>%
+  group_by(Batch) %>%
+  summarise(meany2=mean(post_y2))
+as.data.frame(mcavsensitivitymeany2)
+mcavsensitivitysumm$sey2<-mcavsensitivitysey2$sey2
+mcavsensitivitysumm$meany2<-mcavsensitivitymeany2$meany2
 
-ggplot()+
-  geom_point(data=mcavsensitivity,aes(x=rel_drop_y2,y=rel_drop_sh,colour=Batch))+
-  geom_smooth(data=mcavsensitivity,method='loess',
-  aes(x=rel_drop_y2,y=untransformed_predicted,color=Batch),show.legend=F,se=T, alpha=0.5, size=0.5)+
-  coord_cartesian(clip='off', ylim=c(-120,0))+
-  theme_minimal(base_size = 13)%+replace%
-    theme(panel.border = element_rect(colour='grey20',size=0.5,fill=NA))+
-   scale_colour_manual(values=c('#3C5488B2','#00A087B2'),labels=c('April','October'))+
- theme(panel.spacing = unit(1.2, "lines"),legend.position = 'right')+
-  theme(legend.title=element_text(size=0), axis.title.y = element_markdown())+
-theme(legend.position = c(0.8,0.5))+
-  labs(x='% change in Fv/Fm',y='% change in symbionts per *M. cavernosa* cell')
-  #ggsave('bleaching_sensitivity_batches.pdf',device='pdf',width=7,height=5)
 
-
-#UPDATES FOR ROSS: This model is now also a mixed effects model, performed on transformed response data. A glmm was used instead of a lmm due to uneven sample sizes of from each colony in each treatemnt due to exclusion of control cores. This now shows the linear regression and 95% confidence interval for predicted values from the model. The plot shows MCAV only but stats have been done for all three species. 
-
-
+#UPDATES FOR ROSS: 
 #what if we try plotting end fv/fm and s:h rather than the relative change? And use prediction ellipses or mean and error bars rather than try to fit a linear model. 
 
 ggplot()+
   geom_point(data=mcavsensitivity,aes(x=post_y2,y=post_sh,colour=Batch))+
+  geom_errorbar(data=mcavsensitivitysumm, aes(x=meany2,ymin=mean-se,ymax=mean+se, colour=Batch), width=0.01, show.legend=F)+
+   geom_errorbar(data=mcavsensitivitysumm, aes(y=mean,xmin=meany2-sey2,xmax=meany2+sey2, colour=Batch), width=0.0025, show.legend=F)+
+  geom_point(data=mcavsensitivitysumm, aes(x=meany2,y=mean,colour=Batch),size=3, show.legend=F)+
   theme_minimal(base_size = 13)%+replace%
     theme(panel.border = element_rect(colour='grey20',size=0.5,fill=NA))+
    scale_colour_manual(values=c('#3C5488B2','#00A087B2'),labels=c('April','October'))+
@@ -364,15 +382,7 @@ ggplot()+
 theme(legend.position = c(0.8,0.5))+
   labs(x='Fv/Fm after heat stress',y='symbionts per *M. cavernosa* cell after heat stress')
 
-ggplot()+
-  geom_point(data=mcavsensitivity,aes(x=change_y2,y=post_sh,colour=Batch))+
-  theme_minimal(base_size = 13)%+replace%
-    theme(panel.border = element_rect(colour='grey20',size=0.5,fill=NA))+
-   scale_colour_manual(values=c('#3C5488B2','#00A087B2'),labels=c('April','October'))+
- theme(panel.spacing = unit(1.2, "lines"),legend.position = 'right')+
-  theme(legend.title=element_text(size=0), axis.title.y = element_markdown())+
-theme(legend.position = c(0.8,0.5))+
-  labs(x='reduction in Fv/Fm',y='symbionts per *M. cavernosa* cell after heat stress')
+  #ggsave('bleaching_sensitivity_batches.pdf',device='pdf',width=7,height=5)
 ```
 
 
@@ -734,7 +744,7 @@ ggplot(aucall, aes(x = Timepoint, y = fit, group = Species)) +
 ###UPDATE FOR ROSS: The predicted values are based of a model which controls for pre-heat stress proportion durusdinium (rather than proportion durusdinium at the previous timepoint). Making 'timepoint' an integer rather than a factor in the model also changed things. Would like to perform stats on the interaction effect on shuffling between timepoint and species, but unsure how since mcav fitted to a separate model. The '2-month recovery' points are very slightly differnet from those in the bleached Vs control shuffling plot, but I think this is indicative of shuffling at each timepoint being linked to each coral (rather than averaged within each species) for these predicted values, arther than a mistake in the code. 
 ```
 
-### Figure 3c: O. faveolata and S.siderea corals that initially hosted background Durusdinium shuffled more quickly and more fully to Durusdinium than those with no initial Durusdinium. 
+### Figure 3c: O. faveolata and S.siderea corals that initially hosted background Durusdinium shuffled more quickly and more fully to Durusdinium than those with no initial Durusdinium, which shuffled less than M.cavernosa that contained no initial Durusdinium.
 
 ```{r, warning=F, message=F}
 #now look at timing for switching and shuffling
@@ -782,6 +792,6 @@ ggplot(shufflegroups, aes(x = Timepoint, y = PropD, group=initiald)) +
  
 #ggsave('shuffswitch.pdf',device='pdf',height=5,width=7)
 
-###UPDATE FOR ROSS: Due to small sample size, ofav and ssid are grouped together here (model finds no significant affect of species).
+###UPDATE FOR ROSS: Due to small sample size, ofav and ssid are grouped together here (model finds no significant affect of species). Now this plot includes all corals. 
    
 ```
