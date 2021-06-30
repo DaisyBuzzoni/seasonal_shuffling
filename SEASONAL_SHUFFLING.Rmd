@@ -67,7 +67,7 @@ temp$Date=as.Date(temp$Date,format = "%d/%m/%Y")
           panel.grid.minor.x = element_blank(),
           panel.grid.minor.y = element_blank())+
    labs(x='Month (2019-20)',y='Temperature/°C')+stat_summary(data=temp,aes(x=Date,y=Temp,fill='chartreuse2'),fun.data=mean_se,geom='ribbon',alpha=0.6)+scale_fill_identity(guide='legend',breaks=c('darkgreen','chartreuse2'),labels=c('Fowey Rock 2015-19 average','Emerald Reef 2019'))+guides(fill=guide_legend(title=''))+theme(legend.position = c(0.6,0.3))+scale_x_date(date_labels = '%b',limits=as.Date(c('2019-01-01','2019-12-31')))
-#ggsave('temp3.pdf',device='pdf', width=7,height=5) #add labels to figure to show two collection timepoints
+#ggsave('1a.seasonal_temps.pdf',device='pdf', width=7,height=5) #add labels to figure to show two collection timepoints
 ```
 
 ## INITIAL SYMBIONT COMMUNITIES
@@ -110,7 +110,7 @@ Apr_Oct_sh_change$Species= mapvalues(Apr_Oct_sh_change$Species,
 batches$transf_presh= log10(batches$pre_sh) # transform the response variable
 
 mcavpreshmod=lmer(log10(pre_sh)~Batch+(1|Colony),data=filter(batches,batches$Species=='M.cavernosa'))
-plot_resqq(mcavpreshmod) # check residuals are normally distributed
+#plot_resqq(mcavpreshmod) # check residuals are normally distributed
 
 mcavpreshmod2<- as_lmerModLmerTest(mcavpreshmod)
 summary(mcavpreshmod2) #p for batch, p=0.001126** 
@@ -133,7 +133,7 @@ mcavemmsh_pred$rellower<- (mcavemmsh_pred[2,5]-mcavemmsh_pred[1,6])/mcavemmsh_pr
 
 
 ofavpreshmod=lmer(log10(pre_sh)~Batch+(1|Colony),data=filter(batches,batches$Species=='O.faveolata'))
-plot_resqq(ofavpreshmod) # check residuals are normally distributed
+#plot_resqq(ofavpreshmod) # check residuals are normally distributed
 ofavpreshmod2<- as_lmerModLmerTest(ofavpreshmod)
 summary(ofavpreshmod2) #p for batch, p=0.938
 # now let's get the batch parameter estimates and CIs:
@@ -153,7 +153,7 @@ ofavemmsh_pred$rellower<- (ofavemmsh_pred[2,5]-ofavemmsh_pred[1,6])/ofavemmsh_pr
 
 
 ssidpreshmod=lmer(log10(pre_sh)~Batch+(1|Colony),data=filter(batches,batches$Species=='S.siderea'))
-plot_resqq(mcavpreshmod) # check residuals are normally distributed
+#plot_resqq(mcavpreshmod) # check residuals are normally distributed
 ssidpreshmod2<- as_lmerModLmerTest(ssidpreshmod)
 summary(ssidpreshmod2) #p for batch, p=0.04833*
 # now let's get the batch parameter estimates and CIs:
@@ -206,7 +206,7 @@ ggplot()+
   guides(colour=F)+
   geom_hline(yintercept=0,linetype='dashed')
 
-#ggsave('initialSH_seasonal_emmeans.pdf',device='pdf',width=7,height=5) # add 'higher in Oct'/'higher in Apr' labels to figure
+
 
 
 #perhaps plotting on a log10 scale will correct the +ve -ve skew?
@@ -224,7 +224,7 @@ ggplot()+
   scale_color_manual(values=c('deeppink2','darkorange1', 'darkturquoise'))+
   guides(colour=F)+
   geom_hline(yintercept=0,linetype='dashed')
-
+#ggsave('1b.seasonal_initialSH.pdf',device='pdf',width=7,height=5) # add 'higher in Oct'/'higher in Apr' labels to figure
   
   ggplot()+
   geom_point(data=sh_emmpredchange, aes(x=Species,y=relchange, colour=Species), size=2)+ 
@@ -271,7 +271,7 @@ ggplot()+
 batch_comparevi
 #ggsave('batchcompare_propd_vi_dot.pdf',device='pdf',width=7,height=5)
 
-hist(batches$pre_propD)
+#hist(batches$pre_propD)
 
 mcavpredmod=glmer(pre_propD~Batch+(1|Colony),data=filter(batches,batches$Species=='M.cavernosa'), family = 'binomial')
 summary(mcavpredmod) # p=1
@@ -324,24 +324,24 @@ blch_sensitivity=blch_sensitivity[-c(56,57,75),] #remove 're'_drop_sh' NAs
 mcavsensitivity=subset(blch_sensitivity,Species=='M.cavernosa')
 
 mcavblchresmod=glmer(post_sh~Batch+(1|Colony),data=mcavsensitivity)
-plot_resqq(mcavblchresmod)
+#plot_resqq(mcavblchresmod)
 summary(mcavblchresmod)
 mcavblchresmod2<- as_lmerModLmerTest(mcavblchresmod)
-summary(mcavblchresmod2)#the effect of batch on post heat stress y2 is significant (0.002206).
+summary(mcavblchresmod2)#the effect of batch on post heat stress y2 is significant (p=0.002206).
 
 ofavsensitivity<-subset(blch_sensitivity,Species=='O.faveolata')
 ofavblchresmod=glmer(post_sh~Batch+InitialDom+(1|Colony),data=ofavsensitivity)
-plot_resqq(ofavblchresmod)
+#plot_resqq(ofavblchresmod)
 summary(ofavblchresmod)
 ofavblchresmod2<- as_lmerModLmerTest(ofavblchresmod)
-summary(ofavblchresmod2) #when separated by symbiont genus, the effect of batch on post heat stress y2 is insignificant (0.680)
+summary(ofavblchresmod2) #when separated by symbiont genus, the effect of batch on post heat stress y2 is insignificant (p=0.680)
 
 ssidsensitivity<-subset(blch_sensitivity,Species=='S.siderea')
 ssidblchresmod=glmer(post_sh~Batch+InitialDom+(1|Colony),data=ssidsensitivity)
-plot_resqq(ssidblchresmod)
+#plot_resqq(ssidblchresmod)
 summary(ssidblchresmod)
 ssidblchresmod2<- as_lmerModLmerTest(ssidblchresmod)
-summary(ssidblchresmod2) #when separated by symbiont genus, the effect of batch on post heat stress y2 is insignificant (0.258)
+summary(ssidblchresmod2) #when separated by symbiont genus, the effect of batch on post heat stress y2 is insignificant (p=0.258)
 
 mcavsensitivity$predicted<- predict(mcavblchresmod)
 mcavsensitivity$residuals<- residuals(mcavblchresmod)
@@ -378,11 +378,11 @@ ggplot()+
     theme(panel.border = element_rect(colour='grey20',size=0.5,fill=NA))+
    scale_colour_manual(values=c('#3C5488B2','#00A087B2'),labels=c('April','October'))+
  theme(panel.spacing = unit(1.2, "lines"),legend.position = 'right')+
-  theme(legend.title=element_text(size=0), axis.title.y = element_markdown())+
+  theme(legend.title=element_text(size=0), axis.title.y = element_markdown(), axis.title.x=element_markdown())+
 theme(legend.position = c(0.8,0.5))+
-  labs(x='Fv/Fm after heat stress',y='symbionts per *M. cavernosa* cell after heat stress')
+  labs(x='F<sub>v</sub>/F<sub>m</sub> after heat stress',y='Symbionts per *M. cavernosa* cell <br> after heat stress')
 
-  #ggsave('bleaching_sensitivity_batches.pdf',device='pdf',width=7,height=5)
+  #ggsave('1d.seasonal_bleaching_sensitivity.pdf',device='pdf',width=7,height=5)
 ```
 
 
@@ -399,7 +399,7 @@ mcav=expression(paste(italic("M. cavernosa")))
 ```
 
 
-```{r, warning=F, message=F}
+```{r, warning=F, message=F, include=F}
 allbleach=rbind(ofav_DHW,ssid_DHW,mcav_DHW)
 allbleach$Species=factor(allbleach$Species,levels=c('M.cavernosa','O.faveolata','S.siderea'))
 allrecov=rbind(mcav_recov, ofav_recov, ssid_recov)
@@ -419,32 +419,32 @@ allrecov<-allrecov[-c(86,239),]#model highlighted this one datapoint as an outli
   
 
 bleachingmod2<-glmer(Shprop~DHW*Species*InitialDom+(1|Colony), data=allbleach)
-plot_resqq(bleachingmod2) #perform statistical tests on mixed effects model
+#plot_resqq(bleachingmod2) #perform statistical tests on mixed effects model
 bleachingmod3<-as_lmerModLmerTest(bleachingmod2)
   summary(bleachingmod3)
   anova(bleachingmod3)#no significant difference in bleaching (DHW interaction with species) between species p=0.818834, but a significant interaction between DHW and initial symbiont type (p=0.00421), with nond-hosting corals bleaching more. 
   
 #now looking at any batch differences within each coral species:
   mcavbleachingmod<-glmer(Shprop~DHW*Batch+(1|Colony), data=filter(allbleach,allbleach$Species=='M.cavernosa'))
-  plot_resqq(mcavbleachingmod)
+  #plot_resqq(mcavbleachingmod)
   mcavbleachingmod2<-as_lmerModLmerTest(mcavbleachingmod)
   summary(mcavbleachingmod2)
   anova(mcavbleachingmod2) #significant interaction between DHW and batch on proportion of symbionts retained, p=2.21e-06, with the october batch losing more.
   
   
 recovmod<-glm(Shprop~Recov.Days*Species*InitialDom, data=allrecov, family='quasipoisson')
-plot(recovmod)
+#plot(recovmod)
 recoveryfit= with(summary(recovmod), 1 - deviance/null.deviance)
 recoveryfit #0.5469, R^2 for plotted quasipoisson model (without batch)
 
 recovmod2<-glmer(Shprop~Recov.Days*Species*InitialDom+(1|Colony), data=allrecov)
-plot_resqq(recovmod2)
+#plot_resqq(recovmod2)
 recovmod3<-as_lmerModLmerTest(recovmod2)
 summary(recovmod3)
 anova(recovmod3)# symbiont recovery was significantly differnet between species (recovery days * symbiont density interaction), with ofav p=0.00556 and ssid p=6.48e-06 recovering more than mcav for a given amount of recovery (likely indicative of the delay in symbiont recovery seen in mcav). There was also a significant interaction between initial symbiont genus and recovery days p=2.00e-05, with corals initially not hosting Durusdinium recovering more with a given amount of recovery. 
 
     mcavrecovmod<-glmer(Shprop~Recov.Days*Batch+(1|Colony), data=filter(allrecov,allrecov$Species=='M.cavernosa'))
-  plot_resqq(mcavrecovmod)
+  #plot_resqq(mcavrecovmod)
   mcavrecovmod2<-as_lmerModLmerTest(mcavrecovmod)
   summary(mcavrecovmod2)
   anova(mcavrecovmod2) #there was a significant interaction p=0.004611 of batch on the relationship between symbiont density and recovery days, with the October batch recovering less.
@@ -532,9 +532,9 @@ shufflemod2=lm(post_propD ~Treatment*Batch,
 summary(shufflemod2)
 #again for the initial durusdinium independent model, batch is not a significant driver of shuffling, p= 0.066.  This model did not fit a quasibinomial distrubution, but is amost entirely bond between 0 and 1 regardless due to very large effect size & minimal variation in the data. 
 
-ggplot(data=filter(batches,batches$Species=='M.cavernosa'),aes(y=post_propD, x=Treatment))+
-  geom_point(aes(shape=Treatment))+
-  theme_minimal()
+#ggplot(data=filter(batches,batches$Species=='M.cavernosa'),aes(y=post_propD, x=Treatment))+
+  #geom_point(aes(shape=Treatment))+
+ # theme_minimal()
 
 eff2 <- effect(c('Treatment'), shufflemod2)
 
@@ -584,13 +584,13 @@ Recreating Cunning et al 2018 test of the relative photochemical disadvantages o
 ipam=filter(allbleach,allbleach$Timepoint=='Pre-bleach',allbleach$Species!='M.cavernosa')
 
 ipaminitmod=lmer(Y2~PropD*Species*Batch+(1|Colony),data=ipam)
-plot_resqq(ipaminitmod)
+#plot_resqq(ipaminitmod)
 summary(ipaminitmod)
 
 #UPDATE FOR ROSS: No significant differnece in the interaction between proportion durusdinium and coral species on Fv/Fm (p=0.255).
 ```
 
-### Figure S2: Despite greater symbiont loss in the October M. cavernosa corals, shuffling between April and October were similar for all three coral species. 
+### Figure S1: Despite greater symbiont loss in the October M. cavernosa corals, shuffling between April and October were similar for all three coral species. 
 ```{r, warning=F}
 #before getting fitted values, test statistical significance of batch for each species inidivually:
 ofavbatchmod=glm(post_propD ~ pre_propD+Batch,
