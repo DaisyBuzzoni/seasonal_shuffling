@@ -483,7 +483,7 @@ geom_abline(slope=1,intercept = 0,linetype='dotted')+
   theme(strip.text.x = element_text(face = 'italic'),
       panel.spacing = unit(1.5, "lines"), legend.position = 'bottom', legend.title=element_text(size=12))+
       guides(colour = guide_legend(title=''))
-#ggsave('redblue_shift.pdf',device='pdf', width=10,height=5) #add 'gained durusdinium'/'lost durusdinium' labels
+#ggsave('2.before_after_durusdinium.pdf',device='pdf', width=10,height=5) #add 'gained durusdinium'/'lost durusdinium' labels
 
 ```
 
@@ -571,7 +571,7 @@ ggplot(data=speciesshuff)+
   labs(y='Symbiont Shuffling', x='')+
   scale_y_continuous(limits=c(-1,1.01),expand=c(0,0))+
    scale_x_discrete(labels=c(mcav,ofav,ssid), expand=expansion(mult=c(0.5,0.2)))
-#ggsave('speciesshuffle.pdf',device='pdf', width=7,height=5)
+#ggsave('3a.treatment_shuffling.pdf',device='pdf', width=7,height=5)
 #add 'more durusdinium/less durusdinium' labels post-save
 
 ```
@@ -657,7 +657,7 @@ ggplot(data=filter(batchshuff,batchshuff$Treatment=='Bleached'))+
   labs(y='Symbiont Shuffling in Bleached Corals', x='')+
 coord_cartesian(clip='on', ylim=c(0,1.0))+
   scale_y_continuous(expand=c(0,0))
-#ggsave('shufflebatches.pdf',device='pdf',width=7,height=5)
+#ggsave('S1.shuffling_batches.pdf',device='pdf',width=7,height=5)
   
 ```
 
@@ -739,9 +739,9 @@ ggplot(aucall, aes(x = Timepoint, y = fit, group = Species)) +
    annotate(geom='text',x=3.4,y=-0.1,label=lostd,size=4)+
   theme(legend.position = 'bottom')+
   scale_y_continuous(expand=c(0,0))
-#ggsave('shuffletimingcumulative.pdf',device='pdf',height=5,width=7)
+#ggsave('3b.shuffling_cumulative.pdf',device='pdf',height=5,width=7)
 
-###UPDATE FOR ROSS: The predicted values are based of a model which controls for pre-heat stress proportion durusdinium (rather than proportion durusdinium at the previous timepoint). Making 'timepoint' an integer rather than a factor in the model also changed things. Would like to perform stats on the interaction effect on shuffling between timepoint and species, but unsure how since mcav fitted to a separate model. The '2-month recovery' points are very slightly differnet from those in the bleached Vs control shuffling plot, but I think this is indicative of shuffling at each timepoint being linked to each coral (rather than averaged within each species) for these predicted values, arther than a mistake in the code. 
+###UPDATE FOR ROSS: The predicted values are based of a model which controls for pre-heat stress proportion durusdinium (rather than proportion durusdinium at the previous timepoint). Making 'timepoint' an integer rather than a factor in the model also changed things. Would like to perform stats on the interaction effect on shuffling between timepoint and species, but unsure how since mcav fitted to a separate model. The '2-month recovery' points are very slightly differnet from those in the bleached Vs control shuffling plot, but I think this is indicative of shuffling at each timepoint being linked to each coral (rather than averaged within each species) for these predicted values, rather than a mistake in the code. 
 ```
 
 ### Figure 3c: O. faveolata and S.siderea corals that initially hosted background Durusdinium shuffled more quickly and more fully to Durusdinium than those with no initial Durusdinium, which shuffled less than M.cavernosa that contained no initial Durusdinium.
@@ -790,7 +790,7 @@ ggplot(shufflegroups, aes(x = Timepoint, y = PropD, group=initiald)) +
   guides(colour=guide_legend(nrow=2, byrow=TRUE, title.position ='top',title.hjust = 0.5),linetype=guide_legend(nrow=2, byrow=TRUE, title.position ='top',title.hjust = 0.5))+
   theme(legend.position = 'bottom', legend.title=element_markdown(), axis.title.y = element_markdown())
  
-#ggsave('shuffswitch.pdf',device='pdf',height=5,width=7)
+#ggsave('3c.initial_durusdinium_shuffling.pdf',device='pdf',height=5,width=7)
 
 ###UPDATE FOR ROSS: Due to small sample size, ofav and ssid are grouped together here (model finds no significant affect of species). Now this plot includes all corals. 
    
