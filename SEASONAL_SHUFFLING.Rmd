@@ -282,10 +282,10 @@ summary(ofavpredmod) # p=0.2
 ssidpredmod=glmer(pre_propD~Batch+(1|Colony),data=filter(batches,batches$Species=='S.siderea'), family = 'binomial')
 summary(ssidpredmod)# p0.09
 
-#Make it clear that this plot is showing raw data, not predictive model. glmer is now 'family quasibinomial'. 
+#Make it clear that this plot is showing raw data, not predictive model. glmer is now 'family binomial'. 
 ```
 
-## BLEACHING SENSITIVITY & RATE
+## BLEACHING SENSITIVITY
 ```{r,echo=F,warning=F,message=F,fig.show='hide'}
 bleaching_tidy=read.csv('bleaching_tidy_dates.csv')
 blch_sensitivity=dplyr::filter(bleaching_tidy,Treatment=='Bleached')
@@ -341,7 +341,7 @@ ssidblchresmod=glmer(post_sh~Batch+InitialDom+(1|Colony),data=ssidsensitivity)
 #plot_resqq(ssidblchresmod)
 summary(ssidblchresmod)
 ssidblchresmod2<- as_lmerModLmerTest(ssidblchresmod)
-summary(ssidblchresmod2) #when separated by symbiont genus, the effect of batch on post heat stress y2 is insignificant (p=0.258)
+summary(ssidblchresmod2) #when separated by symbiont genus, the effect of batch on post heat stress s:h is insignificant (p=0.258)
 
 mcavsensitivity$predicted<- predict(mcavblchresmod)
 mcavsensitivity$residuals<- residuals(mcavblchresmod)
@@ -576,7 +576,7 @@ ggplot(data=speciesshuff)+
 
 ```
 
-## shuffling and photochemical efficiency
+## Shuffling and photochemical efficiency
 ### Differnet photochemical disadvantages of hosting Durusdinium at ambient temperatures cannot explain the difference in shuffling between O. faveolata and S. siderea. 
 
 Recreating Cunning et al 2018 test of the relative photochemical disadvantages of hosting durusdinium at ambient temperatures to explain species hierarchy (ofav>ssid) in shuffling.
@@ -775,8 +775,10 @@ OFSSshuffex2=expression(paste( italic("O. faveolata & S. siderea "),'with >0.5')
 
 
 ggplot(shufflegroups, aes(x = Timepoint, y = PropD, group=initiald)) +
-  stat_summary(aes(colour=initiald),fun.data='mean_se',
-             position = position_dodge(0.2), size=0.3, show.legend =F) +
+  geom_point(aes(colour=initiald, shape=initiald),
+             position = position_jitterdodge(), alpha=0.5) +
+  stat_summary(aes(colour=initiald, shape=initiald),fun.data='mean_se',
+             position = position_dodge(0.2), size=0.7,show.legend =F) +
   scale_x_discrete(labels=c('Pre heat stress','Post heat stress','1 month recovery','2 month recovery'))+
   stat_summary(geom='line', aes(linetype=initiald, colour=initiald),position = position_dodge(0.2))+
   theme_minimal(base_size = 15)%+replace%
@@ -785,6 +787,7 @@ ggplot(shufflegroups, aes(x = Timepoint, y = PropD, group=initiald)) +
          panel.grid.major.x = element_blank(),
           panel.grid.minor.y = element_blank())+
   scale_linetype_manual(values=c('solid','dashed','dashed','dashed'),labels=c(MCswitchex,OFSSswitchex,OFSSshuffex1, OFSSshuffex2), name='Initial proportion *Durusdinium* groups')+
+  scale_shape_manual(values=c(19,1,1,1),labels=c(MCswitchex,OFSSswitchex,OFSSshuffex1, OFSSshuffex2), name='Initial proportion *Durusdinium* groups')+
   scale_colour_manual(values=c('blue3','blue3','purple','brown2'),labels=c(MCswitchex,OFSSswitchex,OFSSshuffex1, OFSSshuffex2),name='Initial proportion *Durusdinium* groups')+
   labs(y="Proportion *Durusdinium*", x='')+
   guides(colour=guide_legend(nrow=2, byrow=TRUE, title.position ='top',title.hjust = 0.5),linetype=guide_legend(nrow=2, byrow=TRUE, title.position ='top',title.hjust = 0.5))+
@@ -792,6 +795,6 @@ ggplot(shufflegroups, aes(x = Timepoint, y = PropD, group=initiald)) +
  
 #ggsave('3c.initial_durusdinium_shuffling.pdf',device='pdf',height=5,width=7)
 
-###UPDATE FOR ROSS: Due to small sample size, ofav and ssid are grouped together here (model finds no significant affect of species). Now this plot includes all corals. 
+###UPDATE FOR ROSS: Due to small sample size, ofav and ssid are grouped together here (model finds no significant effect of species). Now this plot includes all corals. 
    
 ```
