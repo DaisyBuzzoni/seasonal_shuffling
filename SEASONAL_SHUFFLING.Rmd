@@ -758,15 +758,19 @@ shufflegroups$initiald[shufflegroups$Species!='M.cavernosa' & shufflegroups$Prop
 shufflegroups$initiald=factor(shufflegroups$initiald, levels=c('MC0','OFSS0','OFSS0TO50','OFSS50TO100'))
 shufflegroups<-filter(shufflegroups,shufflegroups$initiald!='NA')
 
- 
-
 shuffmod4=glm(PropD4~initiald,data=shufflegroups, family='quasibinomial')
 summary(shuffmod4)
-anova(shuffmod4,test='F')# prop d significantly higher after mcav switching compared to ofav/ssid switching p=6.40e-05***
+anova(shuffmod4,test='F')# prop d significantly higher after mcav switching compared to ofav/ssid switching p=6.40e-07***
 
 shufflegroups= pivot_longer(data=shufflegroups, cols=starts_with('PropD'),
                names_to='Timepoint', names_prefix='PropD', values_to='PropD',
                values_drop_na=T)
+#confirm that ofav and ssid can reasonably be grouped together:
+shufflegroups$Species<-as.factor(shufflegroups$Species)
+shufflegroups$Timepoint<-as.numeric(shufflegroups$Timepoint)
+ofavssidpropd<- glm(PropD~Timepoint*initiald*Species,data=filter(shufflegroups,shufflegroups$Species!='M.cavernosa'), family='quasibinomial')
+summary(ofavssidpropd)
+anova(ofavssidpropd,test='F')
 
 MCswitchex=expression(paste( italic("M. cavernosa "),'with 0.0                             '))
 OFSSswitchex=expression(paste( italic("O. faveolata & S. siderea "),'with 0.0  '))
