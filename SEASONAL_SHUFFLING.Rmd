@@ -327,14 +327,20 @@ mcavblchresmod=glmer(post_sh~Batch+(1|Colony),data=mcavsensitivity)
 #plot_resqq(mcavblchresmod)
 summary(mcavblchresmod)
 mcavblchresmod2<- as_lmerModLmerTest(mcavblchresmod)
-summary(mcavblchresmod2)#the effect of batch on post heat stress y2 is significant (p=0.002206).
+summary(mcavblchresmod2)#the effect of batch on post heat stress sh is significant (p=0.002206).
+
+mcavinity2mod=glmer(pre_sh~Batch+(1|Colony),data=mcavsensitivity)
+summary(mcavinity2mod)
+mcavinity2mod2<- as_lmerModLmerTest(mcavinity2mod)
+summary(mcavinity2mod2) #the effect of batch on pre heat stress Fv/Fm was not significant (p=0.216)
+
 
 ofavsensitivity<-subset(blch_sensitivity,Species=='O.faveolata')
 ofavblchresmod=glmer(post_sh~Batch+InitialDom+(1|Colony),data=ofavsensitivity)
 #plot_resqq(ofavblchresmod)
 summary(ofavblchresmod)
 ofavblchresmod2<- as_lmerModLmerTest(ofavblchresmod)
-summary(ofavblchresmod2) #when separated by symbiont genus, the effect of batch on post heat stress y2 is insignificant (p=0.680)
+summary(ofavblchresmod2) #when separated by symbiont genus, the effect of batch on post heat stress sh is insignificant (p=0.680)
 
 ssidsensitivity<-subset(blch_sensitivity,Species=='S.siderea')
 ssidblchresmod=glmer(post_sh~Batch+InitialDom+(1|Colony),data=ssidsensitivity)
@@ -758,9 +764,9 @@ shufflegroups$initiald[shufflegroups$Species!='M.cavernosa' & shufflegroups$Prop
 shufflegroups$initiald=factor(shufflegroups$initiald, levels=c('MC0','OFSS0','OFSS0TO50','OFSS50TO100'))
 shufflegroups<-filter(shufflegroups,shufflegroups$initiald!='NA')
 
-shuffmod4=glm(PropD4~initiald,data=shufflegroups, family='quasibinomial')
+shuffmod4=glmer(PropD4~initiald+(1|Colony),data=shufflegroups, family='binomial')
 summary(shuffmod4)
-anova(shuffmod4,test='F')# prop d significantly higher after mcav switching compared to ofav/ssid switching p=6.40e-07***
+# prop d significantly higher after mcav switching compared to ofav/ssid switching p=0.02**
 
 shufflegroups= pivot_longer(data=shufflegroups, cols=starts_with('PropD'),
                names_to='Timepoint', names_prefix='PropD', values_to='PropD',
@@ -768,13 +774,14 @@ shufflegroups= pivot_longer(data=shufflegroups, cols=starts_with('PropD'),
 #confirm that ofav and ssid can reasonably be grouped together:
 shufflegroups$Species<-as.factor(shufflegroups$Species)
 shufflegroups$Timepoint<-as.numeric(shufflegroups$Timepoint)
-ofavssidpropd<- glm(PropD~Timepoint*initiald*Species,data=filter(shufflegroups,shufflegroups$Species!='M.cavernosa'), family='quasibinomial')
-summary(ofavssidpropd)
-anova(ofavssidpropd,test='F')
+shufflegroups$Colony<-as.factor(shufflegroups$Colony)
+ofavssidpropd<- lmer(PropD~Timepoint*initiald*Species+(1|Colony),data=filter(shufflegroups,shufflegroups$Species!='M.cavernosa'))
+summary(ofavssidpropd)#no significant effcet of ofav vs ssid on prop d (p=0.45), nor of time-species interaction (p=0.33)
+
 
 MCswitchex=expression(paste( italic("M. cavernosa "),'with 0.0                             '))
 OFSSswitchex=expression(paste( italic("O. faveolata & S. siderea "),'with 0.0  '))
-OFSSshuffex1=expression(paste( italic("O. faveolata & S. siderea "),'with >0.0 ≤ 0.5'))
+OFSSshuffex1=expression(paste( italic("O. faveolata & S. siderea "),'with >0.0 ≤ 0.5  '))
 OFSSshuffex2=expression(paste( italic("O. faveolata & S. siderea "),'with >0.5'))
 
 
