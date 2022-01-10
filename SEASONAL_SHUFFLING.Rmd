@@ -65,7 +65,7 @@ temp$Date=as.Date(temp$Date,format = "%d/%m/%Y")
  ggplot()+stat_summary(data=temp3,aes(x=date,y=WTMP,fill='darkgreen'),fun.data=mean_se,geom='ribbon',alpha=0.6)+theme_minimal(base_size = 15)%+replace%
     theme(panel.border = element_rect(colour='grey20',fill=NA),
           panel.grid.minor.x = element_blank(),
-          panel.grid.minor.y = element_blank())+
+          panel.grid.major.x = element_blank())+
    labs(x='Month (2019-20)',y='Temperature/°C')+stat_summary(data=temp,aes(x=Date,y=Temp,fill='chartreuse2'),fun.data=mean_se,geom='ribbon',alpha=0.6)+scale_fill_identity(guide='legend',breaks=c('darkgreen','chartreuse2'),labels=c('Fowey Rock 2015-19 average','Emerald Reef 2019'))+guides(fill=guide_legend(title=''))+theme(legend.position = c(0.6,0.3))+scale_x_date(date_labels = '%b',limits=as.Date(c('2019-01-01','2019-12-31')))
 #ggsave('1a.seasonal_temps.pdf',device='pdf', width=7,height=5) #add labels to figure to show two collection timepoints
 ```
@@ -192,60 +192,21 @@ mcav=expression(paste(italic("M. cavernosa")))
 
 
 ggplot()+
-  geom_point(data=sh_emmcontrasts, aes(x=Species,y=change_untransformed, colour=Species), size=2)+ #large points are showing estimated october:april 
-  geom_point(data=Apr_Oct_sh_change, aes(x=Species,y=octtoapr, colour=Species), size=0.5,  position=position_jitter(width=0.1))+ #small points are showing october s:h / april s:h
-  geom_errorbar(data=sh_emmcontrasts, aes(x=Species, ymin=(lowerCI_change_untransformed), ymax=(upperCI_change_untransformed), colour=Species), size=0.5, width=0.2)+
-  theme_minimal(base_size = 15)%+replace%
-    theme(panel.border = element_rect(colour='grey20',fill=NA),
-          panel.grid.major.x = element_blank(),
-          panel.grid.minor.x = element_blank(),
-          panel.grid.minor.y = element_blank())+
-  labs(y='October : April symbionts per host cell', x='')+
-   scale_x_discrete(labels=c(mcav,ofav,ssid), expand=expansion(add=c(0.4,1.2)))+
-  scale_color_manual(values=c('deeppink2','darkorange1', 'darkturquoise'))+
-  guides(colour=F)+
-  geom_hline(yintercept=0,linetype='dashed')
-
-
-
-
-#perhaps plotting on a log10 scale will correct the +ve -ve skew?
-ggplot()+
-  geom_point(data=sh_emmcontrasts, aes(x=Species,y=(estimate), colour=Species), size=2)+ #large points are showing estimated october:april 
-  geom_point(data=Apr_Oct_sh_change, aes(x=Species,y=log10(octtoapr), colour=Species), size=0.5,  position=position_jitter(width=0.1))+ #small points are showing october s:h / april s:h
+  geom_point(data=sh_emmcontrasts, aes(x=Species,y=(estimate), colour=Species), size=3)+ #large points are showing estimated october:april 
+  geom_point(data=Apr_Oct_sh_change, aes(x=Species,y=log10(octtoapr), colour=Species), size=1.2,  position=position_jitter(width=0.1))+ #small points are showing october s:h / april s:h
   geom_errorbar(data=sh_emmcontrasts, aes(x=Species, ymin=(lower.CL), ymax=(upper.CL), colour=Species), size=0.5, width=0.2)+
   theme_minimal(base_size = 15)%+replace%
     theme(panel.border = element_rect(colour='grey20',fill=NA),
           panel.grid.major.x = element_blank(),
-          panel.grid.minor.x = element_blank(),
-          panel.grid.minor.y = element_blank())+
+          panel.grid.minor.x = element_blank()
+        )+
   labs(y='log(October : April symbionts per host cell)', x='')+
    scale_x_discrete(labels=c(mcav,ofav,ssid), expand=expansion(add=c(0.4,1.2)))+
   scale_color_manual(values=c('deeppink2','darkorange1', 'darkturquoise'))+
   guides(colour=F)+
-  geom_hline(yintercept=0,linetype='dashed')
+  geom_hline(yintercept=0,linetype='dashed')+
+  scale_y_continuous(breaks=seq(-1,1.5,0.5))
 #ggsave('1b.seasonal_initialSH.pdf',device='pdf',width=7,height=5) # add 'higher in Oct'/'higher in Apr' labels to figure
-  
-  ggplot()+
-  geom_point(data=sh_emmpredchange, aes(x=Species,y=relchange, colour=Species), size=2)+ 
-  geom_point(data=Apr_Oct_sh_change, aes(x=Species,y=rel_sh_change, colour=Species), size=0.5,  position=position_jitter(width=0.1))+ #points are showing proportional change from apr to oct
-  geom_errorbar(data=sh_emmpredchange, aes(x=Species, ymin=rellower, ymax=relupper, colour=Species), size=0.5, width=0.2)+
-  theme_minimal(base_size = 15)%+replace%
-    theme(panel.border = element_rect(colour='grey20',fill=NA),
-          panel.grid.major.x = element_blank(),
-          panel.grid.minor.x = element_blank(),
-          panel.grid.minor.y = element_blank())+
-  labs(y='relative change in symbionts per host cell', x='')+
-   scale_x_discrete(labels=c(mcav,ofav,ssid), expand=expansion(add=c(0.4,1.2)))+
-  scale_color_manual(values=c('deeppink2','darkorange1', 'darkturquoise'))+
-  guides(colour=F)+
-  geom_hline(yintercept=0,linetype='dashed')
-
-
-#UPDATES FOR ROSS: 
-#potential problem with this plot is that by plotting the ratio, a ratio of 0.5 (50% decrease) may be equivalent to a ratio of 2 (100% increase)...? Is this plot disproportionately inflating positive values? I have also now removed the scale limits so that every data point is shown.
-
-
 
 ```
 
@@ -262,14 +223,14 @@ ggplot()+
   labs(y='Initial proportion *Durusdinium*')+
   scale_fill_manual(values=c('#3C5488B2','#00A087B2'),labels=c('April','October'))+
   geom_violin(data=batches,aes(x=Species,y=pre_propD,colour=Batch),scale = 'width')+
-  geom_dotplot(data=batches,bins=30,binaxis='y',dotsize=0.7,stackratio=0.5,stackdir='center',stackgroups=F, position='dodge',aes(x= Species,y=pre_propD,fill=Batch))+
+  geom_dotplot(data=batches,bins=30,binaxis='y',dotsize=0.5,stackratio=0.8,stackdir='center',stackgroups=F, position='dodge',alpha=0.7,aes(x= Species,y=pre_propD,fill=Batch, colour=Batch))+
   scale_colour_manual(values=c('#3C5488B2','#00A087B2'),labels=c('April','October'))+
   scale_x_discrete(labels=c(mcav,ofav,ssid))+
    theme(axis.title.y.left  = element_markdown(), legend.position = c(0.2,0.5))+
   labs(x='')+
-  theme(legend.title = element_text(size=0))
+  theme(legend.title = element_text(size=0), legend.key.size = unit(0.6,'cm'))
 batch_comparevi
-#ggsave('batchcompare_propd_vi_dot.pdf',device='pdf',width=7,height=5)
+#ggsave('1c. batchcompare_propd_vi_dot.pdf',device='pdf',width=7,height=5)
 
 #hist(batches$pre_propD)
 
@@ -371,22 +332,18 @@ as.data.frame(mcavsensitivitymeany2)
 mcavsensitivitysumm$sey2<-mcavsensitivitysey2$sey2
 mcavsensitivitysumm$meany2<-mcavsensitivitymeany2$meany2
 
-
-#UPDATES FOR ROSS: 
-#what if we try plotting end fv/fm and s:h rather than the relative change? And use prediction ellipses or mean and error bars rather than try to fit a linear model. 
-
 ggplot()+
-  geom_point(data=mcavsensitivity,aes(x=post_y2,y=post_sh,colour=Batch))+
+  geom_point(data=mcavsensitivity,aes(x=post_y2,y=post_sh,colour=Batch), size=1.5)+
   geom_errorbar(data=mcavsensitivitysumm, aes(x=meany2,ymin=mean-se,ymax=mean+se, colour=Batch), width=0.01, show.legend=F)+
    geom_errorbar(data=mcavsensitivitysumm, aes(y=mean,xmin=meany2-sey2,xmax=meany2+sey2, colour=Batch), width=0.0025, show.legend=F)+
   geom_point(data=mcavsensitivitysumm, aes(x=meany2,y=mean,colour=Batch),size=3, show.legend=F)+
-  theme_minimal(base_size = 13)%+replace%
+  theme_minimal(base_size = 15)%+replace%
     theme(panel.border = element_rect(colour='grey20',size=0.5,fill=NA))+
    scale_colour_manual(values=c('#3C5488B2','#00A087B2'),labels=c('April','October'))+
  theme(panel.spacing = unit(1.2, "lines"),legend.position = 'right')+
   theme(legend.title=element_text(size=0), axis.title.y = element_markdown(), axis.title.x=element_markdown())+
 theme(legend.position = c(0.8,0.5))+
-  labs(x='F<sub>v</sub>/F<sub>m</sub> after heat stress',y='Symbionts per *M. cavernosa* cell <br> after heat stress')
+  labs(x='F<sub>v</sub>/F<sub>m</sub> after heat stress',y='Symbionts per *M. cavernosa* <br> cell after heat stress')
 
   #ggsave('1d.seasonal_bleaching_sensitivity.pdf',device='pdf',width=7,height=5)
 ```
@@ -460,6 +417,7 @@ names(Spec.labs)=c('M.cavernosa','O.faveolata','S.siderea')
 
 ```
 
+
 ## SHUFFLING
 ### Figure 2: Inter- and intra-species variation in the shuffling towards durusdinium after recovery from heat stress.
 Comparison of Proportion D before start of heat stress compared to two months into recovery. Data are binned at intervals of 0.02 (for variable Proportion D), and size aesthetic relates to number of cores in each bin to reduce overplotting. Data from April and October are both included here.
@@ -493,7 +451,7 @@ geom_abline(slope=1,intercept = 0,linetype='dotted')+
 
 ```
 
-### Figure 3a: Shuffling towards high proportions of Durusdinium after heat stress recovery was greatest in M. cavernosa, followed by O. faveolata, followed by S. siderea. 
+### Shuffling towards high proportions of Durusdinium after heat stress recovery was greatest in M. cavernosa, followed by O. faveolata, followed by S. siderea. 
 
 Emulating the 'symbiont shuffling' plot to compare coral species, as in Cunning et al 2018 figure 3b. In order to be able to include mcav, which has no variation in initial proportion d, the following mcav models are independent of initial proportion d, then integrated in with the previous ofav & ssid predicted effects. 
 ```{r,message=F,warning=F}
@@ -533,10 +491,10 @@ auc$Species=factor(auc$Species, levels=c('O.faveolata', 'S.siderea'))
 
 ```{r,warning=F,message=F}
 #using model independent of initial prop d for mcav
-shufflemod2=lm(post_propD ~Treatment*Batch,
+shufflemod2=glm(post_propD ~Treatment*Batch,
                  data=subset(batches, batches$Species=='M.cavernosa'))
 summary(shufflemod2)
-#again for the initial durusdinium independent model, batch is not a significant driver of shuffling, p= 0.066.  This model did not fit a quasibinomial distrubution, but is amost entirely bond between 0 and 1 regardless due to very large effect size & minimal variation in the data. 
+#again for the initial durusdinium independent model, batch is not a significant driver of shuffling, p= 0.066.  This model did not fit a quasibinomial distrubution, but is almost entirely bond between 0 and 1 regardless due to very large effect size & minimal variation in the data. 
 
 #ggplot(data=filter(batches,batches$Species=='M.cavernosa'),aes(y=post_propD, x=Treatment))+
   #geom_point(aes(shape=Treatment))+
@@ -560,8 +518,6 @@ auc2$Species=factor(rep('M.cavernosa'))
 speciesshuff<-rbind(auc,auc2)
 speciesshuff$Species=factor(speciesshuff$Species, levels=c('M.cavernosa', 'O.faveolata', 'S.siderea'))
 
-#quote the shuffling metric for bleached cores of each species, 'S': mcav=0.938948279, ofav=0.927486547, ssid=0.722313707. 
-
 ggplot(data=speciesshuff)+
   geom_hline(yintercept=0,linetype='dashed')+
   geom_errorbar(aes(ymin=lower, ymax=upper, x=Species, colour=Species, group=Treatment),size=0.5, position=position_dodge(width=0.5), width=0.2)+
@@ -577,8 +533,6 @@ ggplot(data=speciesshuff)+
   labs(y='Symbiont Shuffling', x='')+
   scale_y_continuous(limits=c(-1,1.01),expand=c(0,0))+
    scale_x_discrete(labels=c(mcav,ofav,ssid), expand=expansion(mult=c(0.5,0.2)))
-#ggsave('3a.treatment_shuffling.pdf',device='pdf', width=7,height=5)
-#add 'more durusdinium/less durusdinium' labels post-save
 
 ```
 
@@ -593,7 +547,7 @@ ipaminitmod=lmer(Y2~PropD*Species*Batch+(1|Colony),data=ipam)
 #plot_resqq(ipaminitmod)
 summary(ipaminitmod)
 
-#UPDATE FOR ROSS: No significant differnece in the interaction between proportion durusdinium and coral species on Fv/Fm (p=0.255).
+#No significant differnece in the interaction between proportion durusdinium and coral species on Fv/Fm (p=0.255).
 ```
 
 ### Figure S1: Despite greater symbiont loss in the October M. cavernosa corals, shuffling between April and October were similar for all three coral species. 
@@ -646,6 +600,7 @@ auc2 <- aggregate(res2[, c("fit", "lower", "upper")],
                  FUN=function(x) (mean(x)))
 levels(auc2$Treatment)<-c('Control','Bleached')
 auc2$Species=factor(rep('M.cavernosa'))
+auc2$upper[4]<-1
 batchshuff<- rbind(auc2, auc)
 batchshuff$spbatch<- interaction (batchshuff$Batch,batchshuff$Species)
 
@@ -661,13 +616,13 @@ ggplot(data=filter(batchshuff,batchshuff$Treatment=='Bleached'))+
   guides(colour=F, shape=guide_legend(title=''))+
   theme(legend.position=c(0.1,0.15))+
   labs(y='Symbiont Shuffling in Bleached Corals', x='')+
-coord_cartesian(clip='on', ylim=c(0,1.0))+
+coord_cartesian(clip='on', ylim=c(0,1.0), expand=T)
   scale_y_continuous(expand=c(0,0))
 #ggsave('S1.shuffling_batches.pdf',device='pdf',width=7,height=5)
   
 ```
 
-### Figure 3b: Shuffling occurred later in recovery in M. cavernosa compared to O. faveolata and S. siderea. 
+### Figure 3a: Shuffling occurred later in recovery in M. cavernosa compared to O. faveolata and S. siderea. 
 
 ```{r, warning=F}
 shuffletimes=read.csv('shuffle_timepoints.csv',header =T)
@@ -715,11 +670,16 @@ auc2 <- aggregate(res[, c("fit", "lower", "upper")],
                  by=list(Timepoint=res$Timepoint), 
                  FUN=function(x) (mean(x)))
 auc2$Species=factor(rep('M.cavernosa'))
-
+auc2$upper[3]<-1
 aucall <- rbind(auc1, auc2)
+aucall$Treatment<-rep('Bleached',9)
+controls<-speciesshuff[c(1,2,5),]
+controls$Timepoint<-rep('3',3)
+aucall<-rbind(aucall,controls)
 aucall$Timepoint=factor(aucall$Timepoint, levels=c(1,2,3))
 aucall$Species=factor(aucall$Species, levels=c('M.cavernosa','O.faveolata','S.siderea'))
 
+#quote the shuffling metric for bleached cores of each species, 'S': mcav=0.92659842, ofav=0.93774140, ssid=0.75972420.
 ##########
 ofav=expression(paste(italic("O. faveolata")))
 ssid=expression(paste(italic("S. siderea")))
@@ -728,29 +688,31 @@ mcav=expression(paste(italic("M. cavernosa")))
 ggplot(aucall, aes(x = Timepoint, y = fit, group = Species)) +
   geom_errorbar(data=aucall, aes(ymin = lower, ymax = upper), 
                 position = position_dodge(0.2), lwd = 0.2, width = 0.2) +
-  geom_point(aes(color = Species),
+  geom_point(aes(color = Species, shape=Treatment),
              position = position_dodge(0.2), size = 2.5)+
   geom_hline(yintercept = 0, lwd = 0.1) +
-  scale_x_discrete(labels=c('Post heat stress','1 month recovery','2 month recovery'),expand=expansion(mult=c(0.2,0.4)))+
+  scale_x_discrete(labels=c('Post heat stress','1 month recovery','2 month recovery'))+
   theme_minimal(base_size = 13)%+replace%
    theme(panel.border = element_rect(colour='grey20',fill=NA),
           panel.grid.minor.x = element_blank(),
          panel.grid.major.x = element_blank(),
           panel.grid.minor.y = element_blank())+
-  geom_line(linetype='dashed',alpha=0.6,aes(colour=Species),position = position_dodge(0.2))+
+  geom_line(data=filter(aucall,aucall$Treatment=='Bleached'),linetype='dashed',alpha=0.6,aes(colour=Species),position = position_dodge(0.2))+
   scale_colour_manual(values=c('deeppink2','darkorange1','darkturquoise'),labels=c(mcav,ofav,ssid), name='')+
-  coord_cartesian(clip='on', ylim=c(-.2,1.0))+
-  labs(y='Cumulative Symbiont Shuffling',x='')+
-  annotate(geom='text',x=3.4,y=0.1,label=gaindd,size=4)+
-   annotate(geom='text',x=3.4,y=-0.1,label=lostd,size=4)+
-  theme(legend.position = 'bottom')+
-  scale_y_continuous(expand=c(0,0))
-#ggsave('3b.shuffling_cumulative.pdf',device='pdf',height=5,width=7)
+  scale_shape_manual(values=c(16,17),name='')+
+  coord_cartesian(clip='on', ylim=c(-1.0,1.0))+
+  labs(y='Symbiont Shuffling',x='')+
+  annotate(geom='text',x=2.2,y=0.23,label=gaindd,size=3.3)+
+   annotate(geom='text',x=2.2,y=-0.23,label=lostd,size=3.3)+
+  theme(legend.position = 'bottom',
+        legend.box.spacing = unit(0,'pt'),legend.spacing=unit(0,'pt'), legend.text = element_text(size=9))+
+  scale_y_continuous(expand=c(0,0.05))
+#ggsave('3a.shuffling_cumulative.pdf',device='pdf',height=5,width=7)
 
-###UPDATE FOR ROSS: The predicted values are based of a model which controls for pre-heat stress proportion durusdinium (rather than proportion durusdinium at the previous timepoint). Making 'timepoint' an integer rather than a factor in the model also changed things. Would like to perform stats on the interaction effect on shuffling between timepoint and species, but unsure how since mcav fitted to a separate model. The '2-month recovery' points are very slightly differnet from those in the bleached Vs control shuffling plot, but I think this is indicative of shuffling at each timepoint being linked to each coral (rather than averaged within each species) for these predicted values, rather than a mistake in the code. 
+###The predicted values are based of a model which controls for pre-heat stress proportion durusdinium (rather than proportion durusdinium at the previous timepoint). Making 'timepoint' an integer rather than a factor in the model also changed things. Would like to perform stats on the interaction effect on shuffling between timepoint and species, but unsure how since mcav fitted to a separate model. The '2-month recovery' points are very slightly differnet from those in the bleached Vs control shuffling plot, but this is indicative of shuffling at each timepoint being linked to each coral (rather than averaged within each species) for these predicted values, rather than a mistake in the code. 
 ```
 
-### Figure 3c: O. faveolata and S.siderea corals that initially hosted background Durusdinium shuffled more quickly and more fully to Durusdinium than those with no initial Durusdinium, which shuffled less than M.cavernosa that contained no initial Durusdinium.
+### Figure 3b: O. faveolata and S.siderea corals that initially hosted background Durusdinium shuffled more quickly and more fully to Durusdinium than those with no initial Durusdinium, which shuffled less than M.cavernosa that contained no initial Durusdinium.
 
 ```{r, warning=F, message=F}
 #now look at timing for switching and shuffling
@@ -768,6 +730,9 @@ shuffmod4=glmer(PropD4~initiald+(1|Colony),data=shufflegroups, family='binomial'
 summary(shuffmod4)
 # prop d significantly higher after mcav switching compared to ofav/ssid switching p=0.02**
 
+shuffmod5=glmer(PropD4~initiald+(1|Colony),data=filter(shufflegroups, shufflegroups$Species!='M.cavernosa'), family='binomial')
+summary(shuffmod5)
+
 shufflegroups= pivot_longer(data=shufflegroups, cols=starts_with('PropD'),
                names_to='Timepoint', names_prefix='PropD', values_to='PropD',
                values_drop_na=T)
@@ -778,7 +743,7 @@ shufflegroups$Colony<-as.factor(shufflegroups$Colony)
 ofavssidpropd<- lmer(PropD~Timepoint*initiald*Species+(1|Colony),data=filter(shufflegroups,shufflegroups$Species!='M.cavernosa'))
 summary(ofavssidpropd)#no significant effcet of ofav vs ssid on prop d (p=0.45), nor of time-species interaction (p=0.33)
 
-
+shufflegroups$Timepoint<-as.factor(shufflegroups$Timepoint)
 MCswitchex=expression(paste( italic("M. cavernosa "),'with 0.0                             '))
 OFSSswitchex=expression(paste( italic("O. faveolata & S. siderea "),'with 0.0  '))
 OFSSshuffex1=expression(paste( italic("O. faveolata & S. siderea "),'with >0.0 ≤ 0.5  '))
@@ -802,10 +767,11 @@ ggplot(shufflegroups, aes(x = Timepoint, y = PropD, group=initiald)) +
   scale_colour_manual(values=c('blue3','blue3','purple','brown2'),labels=c(MCswitchex,OFSSswitchex,OFSSshuffex1, OFSSshuffex2),name='Initial proportion *Durusdinium* groups')+
   labs(y="Proportion *Durusdinium*", x='')+
   guides(colour=guide_legend(nrow=2, byrow=TRUE, title.position ='top',title.hjust = 0.5),linetype=guide_legend(nrow=2, byrow=TRUE, title.position ='top',title.hjust = 0.5))+
-  theme(legend.position = 'bottom', legend.title=element_markdown(), axis.title.y = element_markdown())
+  theme(legend.position = 'bottom', legend.title=element_markdown(), axis.title.y = element_markdown(), axis.text.x=element_text(size=11))+
+  theme(plot.margin=margin(0.5,1.1,0.5,0.5,"cm"))
  
-#ggsave('3c.initial_durusdinium_shuffling.pdf',device='pdf',height=5,width=7)
+#ggsave('3b.initial_durusdinium_shuffling.pdf',device='pdf',height=5,width=7)
 
-###UPDATE FOR ROSS: Due to small sample size, ofav and ssid are grouped together here (model finds no significant effect of species). Now this plot includes all corals. 
+###Due to small sample size, ofav and ssid are grouped together here (model finds no significant effect of species). Now this plot includes all corals. 
    
 ```
