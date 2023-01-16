@@ -1,5 +1,5 @@
 ---
-title: "Buzzoni D., Cunning R. and Baker A. C. (2022) Initial Algal Symbiont Communities Affect Shuffling to Durusdinium after Coral Bleaching and Reflect Seasonal Differences in Bleaching Sensitivity"
+title: "Buzzoni D., Cunning R. and Baker A. C. (2023) Initial Algal Symbiont Communities Affect Shuffling to Durusdinium after Coral Bleaching and Reflect Seasonal Differences in Bleaching Sensitivity"
 output:
   html_document: default
   pdf_document: default
@@ -72,7 +72,7 @@ temp$Date=as.Date(temp$Date,format = "%d/%m/%Y")
 
 ## INITIAL SYMBIONT COMMUNITIES
 
-### Figure 1b: M. cavernosa symbionts per host cell increased from April to October.
+### Figure 1b: M. cavernosa symbionts per host cell increased from April to October- changes dependent on dominant symbiont in O. faveolata and S. siderea
 
 Add arrows to show that points above line show higher in april, below line shows higher in April.
 
@@ -80,40 +80,61 @@ Add arrows to show that points above line show higher in april, below line shows
 
 #calculate seasonal per colony change in symbiont density (ie the average symbiont density between the two cores taken from each colony per batch)
 batches$pre_sh[which(batches$pre_sh==0)]=NA
-Apr_Oct_sh= batches %>%
-  group_by(Colony,Batch) %>%
-  summarise_at(vars(pre_sh), funs(mean(., na.rm=TRUE)))
+Apr_Oct_sh<-batches[,-c(2,3,7,8,10)]
+Apr_Oct_sh<-filter(Apr_Oct_sh,Apr_Oct_sh$pre_sh!='NA')
+Apr_Oct_sh= Apr_Oct_sh %>%
+  group_by(Species,Colony,Batch) %>%
+  summarise_at(vars(pre_sh, pre_propD, preDcat), funs(mean(., na.rm=TRUE))) #must average the S:H and prop Durusdinium between colony replicates in order to calculate % change between April and October
+#Apr_Oct_sh<-Apr_Oct_sh[-c(5),] #remove colony 28 as no April data
+#remove colonies with mixed communities (less than 98% dominant) to examine effect of symbiont genus on seasonal S:H
+#Apr_Oct_sh<-Apr_Oct_sh[-c(21,22,31,32,39,40,41,42,45,46,49,50,55,56),]
+#Apr_Oct_sh<-Apr_Oct_sh[,-c(5)]
+#Apr_Oct_sh$preDcat<-as.character((Apr_Oct_sh$preDcat))
+#Apr_Oct_sh$preDcat<-revalue(Apr_Oct_sh$preDcat,c('1'='D','0.99'='D','0.98'='D'))
+#Apr_Oct_sh$sym<-c(rep('C',18),rep('B',10),rep('D',4),rep('B',2),rep('D',2),rep('C',4),rep('D',2))
+#Apr_Oct_sh<-Apr_Oct_sh[,-c(5)]
+#Apr_Oct_sh<- Apr_Oct_sh %>%
+#  group_by(Colony)%>%
+#  spread(Batch, pre_sh)
+#Apr_Oct_sh$rel_change<-(log10(Apr_Oct_sh$October/Apr_Oct_sh$April))
 
+#ggplot(data=Apr_Oct_sh)+
+#  geom_point(aes(y=rel_change,x=Species, colour=sym))
+
+Apr_Oct_sh<-Apr_Oct_sh[,-c(6)]
 Apr_sh= filter(Apr_Oct_sh, Batch=='April')
 Apr_sh$Apr_pre_sh=paste(Apr_sh$pre_sh)
 Oct_sh= filter(Apr_Oct_sh, Batch=='October')
 Oct_sh$Oct_pre_sh=paste(Oct_sh$pre_sh)
+Apr_sh$Apr_pre_propd<-paste(Apr_sh$pre_propD)
+Oct_sh$Oct_pre_propd<-paste(Oct_sh$pre_propD)
+Apr_sh<-Apr_sh[,-c(3,4,5)]
+Oct_sh<-Oct_sh[,-c(3,4,5)]
 Apr_Oct_sh_change=join(Apr_sh,Oct_sh,by='Colony')
-Apr_Oct_sh_change=Apr_Oct_sh_change[,c(1,4,7)]
+Apr_Oct_sh_change=Apr_Oct_sh_change[,-c(5)]
 Apr_Oct_sh_change$Apr_pre_sh=as.numeric(Apr_Oct_sh_change$Apr_pre_sh)
 Apr_Oct_sh_change$Oct_pre_sh=as.numeric(Apr_Oct_sh_change$Oct_pre_sh)
 Apr_Oct_sh_change$pre_sh_change= Apr_Oct_sh_change$Oct_pre_sh- Apr_Oct_sh_change$Apr_pre_sh
 Apr_Oct_sh_change$rel_sh_change= ((Apr_Oct_sh_change$Oct_pre_sh- Apr_Oct_sh_change$Apr_pre_sh)/Apr_Oct_sh_change$Apr_pre_sh)
 Apr_Oct_sh_change$octtoapr<- Apr_Oct_sh_change$Oct_pre_sh/Apr_Oct_sh_change$Apr_pre_sh
-Apr_Oct_sh_change$Species=factor(Apr_Oct_sh_change$Colony)
-Apr_Oct_sh_change$Species= mapvalues(Apr_Oct_sh_change$Species,
-                          from=c('100','2','27','28','39','67','68','71','72','87'),to=(rep('M.cavernosa',times=10)))
- Apr_Oct_sh_change$Species= mapvalues(Apr_Oct_sh_change$Species,
-                          from=c('13','21','34','36','4','62','64','65','66','81'),to=(rep('O.faveolata',times=10)))                         
-  Apr_Oct_sh_change$Species= mapvalues(Apr_Oct_sh_change$Species,
-                          from=c('16','18','19','22','23','26','3','35','41','48'),to=(rep('S.siderea',times=10))) 
+Apr_Oct_sh_change$meanpropd<-(as.numeric(Apr_Oct_sh_change$Apr_pre_propd) + as.numeric(Apr_Oct_sh_change$Oct_pre_propd))/2
+Apr_Oct_sh_change$propD_group<-paste(Apr_Oct_sh_change$meanpropd)
+Apr_Oct_sh_change$propD_group<-c(rep('0',10),rep('mixed',1),rep('0',4),rep('mixed',1),rep('1',2),rep('0',1),rep('mixed',2),rep('1',1),rep('mixed',1),rep('0',1),rep('mixed',1),rep('0',1),rep('1',2))
+Apr_Oct_sh_change$propD_group<-factor(Apr_Oct_sh_change$propD_group,levels=c('0','mixed','1'))
+#Apr_Oct_sh_change$Species...1=factor(Apr_Oct_sh_change$Colony)
 # this dataframe shows the average change in s:h per colony
 
 
 ##test statistical significance in seasonal change in S:H
 #hist(log10(batches$pre_sh)) #log10 transformed data then used linear mixed effects model on s:h data to test effect of batch within each species, with colony as a random factor
+
 batches$transf_presh= log10(batches$pre_sh) # transform the response variable
 
-mcavpreshmod=lmer(log10(pre_sh)~Batch+(1|Colony),data=filter(batches,batches$Species=='M.cavernosa'))
-#plot_resqq(mcavpreshmod) # check residuals are normally distributed
+mcavpreshmod=lmer(log10(pre_sh)~Batch+pre_propD+(1|Colony),data=filter(batches,batches$Species=='M.cavernosa'))
+plot_resqq(mcavpreshmod) # check residuals are normally distributed
 
 mcavpreshmod2<- as_lmerModLmerTest(mcavpreshmod)
-summary(mcavpreshmod2) #p for batch, p=0.001126** 
+summary(mcavpreshmod2) #p for batch, p=0.001126** p for batch=0.000777* when pre_propD added 
 
 # now let's get the batch parameter estimates and CIs:
 mcavemm.sh<- emmeans(mcavpreshmod, specs=revpairwise~Batch) 
@@ -131,11 +152,27 @@ mcavemmsh_pred$relupper<- (mcavemmsh_pred[2,6]-mcavemmsh_pred[1,5])/mcavemmsh_pr
 mcavemmsh_pred$rellower<- (mcavemmsh_pred[2,5]-mcavemmsh_pred[1,6])/mcavemmsh_pred[1,2]
 
 
-
-ofavpreshmod=lmer(log10(pre_sh)~Batch+(1|Colony),data=filter(batches,batches$Species=='O.faveolata'))
-#plot_resqq(ofavpreshmod) # check residuals are normally distributed
+ofavpreshmod=lmer(log10(pre_sh)~Batch*pre_propD+(1|Colony),data=filter(batches,batches$Species=='O.faveolata'))
+plot_resqq(ofavpreshmod) # check residuals are normally distributed
 ofavpreshmod2<- as_lmerModLmerTest(ofavpreshmod)
-summary(ofavpreshmod2) #p for batch, p=0.938
+summary(ofavpreshmod2) #p for batch, p=0.938, 0.7838 when pre propd added. pre prop d had significant effect, 0.0118.
+#when pre propd included as interaction with batch, effect of batch was 0.28375, insignificant interaction between batch and pre prop d (0.17855),but significant effect of pre prop d on pre SH (0.00433). 
+
+#now test for seasonal change in proportion d*S:H
+ofavpredshmod<-lmer((log10(pre_sh)*pre_propD)~Batch+(1|Colony),data=filter(batches,batches$Species=='O.faveolata'))
+plot_resqq(ofavpredshmod) # check residuals are normally distributed
+ofavpredshmod2<- as_lmerModLmerTest(ofavpredshmod)
+summary(ofavpredshmod2)
+
+ggplot(data=filter(batches,batches$Species=='O.faveolata'), aes(y=log10(pre_sh), x=pre_propD, colour=Batch))+
+  geom_point()
+
+ggplot(data=filter(batches,batches$Species=='S.siderea'), aes(y=log10(pre_sh), x=pre_propD, colour=Batch))+
+  geom_point()
+
+ggplot(data=filter(batches,batches$Species=='M.cavernosa'), aes(y=log10(pre_sh), x=Batch, colour=Batch))+
+  geom_point()
+
 # now let's get the batch parameter estimates and CIs:
 ofavemm.sh<- emmeans(ofavpreshmod, specs=revpairwise~Batch) 
 summary(ofavemm.sh)
@@ -152,13 +189,20 @@ ofavemmsh_pred$relupper<- (ofavemmsh_pred[2,6]-ofavemmsh_pred[1,5])/ofavemmsh_pr
 ofavemmsh_pred$rellower<- (ofavemmsh_pred[2,5]-ofavemmsh_pred[1,6])/ofavemmsh_pred[1,2]
 
 
-ssidpreshmod=lmer(log10(pre_sh)~Batch+(1|Colony),data=filter(batches,batches$Species=='S.siderea'))
+ssidpreshmod=lmer(log10(pre_sh)~Batch*pre_propD+(1|Colony),data=filter(batches,batches$Species=='S.siderea'))
 #plot_resqq(mcavpreshmod) # check residuals are normally distributed
 ssidpreshmod2<- as_lmerModLmerTest(ssidpreshmod)
-summary(ssidpreshmod2) #p for batch, p=0.04833*
+summary(ssidpreshmod2) #p for batch, p=0.04833*, p=0.0315 when model includes pre propD. interaction between pre propd and batch on pre sh is significant (0.005007) and effect of batch on pre sh also becomes more significant with interaction included, p=0.000464. 
 # now let's get the batch parameter estimates and CIs:
 ssidemm.sh<- emmeans(ssidpreshmod, specs=revpairwise~Batch) 
 summary(ssidemm.sh)
+
+#again, checking for sh*propd interaction
+ssidpredshmod=lmer((log10(pre_sh)*pre_propD)~Batch+(1|Colony),data=filter(batches,batches$Species=='S.siderea'))
+#plot_resqq(mcavpreshmod) # check residuals are normally distributed
+ssidpredshmod2<- as_lmerModLmerTest(ssidpredshmod)
+summary(ssidpredshmod2)
+
 ssidemmsh_contrasts<- ssidemm.sh$contrasts %>%
      confint()%>%
      as.data.frame() # NB these results are given on a log10 scale
@@ -192,9 +236,9 @@ mcav=expression(paste(italic("M. cavernosa")))
 
 
 ggplot()+
-  geom_point(data=sh_emmcontrasts, aes(x=Species,y=(estimate), colour=Species), size=3)+ #large points are showing estimated october:april 
-  geom_point(data=Apr_Oct_sh_change, aes(x=Species,y=log10(octtoapr), colour=Species), size=1.2,  position=position_jitter(width=0.1))+ #small points are showing october s:h / april s:h
-  geom_errorbar(data=sh_emmcontrasts, aes(x=Species, ymin=(lower.CL), ymax=(upper.CL), colour=Species), size=0.5, width=0.2)+
+  geom_point(data=sh_emmcontrasts, aes(x=Species,y=(estimate)), size=3, alpha=0.6)+ #large points are showing estimated october:april 
+  geom_point(data=Apr_Oct_sh_change, aes(x=Species...1,y=log10(octtoapr), colour=propD_group), size=1.2,  position=position_jitter(width=0.1))+ #small points are showing october s:h / april s:h
+  geom_errorbar(data=sh_emmcontrasts, aes(x=Species, ymin=(lower.CL), ymax=(upper.CL)), size=0.5, width=0.2, alpha=0.6)+
   theme_minimal(base_size = 15)%+replace%
     theme(panel.border = element_rect(colour='grey20',fill=NA),
           panel.grid.major.x = element_blank(),
@@ -202,12 +246,14 @@ ggplot()+
         )+
   labs(y='log(October : April symbionts per host cell)', x='')+
    scale_x_discrete(labels=c(mcav,ofav,ssid), expand=expansion(add=c(0.4,1.2)))+
-  scale_color_manual(values=c('deeppink2','darkorange1', 'darkturquoise'))+
-  guides(colour=F)+
+  scale_color_manual(values=c('blue','grey','red'), name='Proportion Durusdinium')+
   geom_hline(yintercept=0,linetype='dashed')+
-  scale_y_continuous(breaks=seq(-1,1.5,0.5))
+  scale_y_continuous(breaks=seq(-1,1.5,0.5))+
+theme(legend.title = element_markdown(size=9), legend.text=element_text(size=9),legend.position = c(0.6,0.9))+
+  guides(colour=guide_legend(ncol=3))
 #ggsave('1b.seasonal_initialSH.pdf',device='pdf',width=7,height=5) # add 'higher in Oct'/'higher in Apr' labels to figure
-
+ scale_color_manual(values=c('deeppink2','darkorange1', 'darkturquoise'))+
+   guides(colour=F)+
 ```
 
 ### Figure 1c: Proportion Durusdinium did not change between April and October for any of the 3 coral species. 
@@ -430,9 +476,11 @@ beforeaftershift<-rbind(mcavshift,ofavshift,ssidshift)
 beforeaftershift$Treatment<-factor(beforeaftershift$Treatment,levels=c('Manipulated','Control'))
 gaindd=expression(paste("Gained",italic(" Durusdinium")))
 lostd=expression(paste("Lost",italic(" Durusdinium")))
+my_y_title <- expression(paste("Proportion ", italic("Durusdinium"), " after"))
+my_x_title<- expression(paste("Proportion ", italic("Durusdinium"), " before"))
 
    ggplot()+geom_count(data=(beforeaftershift),
-     aes(x=preDcat,y=postDcat,colour=Treatment))+
+     aes(x=preDcat,y=postDcat,colour=Treatment, alpha=0.6))+
 facet_grid(cols=vars(Species),labeller=labeller(Species=Spec.labs))+
 geom_abline(slope=1,intercept = 0,linetype='dotted')+
   scale_color_manual(values=c('brown2','blue3'),labels=c('Bleached','Control'))+
@@ -440,13 +488,13 @@ geom_abline(slope=1,intercept = 0,linetype='dotted')+
     theme(panel.border = element_rect(colour='grey20',fill=NA),
           panel.grid.minor.x = element_blank(),
           panel.grid.minor.y = element_blank())+
-  labs(x='Proportion *Durusdinium* before',y='Proportion *Durusdinium* after')+
+  labs(x=my_x_title,y=my_y_title)+
  guides(size=guide_legend(title='Binned n'))+
   scale_size(range=c(1,14),breaks=(c(1,2,6,10)))+
-  theme(axis.title.x = element_markdown(),axis.title.y=element_markdown())+
   theme(strip.text.x = element_text(face = 'italic'),
       panel.spacing = unit(1.5, "lines"), legend.position = 'bottom', legend.title=element_text(size=12))+
-      guides(colour = guide_legend(title=''))
+      guides(colour = guide_legend(title=''))+
+     guides(alpha=F)
 #ggsave('2.before_after_durusdinium.pdf',device='pdf', width=10,height=5) #add 'gained durusdinium'/'lost durusdinium' labels
 
 ```
@@ -469,7 +517,7 @@ summary(shufflemod)# Model summary
 #treatment had significant effect on shuffling (p=0.0259). Batch did not significantly affect shuffling (p=0.8350).
                               
 #Get fitted values averaging across initial proportion durusdinium
-eff <- effect(c('pre_propD', 'Species','Treatment'), shufflemod, 
+eff <- effect(c('pre_propD','Species','Treatment', 'Batch'), shufflemod, 
               xlevels=list(pre_propD=seq(0, 1, by=0.01)))
 # Get all fitted values and subsets for each treatment
 res <- droplevels(data.frame(eff))
@@ -511,7 +559,7 @@ res2.Ct <- subset(data.frame(eff2), Treatment=="Control")
 auc2 <- aggregate(res2[, c("fit", "lower", "upper")], 
                  by=list(Treatment=res2$Treatment),
                  FUN=function(x) (mean(x)))
-levels(auc2$Treatment)<-c('Control','Bleached')
+levels(auc2$Treatment)<-c('Bleached','Control')
 auc2.list <- split(auc2, list(auc2$Treatment))
 auc2$Species=factor(rep('M.cavernosa'))
 
@@ -552,16 +600,16 @@ summary(ipaminitmod)
 
 ### Figure S1: Despite greater symbiont loss in the October M. cavernosa corals, shuffling between April and October were similar for all three coral species. 
 ```{r, warning=F}
-#before getting fitted values, test statistical significance of batch for each species inidivually:
+#before getting fitted values, test statistical significance of batch for each species individually:
 ofavbatchmod=glm(post_propD ~ pre_propD+Batch,
                  data=filter(batches, batches$Species=='O.faveolata', Treatment=='Manipulated'), family='quasibinomial')
-ssidbatchmod=glm(post_propD ~ pre_propD + Batch,
+ssidbatchmod=glm(post_propD ~ pre_propD+Batch,
                  data=filter(batches, batches$Species=='S.siderea', Treatment=='Manipulated'),family='quasibinomial')  
-mcavbatchmod=lm(post_propD ~Batch,
+mcavbatchmod=lm(post_propD ~ Batch,
                  data=filter(batches, batches$Species=='M.cavernosa', Treatment=='Manipulated'))
-summary(ofavbatchmod) #p=0.683
-summary(ssidbatchmod) #p=0.9768
-summary(mcavbatchmod) #p=0.107
+summary(ofavbatchmod) #p=0.548
+summary(ssidbatchmod) #p=0.3964
+summary(mcavbatchmod) #p=0.0963
 
 
 eff <- effect(c('pre_propD', 'Species','Treatment', 'Batch'), shufflemod, 
@@ -631,6 +679,10 @@ shuff=read.csv('shuff.csv',header = T)
 shuff$Colony=factor(shuff$Colony)
 shuff$Species=factor(shuff$Species)
 shuff$Timepoint=as.integer(shuff$Timepoint,length=3)
+shuffcontrols<-read.csv('controltimepoints.csv',header=T)
+shuffcontrols$Colony=factor(shuffcontrols$Colony)
+shuffcontrols$Species=factor(shuffcontrols$Species)
+shuffcontrols$Timepoint=as.integer(shuffcontrols$Timepoint,length=3)
 
 # have a look at the data to see data distribution for the change in proportion Durusdinium
 ggplot(data=filter(shuff,shuff$Species!='M.cavernosa'),aes(y=PropD, x=PropD0))+
@@ -673,13 +725,51 @@ auc2$Species=factor(rep('M.cavernosa'))
 auc2$upper[3]<-1
 aucall <- rbind(auc1, auc2)
 aucall$Treatment<-rep('Bleached',9)
-controls<-speciesshuff[c(1,2,5),]
-controls$Timepoint<-rep('3',3)
-aucall<-rbind(aucall,controls)
-aucall$Timepoint=factor(aucall$Timepoint, levels=c(1,2,3))
+
+#controls<-speciesshuff[c(3,4,6),]
+#controls$Timepoint<-rep('3',3)
+aucall<-rbind(aucall,aucallcont)
+aucall$Timepoint=factor(aucall$Timepoint, levels=c(0,1,2,3))
 aucall$Species=factor(aucall$Species, levels=c('M.cavernosa','O.faveolata','S.siderea'))
 
+
+propD1cont=glm(PropD ~ PropD0+Timepoint*Species,
+             data=filter(shuffcontrols, shuffcontrols$Species!='M.cavernosa'), family='quasibinomial')
+
+eff1cont <- effect(c('PropD0', 'Timepoint', 'Species'), propD1cont, 
+              xlevels=list(PropD0=seq(0, 1, by=0.01)))
+
+rescont <- droplevels(data.frame(eff1cont))
+rescont$Species <- factor(rescont$Species, levels=c("O.faveolata", "S.siderea"))
+rescont$Timepoint <- factor(rescont$Timepoint,levels=c('1','2','3'))
+# Get AUC for fitted values, lower and upper confidence limits
+auc1cont <- aggregate(rescont[, c("fit", "lower", "upper")], 
+                 by=list(Species=rescont$Species,Timepoint=rescont$Timepoint), 
+                 FUN=function(x) (mean(x)-0.5)/0.5)
+
+#now an intial prop d independent model for mcav
+propD2cont=lm(PropD ~ Timepoint,data=filter(shuffcontrols, shuffcontrols$Species=='M.cavernosa'))
+
+eff2cont <- effect(c('Timepoint'), propD2cont)
+
+rescont <- droplevels(data.frame(eff2cont))
+rescont$Timepoint <- factor(rescont$Timepoint,levels=c('1','2','3'))
+# Get AUC for fitted values, lower and upper confidence limits
+auc2cont <- aggregate(rescont[, c("fit", "lower", "upper")], 
+                 by=list(Timepoint=rescont$Timepoint), 
+                 FUN=function(x) (mean(x)))
+auc2cont$Species=factor(rep('M.cavernosa'))
+aucallcont <- rbind(auc1cont, auc2cont)
+aucallcont$Treatment<-rep('Control',9)
+
+t0<-read.csv('t0.csv', header=T)
+aucall<-rbind(aucall,t0)
+aucall$Timepoint=factor(aucall$Timepoint, levels=c(0,1,2,3))
+aucall$Species=factor(aucall$Species, levels=c('M.cavernosa','O.faveolata','S.siderea'))
+aucall$Timepoint[19:24]<-0
+
 #quote the shuffling metric for bleached cores of each species, 'S': mcav=0.92659842, ofav=0.93774140, ssid=0.75972420.
+#for controls, mcav=0.0093, ofav=0.0169, ssid=-0.1698
 ##########
 ofav=expression(paste(italic("O. faveolata")))
 ssid=expression(paste(italic("S. siderea")))
@@ -691,19 +781,20 @@ ggplot(aucall, aes(x = Timepoint, y = fit, group = Species)) +
   geom_point(aes(color = Species, shape=Treatment),
              position = position_dodge(0.2), size = 2.5)+
   geom_hline(yintercept = 0, lwd = 0.1) +
-  scale_x_discrete(labels=c('Post heat stress','1 month recovery','2 month recovery'))+
+  scale_x_discrete(labels=c('Pre heat stress','Post heat stress','1 month recovery','2 month recovery'))+
   theme_minimal(base_size = 13)%+replace%
    theme(panel.border = element_rect(colour='grey20',fill=NA),
           panel.grid.minor.x = element_blank(),
          panel.grid.major.x = element_blank(),
           panel.grid.minor.y = element_blank())+
-  geom_line(data=filter(aucall,aucall$Treatment=='Bleached'),linetype='dashed',alpha=0.6,aes(colour=Species),position = position_dodge(0.2))+
+ geom_line(data=filter(aucall,aucall$Treatment=='Bleached'),linetype='dashed',alpha=0.6,aes(colour=Species),position = position_dodge(0.2))+
+  geom_line(data=filter(aucall,aucall$Treatment=='Control'),linetype='dotted',alpha=0.6,aes(colour=Species),position = position_dodge(0.2))+
   scale_colour_manual(values=c('deeppink2','darkorange1','darkturquoise'),labels=c(mcav,ofav,ssid), name='')+
   scale_shape_manual(values=c(16,17),name='')+
   coord_cartesian(clip='on', ylim=c(-1.0,1.0))+
   labs(y='Symbiont Shuffling',x='')+
-  annotate(geom='text',x=2.2,y=0.23,label=gaindd,size=3.3)+
-   annotate(geom='text',x=2.2,y=-0.23,label=lostd,size=3.3)+
+  annotate(geom='text',x=0.85,y=0.3,label=gaindd,size=3.3)+
+   annotate(geom='text',x=0.85,y=-0.3,label=lostd,size=3.3)+
   theme(legend.position = 'bottom',
         legend.box.spacing = unit(0,'pt'),legend.spacing=unit(0,'pt'), legend.text = element_text(size=9))+
   scale_y_continuous(expand=c(0,0.05))
@@ -716,6 +807,7 @@ ggplot(aucall, aes(x = Timepoint, y = fit, group = Species)) +
 
 ```{r, warning=F, message=F}
 #now look at timing for switching and shuffling
+
 shufflegroups<- filter(shuffletimes,shuffletimes$Treatment=='Manipulated')
 shufflegroups$initiald<-paste(shufflegroups$PropD1)
 shufflegroups<-filter(shufflegroups,shufflegroups$initiald!='NA')
@@ -725,7 +817,10 @@ shufflegroups$initiald[shufflegroups$Species!='M.cavernosa' & shufflegroups$Prop
 shufflegroups$initiald[shufflegroups$Species!='M.cavernosa' & shufflegroups$PropD1>0.50]='OFSS50TO100'
 shufflegroups$initiald=factor(shufflegroups$initiald, levels=c('MC0','OFSS0','OFSS0TO50','OFSS50TO100'))
 shufflegroups<-filter(shufflegroups,shufflegroups$initiald!='NA')
-
+shufflegroupssh<-shufflegroups[,-c(1,2,4,5,6,7,8,9,14,15,16,17)]
+shufflegroupsshprop<-shufflegroups[,-c(1,2,4,5,6,7,8,9,10,11,12,13)]
+shufflegroups<-shufflegroups[,-c(10:17)]
+  
 shuffmod4=glmer(PropD4~initiald+(1|Colony),data=shufflegroups, family='binomial')
 summary(shuffmod4)
 # prop d significantly higher after mcav switching compared to ofav/ssid switching p=0.02**
@@ -735,22 +830,38 @@ summary(shuffmod5)
 
 shufflegroups= pivot_longer(data=shufflegroups, cols=starts_with('PropD'),
                names_to='Timepoint', names_prefix='PropD', values_to='PropD',
-               values_drop_na=T)
+               values_drop_na=F)
+
+shufflegroupssh<-pivot_longer(data=shufflegroupssh, cols=c(2:5), names_to = 'Timepoint',names_prefix = 'sh', values_to = 'sh', values_drop_na = F)
+shufflegroupssh<-shufflegroupssh[,-c(2)]
+
+shufflegroupsshprop<-shufflegroupsshprop[,-c(6)]
+colnames(shufflegroupsshprop)[2]<-'sh1'
+colnames(shufflegroupsshprop)[3]<-'sh2'
+colnames(shufflegroupsshprop)[4]<-'sh3'
+colnames(shufflegroupsshprop)[5]<-'sh4'
+shufflegroupsshprop<-pivot_longer(data=shufflegroupsshprop,cols=c(2:5), names_to = 'Timepoint',names_prefix = 'sh',values_to = 'shprop',values_drop_na = F)
+
+
+shufflegroupsall<-full_join(shufflegroups,shufflegroupssh,by=c('Core','Timepoint'))
+shufflegroupsall<-full_join(shufflegroupsall,shufflegroupsshprop,by=c('Core','Timepoint'))
+shufflegroupsall<-filter(shufflegroupsall,shufflegroupsall$PropD!='NA')
+
 #confirm that ofav and ssid can reasonably be grouped together:
-shufflegroups$Species<-as.factor(shufflegroups$Species)
-shufflegroups$Timepoint<-as.numeric(shufflegroups$Timepoint)
-shufflegroups$Colony<-as.factor(shufflegroups$Colony)
+shufflegroupsall$Species<-as.factor(shufflegroupsall$Species)
+shufflegroupsall$Timepoint<-as.factor(shufflegroupsall$Timepoint)
+shufflegroupsall$Colony<-as.factor(shufflegroupsall$Colony)
 ofavssidpropd<- lmer(PropD~Timepoint*initiald*Species+(1|Colony),data=filter(shufflegroups,shufflegroups$Species!='M.cavernosa'))
 summary(ofavssidpropd)#no significant effcet of ofav vs ssid on prop d (p=0.45), nor of time-species interaction (p=0.33)
 
-shufflegroups$Timepoint<-as.factor(shufflegroups$Timepoint)
+shufflegroupsall$Timepoint<-as.factor(shufflegroupsall$Timepoint)
 MCswitchex=expression(paste( italic("M. cavernosa "),'with 0.0                             '))
 OFSSswitchex=expression(paste( italic("O. faveolata & S. siderea "),'with 0.0  '))
 OFSSshuffex1=expression(paste( italic("O. faveolata & S. siderea "),'with >0.0 ≤ 0.5  '))
 OFSSshuffex2=expression(paste( italic("O. faveolata & S. siderea "),'with >0.5'))
 
 
-ggplot(shufflegroups, aes(x = Timepoint, y = PropD, group=initiald)) +
+ggplot(shufflegroupsall, aes(x = Timepoint, y = PropD, group=initiald)) +
   geom_point(aes(colour=initiald, shape=initiald),
              position = position_jitterdodge(), alpha=0.5) +
   stat_summary(aes(colour=initiald, shape=initiald),fun.data='mean_se',
@@ -771,6 +882,29 @@ ggplot(shufflegroups, aes(x = Timepoint, y = PropD, group=initiald)) +
   theme(plot.margin=margin(0.5,1.1,0.5,0.5,"cm"))
  
 #ggsave('3b.initial_durusdinium_shuffling.pdf',device='pdf',height=5,width=7)
+
+ggplot(shufflegroupsall, aes(x = Timepoint, y = log10(shprop), group=initiald)) +
+  geom_point(aes(colour=initiald, shape=initiald),
+             position = position_jitterdodge(), alpha=0.5) +
+  stat_summary(aes(colour=initiald, shape=initiald),fun.data='mean_se',
+             position = position_dodge(0.2), size=0.7,show.legend =F) +
+  scale_x_discrete(labels=c('Pre heat stress','Post heat stress','1 month recovery','2 month recovery'))+
+  stat_summary(geom='line', aes(linetype=initiald, colour=initiald),position = position_dodge(0.2))+
+  theme_minimal(base_size = 13)%+replace%
+   theme(panel.border = element_rect(colour='grey20',fill=NA),
+          panel.grid.minor.x = element_blank(),
+         panel.grid.major.x = element_blank(),
+          panel.grid.minor.y = element_blank())+
+  scale_linetype_manual(values=c('solid','dashed','dashed','dashed'),labels=c(MCswitchex,OFSSswitchex,OFSSshuffex1, OFSSshuffex2), name='Initial proportion *Durusdinium* groups')+
+  scale_shape_manual(values=c(19,1,1,1),labels=c(MCswitchex,OFSSswitchex,OFSSshuffex1, OFSSshuffex2), name='Initial proportion *Durusdinium* groups')+
+  scale_colour_manual(values=c('blue3','blue3','purple','brown2'),labels=c(MCswitchex,OFSSswitchex,OFSSshuffex1, OFSSshuffex2),name='Initial proportion *Durusdinium* groups')+
+  labs(y="log (Proportional symbiont gain/loss)", x='')+
+  guides(colour=guide_legend(nrow=2, byrow=TRUE, title.position ='top',title.hjust = 0.5),linetype=guide_legend(nrow=2, byrow=TRUE, title.position ='top',title.hjust = 0.5))+
+  theme(legend.position = 'bottom', legend.title=element_markdown(size=11),legend.text = element_text(size=9), axis.title.y = element_text(size=9), axis.text.x=element_text(size=9))+
+  theme(plot.margin=margin(0.5,1.1,0.5,0.5,"cm"))+
+  geom_hline(yintercept = 0, lwd = 0.1) 
+#ggsave('3c.initial_durusdinium_sh.pdf',device='pdf',height=5,width=7)
+
 
 ###Due to small sample size, ofav and ssid are grouped together here (model finds no significant effect of species). Now this plot includes all corals. 
    
