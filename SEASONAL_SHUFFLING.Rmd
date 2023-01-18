@@ -72,7 +72,7 @@ temp$Date=as.Date(temp$Date,format = "%d/%m/%Y")
 
 ## INITIAL SYMBIONT COMMUNITIES
 
-### Figure 1b: M. cavernosa symbionts per host cell increased from April to October- changes dependent on dominant symbiont in O. faveolata and S. siderea
+### Figure 1b: M. cavernosa symbionts per host cell increased from April to October and S. siderea symbionts decreased- changes dependent on dominant symbiont in O. faveolata and S. siderea
 
 Add arrows to show that points above line show higher in april, below line shows higher in April.
 
@@ -197,6 +197,18 @@ summary(ssidpreshmod2) #p for batch, p=0.04833*, p=0.0315 when model includes pr
 ssidemm.sh<- emmeans(ssidpreshmod, specs=revpairwise~Batch) 
 summary(ssidemm.sh)
 
+ssidcladpresh<-filter(batches, batches$Species=='S.siderea')
+ssidcladpresh<-filter(ssidcladpresh, ssidcladpresh$preDcat<0.05)
+ssidcladpreshmod<-lmer(log10(pre_sh)~Batch+(1|Colony), data=ssidcladpresh)
+ssidcladpreshmod2<- as_lmerModLmerTest(ssidcladpreshmod)
+summary(ssidcladpreshmod2)
+ssiddurpresh<-filter(batches, batches$Species=='S.siderea')
+ssiddurpresh<-filter(ssiddurpresh, ssiddurpresh$preDcat>0.95)
+ssiddurpreshmod<-lmer(log10(pre_sh)~Batch+(1|Colony), data=ssiddurpresh)
+ssiddurpreshmod2<- as_lmerModLmerTest(ssiddurpreshmod)
+summary(ssiddurpreshmod2)
+
+
 #again, checking for sh*propd interaction
 ssidpredshmod=lmer((log10(pre_sh)*pre_propD)~Batch+(1|Colony),data=filter(batches,batches$Species=='S.siderea'))
 #plot_resqq(mcavpreshmod) # check residuals are normally distributed
@@ -249,7 +261,7 @@ ggplot()+
   scale_color_manual(values=c('blue','grey','red'), name='Proportion Durusdinium')+
   geom_hline(yintercept=0,linetype='dashed')+
   scale_y_continuous(breaks=seq(-1,1.5,0.5))+
-theme(legend.title = element_markdown(size=9), legend.text=element_text(size=9),legend.position = c(0.6,0.9))+
+theme(legend.title = element_markdown(size=11), legend.text=element_text(size=11),legend.position = c(0.6,0.9))+
   guides(colour=guide_legend(ncol=3))
 #ggsave('1b.seasonal_initialSH.pdf',device='pdf',width=7,height=5) # add 'higher in Oct'/'higher in Apr' labels to figure
  scale_color_manual(values=c('deeppink2','darkorange1', 'darkturquoise'))+
@@ -324,7 +336,7 @@ blch_sensitivity=filter(blch_sensitivity, InitialDom=='d'| InitialDom=='nond')
 blch_sensitivity$Colony=as.factor(blch_sensitivity$Colony) 
 ```
 
-### Figure 1d: M. cavernosa showed higher sensitivity to bleaching in October compared to April.
+### M. cavernosa showed higher sensitivity to bleaching in October compared to April.
 
 ```{r, message=F, warning=F}
 blch_sensitivity=blch_sensitivity[-c(56,57,75),] #remove 're'_drop_sh' NAs
@@ -612,6 +624,7 @@ summary(ssidbatchmod) #p=0.3964
 summary(mcavbatchmod) #p=0.0963
 
 
+
 eff <- effect(c('pre_propD', 'Species','Treatment', 'Batch'), shufflemod, 
               xlevels=list(pre_propD=seq(0, 1, by=0.01)))
 # Get all fitted values and subsets for each treatment and now also batch
@@ -646,14 +659,16 @@ res2.Oc<- subset(data.frame(eff2), Batch=='October')
 auc2 <- aggregate(res2[, c("fit", "lower", "upper")], 
                  by=list(Treatment=res2$Treatment, Batch=res2$Batch),
                  FUN=function(x) (mean(x)))
-levels(auc2$Treatment)<-c('Control','Bleached')
+levels(auc2$Treatment)<-c('Bleached','Control')
 auc2$Species=factor(rep('M.cavernosa'))
-auc2$upper[4]<-1
+auc2$upper[3]<-1
+auc<-auc %>%
+  relocate(Species, .after=upper)
 batchshuff<- rbind(auc2, auc)
 batchshuff$spbatch<- interaction (batchshuff$Batch,batchshuff$Species)
 
-ggplot(data=filter(batchshuff,batchshuff$Treatment=='Bleached'))+
-  geom_errorbar(aes(ymin=lower, ymax=upper, x=Species, colour=Species, group=Batch),size=0.5, position=position_dodge(width=0.5), width=0.2)+
+ggplot(data=batchshuff)+
+  geom_errorbar(aes(ymin=lower, ymax=upper, x=Species, colour=Species, group=Batch, linetype=Treatment),size=0.5, position=position_dodge(width=0.5), width=0.2)+
    geom_point(aes(y=fit, x=Species, shape=Batch, colour=Species),size=2, position=position_dodge(width=0.5))+
   theme_minimal(base_size = 13)%+replace%
    theme(panel.border = element_rect(colour='grey20',fill=NA),
@@ -661,10 +676,11 @@ ggplot(data=filter(batchshuff,batchshuff$Treatment=='Bleached'))+
          panel.grid.major.x = element_blank(),
           panel.grid.minor.y = element_blank())+
   scale_color_manual(values=c('deeppink2','darkorange1', 'darkturquoise'))+scale_x_discrete(labels=c(mcav,ofav,ssid))+
-  guides(colour=F, shape=guide_legend(title=''))+
-  theme(legend.position=c(0.1,0.15))+
-  labs(y='Symbiont Shuffling in Bleached Corals', x='')+
-coord_cartesian(clip='on', ylim=c(0,1.0), expand=T)
+  guides(colour=F, shape=guide_legend(title=''), linetype=guide_legend(title=''))+
+  theme(legend.position=c(0.19,0.3), legend.box= "horizontal")+
+   geom_hline(yintercept = 0, lwd = 0.1) +
+  labs(y='Symbiont Shuffling', x='')+
+coord_cartesian(clip='on', ylim=c(-1,1), expand=T)
   scale_y_continuous(expand=c(0,0))
 #ggsave('S1.shuffling_batches.pdf',device='pdf',width=7,height=5)
   
@@ -860,6 +876,7 @@ OFSSswitchex=expression(paste( italic("O. faveolata & S. siderea "),'with 0.0  '
 OFSSshuffex1=expression(paste( italic("O. faveolata & S. siderea "),'with >0.0 ≤ 0.5  '))
 OFSSshuffex2=expression(paste( italic("O. faveolata & S. siderea "),'with >0.5'))
 
+shufflegroupsall$propSHd<-shufflegroupsall$shprop * shufflegroupsall$PropD
 
 ggplot(shufflegroupsall, aes(x = Timepoint, y = PropD, group=initiald)) +
   geom_point(aes(colour=initiald, shape=initiald),
@@ -905,6 +922,111 @@ ggplot(shufflegroupsall, aes(x = Timepoint, y = log10(shprop), group=initiald)) 
   geom_hline(yintercept = 0, lwd = 0.1) 
 #ggsave('3c.initial_durusdinium_sh.pdf',device='pdf',height=5,width=7)
 
+
+ggplot(shufflegroupsall, aes(x = Timepoint, y = log10(propSHd), group=initiald)) +
+  geom_point(aes(colour=initiald, shape=initiald),
+             position = position_jitterdodge(), alpha=0.5) +
+  stat_summary(aes(colour=initiald, shape=initiald),fun.data='mean_se',
+             position = position_dodge(0.2), size=0.7,show.legend =F) +
+  scale_x_discrete(labels=c('Pre heat stress','Post heat stress','1 month recovery','2 month recovery'))+
+  stat_summary(geom='line', aes(linetype=initiald, colour=initiald),position = position_dodge(0.2))+
+  theme_minimal(base_size = 13)%+replace%
+   theme(panel.border = element_rect(colour='grey20',fill=NA),
+          panel.grid.minor.x = element_blank(),
+         panel.grid.major.x = element_blank(),
+          panel.grid.minor.y = element_blank())+
+  scale_linetype_manual(values=c('solid','dashed','dashed','dashed'),labels=c(MCswitchex,OFSSswitchex,OFSSshuffex1, OFSSshuffex2), name='Initial proportion *Durusdinium* groups')+
+  scale_shape_manual(values=c(19,1,1,1),labels=c(MCswitchex,OFSSswitchex,OFSSshuffex1, OFSSshuffex2), name='Initial proportion *Durusdinium* groups')+
+  scale_colour_manual(values=c('blue3','blue3','purple','brown2'),labels=c(MCswitchex,OFSSswitchex,OFSSshuffex1, OFSSshuffex2),name='Initial proportion *Durusdinium* groups')+
+  labs(y="log (Proportional Durusdinium gain/loss)", x='')+
+  guides(colour=guide_legend(nrow=2, byrow=TRUE, title.position ='top',title.hjust = 0.5),linetype=guide_legend(nrow=2, byrow=TRUE, title.position ='top',title.hjust = 0.5))+
+  theme(legend.position = 'bottom', legend.title=element_markdown(size=11),legend.text = element_text(size=9), axis.title.y = element_text(size=9), axis.text.x=element_text(size=9))+
+  theme(plot.margin=margin(0.5,1.1,0.5,0.5,"cm"))+
+  geom_hline(yintercept = 0, lwd = 0.1) 
+#ggsave('3c.initial_durusdinium_sh.pdf',device='pdf',height=5,width=7)
+
+
+#let's split the proportional s:h and th prop d into two panels; 'Threshold effect of initial proportion Durusdinium on recovery of cores with D' and 'Species differences in the ability of corals to become dominated by D when D is undetectable'.
+
+panel1<-filter(shufflegroupsall, shufflegroupsall$initiald!='MC0')
+panel2<-filter(shufflegroupsall, shufflegroupsall$initiald=='OFSS0'|shufflegroupsall$initiald=='MC0')
+
+ggplot(panel1, aes(x = Timepoint, y = PropD, group=initiald)) +
+  geom_point(aes(colour=initiald),shape=1,
+             position = position_jitterdodge(), alpha=0.5) +
+  stat_summary(aes(colour=initiald),shape=1,fun.data='mean_se',
+             position = position_dodge(0.2), size=0.7,show.legend =F) +
+  scale_x_discrete(labels=c('Pre heat stress','Post heat stress','1 month recovery','2 month recovery'))+
+  stat_summary(geom='line', aes(colour=initiald),linetype='dashed',position = position_dodge(0.2))+
+  theme_minimal(base_size = 13)%+replace%
+   theme(panel.border = element_rect(colour='grey20',fill=NA),
+          panel.grid.minor.x = element_blank(),
+         panel.grid.major.x = element_blank(),
+          panel.grid.minor.y = element_blank())+
+  scale_colour_manual(values=c('blue3','purple','brown2'),labels=c('0.0','>0.0 ≤ 0.5', '>0.5'),name='*O. faveolata* & *S. siderea* initial proportion *Durusdinium* thresholds')+
+  labs(y="Proportion *Durusdinium*", x='')+
+  guides(colour=guide_legend(nrow=1, byrow=TRUE, title.position ='top'))+
+  theme(legend.position = 'bottom', legend.title=element_markdown(size=11),legend.text = element_text(size=10), axis.title.y = element_markdown(), axis.text.x=element_text(size=10))+
+  theme(plot.margin=margin(0.5,1.1,0.5,0.5,"cm"))
+#ggsave('3b.initial_durusdinium_shuffling.pdf',device='pdf',height=5,width=7)
+
+ggplot(panel2, aes(x = Timepoint, y = PropD, group=Species)) +
+  geom_point(aes(colour=Species),shape=1,
+             position = position_jitterdodge(), alpha=0.5) +
+  stat_summary(aes(colour=Species),shape=1,fun.data='mean_se',
+             position = position_dodge(0.2), size=0.7,show.legend =F) +
+  scale_x_discrete(labels=c('Pre heat stress','Post heat stress','1 month recovery','2 month recovery'))+
+  stat_summary(geom='line', aes(colour=Species),linetype='dashed',position = position_dodge(0.2))+
+  theme_minimal(base_size = 13)%+replace%
+   theme(panel.border = element_rect(colour='grey20',fill=NA),
+          panel.grid.minor.x = element_blank(),
+         panel.grid.major.x = element_blank(),
+          panel.grid.minor.y = element_blank())+
+  scale_colour_manual(values=c('deeppink2','darkorange1','darkturquoise'),labels=c(mcav,ofav,ssid),name='No pre-heat stress *Durusdinium* detected')+
+  labs(y="Proportion *Durusdinium*", x='')+
+  guides(colour=guide_legend(nrow=1, byrow=TRUE, title.position ='top'))+
+  theme(legend.position = 'bottom', legend.title=element_markdown(size=11),legend.text = element_text(size=10), axis.title.y = element_markdown(), axis.text.x=element_text(size=10))+
+  theme(plot.margin=margin(0.5,1.1,0.5,0.5,"cm"))
+#ggsave('3c.initial_durusdinium_switching.pdf',device='pdf',height=5,width=7)
+
+
+ggplot(panel1, aes(x = Timepoint, y = log10(shprop), group=initiald)) +
+  geom_point(aes(colour=initiald),shape=1,
+             position = position_jitterdodge(), alpha=0.5) +
+  stat_summary(aes(colour=initiald),shape=1,fun.data='mean_se',
+             position = position_dodge(0.2), size=0.7,show.legend =F) +
+  scale_x_discrete(labels=c('Pre heat stress','Post heat stress','1 month recovery','2 month recovery'))+
+  stat_summary(geom='line', aes(colour=initiald),linetype='dashed',position = position_dodge(0.2))+
+  theme_minimal(base_size = 13)%+replace%
+   theme(panel.border = element_rect(colour='grey20',fill=NA),
+          panel.grid.minor.x = element_blank(),
+         panel.grid.major.x = element_blank(),
+          panel.grid.minor.y = element_blank())+
+  scale_colour_manual(values=c('blue3','purple','brown2'),labels=c('0.0','>0.0 ≤ 0.5', '>0.5'),name='*O. faveolata* & *S. siderea* initial proportion *Durusdinium* thresholds')+
+  labs(y="log (Proportional symbiont gain/loss)", x='')+
+  guides(colour=guide_legend(nrow=1, byrow=TRUE, title.position ='top'))+
+  theme(legend.position = 'bottom', legend.title=element_markdown(size=11),legend.text = element_text(size=10), axis.title.y = element_markdown(), axis.text.x=element_text(size=10))+
+  theme(plot.margin=margin(0.5,1.1,0.5,0.5,"cm"))
+#ggsave('S2a.initial_durusdinium_shufflingSH.pdf',device='pdf',height=5,width=7)
+
+ggplot(panel2, aes(x = Timepoint, y = log10(shprop), group=Species)) +
+  geom_point(aes(colour=Species),shape=1,
+             position = position_jitterdodge(), alpha=0.5) +
+  stat_summary(aes(colour=Species),shape=1,fun.data='mean_se',
+             position = position_dodge(0.2), size=0.7,show.legend =F) +
+  scale_x_discrete(labels=c('Pre heat stress','Post heat stress','1 month recovery','2 month recovery'))+
+  stat_summary(geom='line', aes(colour=Species),linetype='dashed',position = position_dodge(0.2))+
+  theme_minimal(base_size = 13)%+replace%
+   theme(panel.border = element_rect(colour='grey20',fill=NA),
+          panel.grid.minor.x = element_blank(),
+         panel.grid.major.x = element_blank(),
+          panel.grid.minor.y = element_blank())+
+  scale_colour_manual(values=c('deeppink2','darkorange1','darkturquoise'),labels=c(mcav,ofav,ssid),name='No pre-heat stress *Durusdinium* detected')+
+  labs(y="log (Proportional symbiont gain/loss)", x='')+
+  guides(colour=guide_legend(nrow=1, byrow=TRUE, title.position ='top'))+
+  theme(legend.position = 'bottom', legend.title=element_markdown(size=11),legend.text = element_text(size=10), axis.title.y = element_markdown(), axis.text.x=element_text(size=10))+
+  theme(plot.margin=margin(0.5,1.1,0.5,0.5,"cm"))
+#ggsave('S2b.initial_durusdinium_switchingSH.pdf',device='pdf',height=5,width=7)
 
 ###Due to small sample size, ofav and ssid are grouped together here (model finds no significant effect of species). Now this plot includes all corals. 
    
