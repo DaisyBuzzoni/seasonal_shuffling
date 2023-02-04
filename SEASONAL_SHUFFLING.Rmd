@@ -1,5 +1,5 @@
 ---
-title: "Buzzoni D., Cunning R. and Baker A. C. (2023) Initial Algal Symbiont Communities Affect Shuffling to Durusdinium after Coral Bleaching and Reflect Seasonal Differences in Bleaching Sensitivity"
+title: "Buzzoni D., Cunning R. and Baker A. C. (2023) The role of background algal symbionts as drivers of shuffling to thermotolerant symbionts following bleaching in three Caribbean coral species"
 output:
   html_document: default
   pdf_document: default
