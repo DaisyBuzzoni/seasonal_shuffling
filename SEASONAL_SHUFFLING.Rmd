@@ -1028,6 +1028,36 @@ ggplot(panel2, aes(x = Timepoint, y = log10(shprop), group=Species)) +
   theme(plot.margin=margin(0.5,1.1,0.5,0.5,"cm"))
 #ggsave('S2b.initial_durusdinium_switchingSH.pdf',device='pdf',height=5,width=7)
 
-###Due to small sample size, ofav and ssid are grouped together here (model finds no significant effect of species). Now this plot includes all corals. 
-   
+###Due to small sample size, ofav and ssid are grouped together here (model finds no significant effect of species). Now this plot includes all corals.
+```
+
+
+```{r, warning=F, message=F, broken stick model to determine minimum threshold}
+brokenstick<-filter(shufflegroupsall, shufflegroupsall$Species!='M.cavernosa')
+brokenstick<-filter(brokenstick, brokenstick$Timepoint=='1'|brokenstick$Timepoint=='4')
+brokenstick<-brokenstick[,-c(2,5,9,10,11)]
+brokenstick<-spread(brokenstick,key='Timepoint', value='PropD')
+colnames(brokenstick)<-c('Species','Core','Colony','group','initiald','finald')
+#brokenstick<-filter(brokenstick,brokenstick$initiald<0.5)
+brokenstickofav<-filter(brokenstick, brokenstick$Species=='O.faveolata')
+brokenstickssid<-filter(brokenstick, brokenstick$Species=='S.siderea')
+
+library(segmented)
+brokenstickmod<-brokenstick(finald~initiald|Species,data=brokenstick ,method='lmer', boundary=c(0,1))
+brokenstickmod$mod
+summary(brokenstickmod$mod)
+qt(p=0.05, df=46, lower.tail = F)#1.68= t crit
+get_knots(brokenstickmod) #0 initial predicts 44% final, 0.27% initial predicts 100% final, 27.9% initial predicts 0.719 final, & 90% initial predicts final 100%.
+
+brokenstickofav<-brokenstick(finald~initiald|Colony,data=brokenstickofav,method='lmer')
+brokenstickofav$mod 
+summary(brokenstickofav$mod)
+get_knots(brokenstickofav) #0 initial predicts 48% final, 0.04% initial predicts 90.9% final, 1.4% initial predicts 99.5% final, & 48.5% initial predicts final 100%
+
+brokenstickssid<-brokenstick(finald~initiald|Colony,data=brokenstickssid,method='lmer')
+brokenstickssid$mod
+summary(brokenstickssid$mod)
+get_knots(brokenstickssid) #0 initial predicts 57.75% final, 22.9% initial predicts 58.44% final, 70.3% initial predicts 96.7 final, & 95% initial predicts final 100%
+
+
 ```
